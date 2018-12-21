@@ -5,10 +5,13 @@
         android:id="@+id/recents"
         android:icon="@drawable/ic_recent"
         android:title="Recents" />
-
     <item
         android:id="@+id/search"
         android:icon="@drawable/ic_contacts"
-        android:title="Search" />
+        android:title="Contacts" />
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_profile"
+        android:title="Profile" />
 
 </menu>

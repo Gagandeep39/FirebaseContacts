@@ -1,69 +1,69 @@
 package com.gagandeep.nuvococontacts;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link SearchFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link SearchFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SearchFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
-    private String mParam2;
+    private SearchView searchView = null;
+    private SearchView.OnQueryTextListener queryTextListener;
 
-    private OnFragmentInteractionListener mListener;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_search, container, false);
+        Toolbar actionBarToolBar = v.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(actionBarToolBar);
+        actionBarToolBar.inflateMenu(R.menu.search_menu);
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
 
-    public SearchFragment() {
-        // Required empty public constructor
-    }
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        return v;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        setHasOptionsMenu(true);
+
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_search, container, false);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.search_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.search_view_menu_item, menu);
+        MenuItem searchViewItem = menu.findItem(R.id.action_search);
+        final SearchView searchViewAndroidActionBar = (SearchView) MenuItemCompat.getActionView(searchViewItem);
+        searchViewAndroidActionBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchViewAndroidActionBar.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        return super.onOptionsItemSelected(item);
     }
 }
