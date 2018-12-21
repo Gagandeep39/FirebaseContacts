@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/recents"
+        android:icon="@drawable/ic_recent"
+        android:title="Recents" />
+
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_contacts"
+        android:title="Search" />
+
+</menu>
