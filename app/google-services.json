@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "403300119169",
+    "firebase_url": "https://nuvoco-contacts.firebaseio.com",
+    "project_id": "nuvoco-contacts",
+    "storage_bucket": "nuvoco-contacts.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:403300119169:android:81526ac32bb379c8",
+        "android_client_info": {
+          "package_name": "com.gagandeep.nuvococontacts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "403300119169-enk5dpe2fioklfjvo4jhien9ph15u3hh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gagandeep.nuvococontacts",
+            "certificate_hash": "73eab69a1377932dc5adbcc557dfef775d08b998"
+          }
+        },
+        {
+          "client_id": "403300119169-hne10plocqkouedpmuuo4svl5i25j3lc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWrSfAKhy0Pdhy-J8neGxLQT9mnd4cTNM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "403300119169-hne10plocqkouedpmuuo4svl5i25j3lc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

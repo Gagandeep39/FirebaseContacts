@@ -2,6 +2,7 @@ package com.gagandeep.nuvococontacts;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -33,11 +35,12 @@ public class SearchFragment extends Fragment {
     DatabaseReference databaseReferenceUser;
     List<User> userList;
     ListView listView;
+    CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     public SearchFragment() {
     }
 
-    ValueEventListener v = new ValueEventListener() {
+    ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             userList.clear();
@@ -84,30 +87,43 @@ public class SearchFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchViewAndroidActionBar.clearFocus();
+                Query q = FirebaseDatabase.getInstance().getReference("userinfo")
+                        .orderByChild("name").startAt(query);
+                q.addListenerForSingleValueEvent(valueEventListener);
+
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                return false;
+
+                Query q = FirebaseDatabase.getInstance().getReference("userinfo")
+                        .orderByChild("name").startAt(newText);
+                q.addListenerForSingleValueEvent(valueEventListener);
+                return true;
             }
         });
     }
 
     private void findViews(View v) {
         listView = v.findViewById(R.id.listView);
+        mCollapsingToolbarLayout = v.findViewById(R.id.collapsing);
+        mCollapsingToolbarLayout.setTitleEnabled(false);
+
+
         userList = new ArrayList<>();
         databaseReferenceUser = FirebaseDatabase.getInstance().getReference("userinfo");
         databaseReferenceUser.keepSynced(true);
 
         Toolbar actionBarToolBar = v.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(actionBarToolBar);
+        actionBarToolBar.setTitle("Search Contacts");
         actionBarToolBar.inflateMenu(R.menu.search_menu);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        databaseReferenceUser.addValueEventListener(v);
+        databaseReferenceUser.addValueEventListener(valueEventListener);
     }
 }
