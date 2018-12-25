@@ -16,7 +16,6 @@
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:title="scdfvgbhj"
             app:titleEnabled="true"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
@@ -24,6 +23,7 @@
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
+                app:title="Recents"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay" />

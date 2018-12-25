@@ -1,6 +1,7 @@
 package com.gagandeep.nuvococontacts;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -12,20 +13,57 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SearchFragment extends Fragment {
 
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
+    DatabaseReference databaseReferenceUser;
+    List<User> userList;
+    ListView listView;
+
+    public SearchFragment() {
+    }
+
+    ValueEventListener v = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            userList.clear();
+            for (DataSnapshot artistSnapShot : dataSnapshot.getChildren()) {
+                User user = artistSnapShot.getValue(User.class);
+                userList.add(user);
+
+            }
+            UserList adapter = new UserList(getActivity(), userList);
+            listView.setAdapter(adapter);
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_search, container, false);
-        Toolbar actionBarToolBar = v.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(actionBarToolBar);
-        actionBarToolBar.inflateMenu(R.menu.search_menu);
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+        FirebaseApp.initializeApp(getContext());
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        databaseReferenceUser = database.getReference();
+        findViews(v);
+
 
         return v;
     }
@@ -34,17 +72,12 @@ public class SearchFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
-
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.search_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
-
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.search_view_menu_item, menu);
         MenuItem searchViewItem = menu.findItem(R.id.action_search);
         final SearchView searchViewAndroidActionBar = (SearchView) MenuItemCompat.getActionView(searchViewItem);
         searchViewAndroidActionBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -61,9 +94,20 @@ public class SearchFragment extends Fragment {
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    private void findViews(View v) {
+        listView = v.findViewById(R.id.listView);
+        userList = new ArrayList<>();
+        databaseReferenceUser = FirebaseDatabase.getInstance().getReference("userinfo");
+        databaseReferenceUser.keepSynced(true);
 
-        return super.onOptionsItemSelected(item);
+        Toolbar actionBarToolBar = v.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(actionBarToolBar);
+        actionBarToolBar.inflateMenu(R.menu.search_menu);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        databaseReferenceUser.addValueEventListener(v);
     }
 }
