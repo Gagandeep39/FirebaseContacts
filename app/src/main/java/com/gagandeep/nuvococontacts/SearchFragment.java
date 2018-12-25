@@ -13,38 +13,43 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DatabaseReference;
+
 
 public class SearchFragment extends Fragment {
 
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
+    DatabaseReference databaseReferenceUser;
+
+    public SearchFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_search, container, false);
+        findViews(v);
+
+
+        return v;
+    }
+
+    private void findViews(View v) {
         Toolbar actionBarToolBar = v.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(actionBarToolBar);
         actionBarToolBar.inflateMenu(R.menu.search_menu);
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
-
-        return v;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
-
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.search_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
-
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.search_view_menu_item, menu);
         MenuItem searchViewItem = menu.findItem(R.id.action_search);
         final SearchView searchViewAndroidActionBar = (SearchView) MenuItemCompat.getActionView(searchViewItem);
         searchViewAndroidActionBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -61,9 +66,11 @@ public class SearchFragment extends Fragment {
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+//    private boolean updateUser(String id, String name, String track){
+//        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("artists").child(id);
+//        databaseReference.setValue(artist);
+//        Toast.makeText(this, "Artist Updated", Toast.LENGTH_SHORT).show();
+//        return true;
+//    }
 
-        return super.onOptionsItemSelected(item);
-    }
 }
