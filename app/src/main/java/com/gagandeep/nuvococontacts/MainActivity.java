@@ -16,10 +16,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 		setContentView(R.layout.activity_main);
 		//loading the default fragment
 //        FirebaseApp.initializeApp(this);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
 
 		loadFragment(new RecentFragment());
