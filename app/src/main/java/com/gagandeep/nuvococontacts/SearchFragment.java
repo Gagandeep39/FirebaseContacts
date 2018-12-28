@@ -77,32 +77,70 @@ public class SearchFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.search_menu, menu);
+//        super.onCreateOptionsMenu(menu, inflater);
+//        MenuItem searchViewItem = menu.findItem(R.id.action_search);
+//        final SearchView searchViewAndroidActionBar = (SearchView) MenuItemCompat.getActionView(searchViewItem);
+//        searchViewAndroidActionBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                searchViewAndroidActionBar.clearFocus();
+//                Query q = FirebaseDatabase.getInstance().getReference("userinfo")
+//                        .orderByChild("name").startAt(query);
+//                q.addListenerForSingleValueEvent(valueEventListener);
+//
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//
+//                Query q = FirebaseDatabase.getInstance().getReference("userinfo")
+//                        .orderByChild("name").startAt(newText);
+//                q.addListenerForSingleValueEvent(valueEventListener);
+//                return true;
+//            }
+//        });
+//    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+//        MenuItem searchViewItem =    menu.findItem(R.id.action_search);
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                final SearchView searchViewAndroidActionBar = (SearchView) MenuItemCompat.getActionView(item);
+                searchViewAndroidActionBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        searchViewAndroidActionBar.clearFocus();
+                        Query q = FirebaseDatabase.getInstance().getReference("userinfo")
+                                .orderByChild("name").startAt(query);
+                        q.addListenerForSingleValueEvent(valueEventListener);
+
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+
+                        Query q = FirebaseDatabase.getInstance().getReference("userinfo")
+                                .orderByChild("name").startAt(newText);
+                        q.addListenerForSingleValueEvent(valueEventListener);
+                        return true;
+                    }
+                });
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.search_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
-        MenuItem searchViewItem = menu.findItem(R.id.action_search);
-        final SearchView searchViewAndroidActionBar = (SearchView) MenuItemCompat.getActionView(searchViewItem);
-        searchViewAndroidActionBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                searchViewAndroidActionBar.clearFocus();
-                Query q = FirebaseDatabase.getInstance().getReference("userinfo")
-                        .orderByChild("name").startAt(query);
-                q.addListenerForSingleValueEvent(valueEventListener);
-
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-
-                Query q = FirebaseDatabase.getInstance().getReference("userinfo")
-                        .orderByChild("name").startAt(newText);
-                q.addListenerForSingleValueEvent(valueEventListener);
-                return true;
-            }
-        });
+        inflater.inflate(R.menu.search_menu, menu);
     }
 
     private void findViews(View v) {

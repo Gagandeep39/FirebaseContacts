@@ -3,15 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/advanced_search"
-        android:icon="@drawable/ic_menu"
-        android:title="Search"
-        app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="always|collapseActionView" />
-    <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search"
         android:title="Search"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always|collapseActionView" />
-</menu>
+    <item
+        android:id="@+id/advanced_search"
+        android:icon="@drawable/ic_menu"
+        android:title="Search"
+        app:showAsAction="always|collapseActionView" />
+</menu><!--<menu xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--xmlns:myapp="http://schemas.android.com/tools">-->
+
+    <!--<item--><!--android:id="@+id/action_search"--><!--android:icon="@drawable/ic_search"--><!--android:title="Searc h"--><!--myapp:showAsAction="always|collapseActionView"--><!--myapp:actionViewClass="android.support.v7.widget.SearchView" />-->
+
+    <!--<item--><!--android:id="@+id/advanced_search"--><!--android:title="@string/action_settings"--><!--app:showAsAction="never" />-->
+
+    <!--</menu>-->
+
