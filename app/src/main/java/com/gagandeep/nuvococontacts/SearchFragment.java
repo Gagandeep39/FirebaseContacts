@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,7 +27,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -111,7 +109,7 @@ public class SearchFragment extends Fragment {
                 searchViewAndroidActionBar.clearFocus();
                 Toast.makeText(getActivity(), ""  + userList.size(), Toast.LENGTH_SHORT).show();
                 for (int i=0; i<userList.size(); i++){
-                    if (userList.get(i).getName().equals(query))
+                    if (userList.get(i).getName().toLowerCase().contains(query.toLowerCase()))
                         sortedArrayList.add(userList.get(i));
                 }
 
