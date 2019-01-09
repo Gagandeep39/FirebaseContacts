@@ -3,18 +3,25 @@ package com.gagandeep.nuvococontacts;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +43,9 @@ public class SearchFragment extends Fragment {
     List<User> userList;
     ListView listView;
     CollapsingToolbarLayout mCollapsingToolbarLayout;
+    UserList adapter;
+    ArrayList<User> sortedArrayList, backupArrayList;
+    FloatingActionButton clearSearchFAB;
 
     public SearchFragment() {
     }
@@ -49,7 +59,7 @@ public class SearchFragment extends Fragment {
                 userList.add(user);
 
             }
-            UserList adapter = new UserList(getActivity(), userList);
+            adapter = new UserList(getActivity(), userList);
             listView.setAdapter(adapter);
         }
 
@@ -77,61 +87,14 @@ public class SearchFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.search_menu, menu);
-//        super.onCreateOptionsMenu(menu, inflater);
-//        MenuItem searchViewItem = menu.findItem(R.id.action_search);
-//        final SearchView searchViewAndroidActionBar = (SearchView) MenuItemCompat.getActionView(searchViewItem);
-//        searchViewAndroidActionBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                searchViewAndroidActionBar.clearFocus();
-//                Query q = FirebaseDatabase.getInstance().getReference("userinfo")
-//                        .orderByChild("name").startAt(query);
-//                q.addListenerForSingleValueEvent(valueEventListener);
-//
-//                return true;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//
-//                Query q = FirebaseDatabase.getInstance().getReference("userinfo")
-//                        .orderByChild("name").startAt(newText);
-//                q.addListenerForSingleValueEvent(valueEventListener);
-//                return true;
-//            }
-//        });
-//    }
-
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-//        MenuItem searchViewItem =    menu.findItem(R.id.action_search);
+    public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_search:
-                final SearchView searchViewAndroidActionBar = (SearchView) MenuItemCompat.getActionView(item);
-                searchViewAndroidActionBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        searchViewAndroidActionBar.clearFocus();
-                        Query q = FirebaseDatabase.getInstance().getReference("userinfo")
-                                .orderByChild("name").startAt(query);
-                        q.addListenerForSingleValueEvent(valueEventListener);
 
-                        return true;
-                    }
 
-                    @Override
-                    public boolean onQueryTextChange(String newText) {
-
-                        Query q = FirebaseDatabase.getInstance().getReference("userinfo")
-                                .orderByChild("name").startAt(newText);
-                        q.addListenerForSingleValueEvent(valueEventListener);
-                        return true;
-                    }
-                });
+            case R.id.advanced_search:
+                showUpdateDialogue();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -141,14 +104,120 @@ public class SearchFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.search_menu, menu);
+        final SearchView searchViewAndroidActionBar = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchViewAndroidActionBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchViewAndroidActionBar.clearFocus();
+                Toast.makeText(getActivity(), ""  + userList.size(), Toast.LENGTH_SHORT).show();
+                for (int i=0; i<userList.size(); i++){
+                    if (userList.get(i).getName().equals(query))
+                        sortedArrayList.add(userList.get(i));
+                }
+
+                adapter = new UserList(getActivity(), sortedArrayList);
+                listView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                return true;
+            }
+        });
+    }
+
+    private void showUpdateDialogue() {
+        AlertDialog.Builder dialogueBuilder = new AlertDialog.Builder(getContext());
+        View dialogueView = getLayoutInflater().inflate(R.layout.advanced_search_dialogue, null);
+        dialogueBuilder.setView(dialogueView);
+
+        final TextInputEditText editTextName, editTextLocation, editTextDepartment, editTextPhone;
+        Button searchButton;
+        editTextName = dialogueView.findViewById(R.id.editTextName);
+        editTextLocation = dialogueView.findViewById(R.id.editTextLocation);
+        editTextDepartment = dialogueView.findViewById(R.id.editTextDepartment);
+        searchButton = dialogueView.findViewById(R.id.searchButton);
+
+        dialogueBuilder.setTitle("Search");
+        final AlertDialog alertDialog = dialogueBuilder.create();
+        alertDialog.show();
+
+        sortedArrayList = new ArrayList<>();
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = editTextName.getText().toString().toLowerCase();
+                String location = editTextLocation.getText().toString().toLowerCase();
+                String department = editTextDepartment.getText().toString().toLowerCase();
+                int counter;
+
+                for (int i = 0; i < userList.size(); i++) {
+
+//                    Toast.makeText(getActivity(), "LOL" +userList.size(), Toast.LENGTH_SHORT).show();
+                    counter = 0;
+                    if (!TextUtils.isEmpty(name)) {
+                        if (userList.get(i).getName().toLowerCase().contains(name)) {
+                            counter++;
+                        }
+                    }
+                    if (!TextUtils.isEmpty(location)) {
+                        Toast.makeText(getActivity(), "" + userList.get(i).getLocation(), Toast.LENGTH_SHORT).show();
+                        if (userList.get(i).getLocation().toLowerCase().contains(location))
+                        {
+
+                        Toast.makeText(getActivity(), "scdfgnhjk", Toast.LENGTH_SHORT).show();
+                            counter++;
+                        }
+                    }
+                    if (!TextUtils.isEmpty(department)) {
+                        if (userList.get(i).getDesignation().toLowerCase().contains(department))
+                            counter++;
+                    }
+
+
+                    if (counter > 0) {
+                        Toast.makeText(getActivity(), "" + userList.get(i), Toast.LENGTH_SHORT).show();
+                        sortedArrayList.add(userList.get(i));
+                    }
+                }
+
+                adapter = new UserList(getActivity(), sortedArrayList);
+                listView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                clearSearchFAB.show();
+
+
+                alertDialog.dismiss();
+            }
+        });
+
+
     }
 
     private void findViews(View v) {
         listView = v.findViewById(R.id.listView);
+        clearSearchFAB = v.findViewById(R.id.fab);
+        sortedArrayList  = new ArrayList<>();
+
+        clearSearchFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter = new UserList(getActivity(), userList);
+                listView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                clearSearchFAB.hide();
+            }
+        });
+
         mCollapsingToolbarLayout = v.findViewById(R.id.collapsing);
         mCollapsingToolbarLayout.setTitleEnabled(false);
 
-
+        backupArrayList = new ArrayList<>();
         userList = new ArrayList<>();
         databaseReferenceUser = FirebaseDatabase.getInstance().getReference("userinfo");
         databaseReferenceUser.keepSynced(true);

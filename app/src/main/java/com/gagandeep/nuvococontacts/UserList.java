@@ -24,11 +24,11 @@ public class UserList extends ArrayAdapter<User> {
         LayoutInflater inflater = context.getLayoutInflater();
         View listViewItem = inflater.inflate(R.layout.list_layout, null, true);
         TextView nameTextView = listViewItem.findViewById(R.id.textViewName);
-        TextView songTextView = listViewItem.findViewById(R.id.textViewPhone);
+        TextView songTextView = listViewItem.findViewById(R.id.textViewLocation);
         User user = userList.get(position);
 
         nameTextView.setText(user.getName());
-        songTextView.setText(user.getPhoneno_1());
+        songTextView.setText(user.getLocation());
         return listViewItem;
     }
 
