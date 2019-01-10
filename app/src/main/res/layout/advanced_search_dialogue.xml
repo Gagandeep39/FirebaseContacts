@@ -44,10 +44,10 @@
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/editTextPhone"
+            android:id="@+id/editTextDesignation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Phone" />
+            android:hint="Designation" />
     </android.support.design.widget.TextInputLayout>
 
     <Button

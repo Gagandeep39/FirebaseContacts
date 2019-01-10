@@ -136,11 +136,12 @@ public class SearchFragment extends Fragment {
         View dialogueView = getLayoutInflater().inflate(R.layout.advanced_search_dialogue, null);
         dialogueBuilder.setView(dialogueView);
 
-        final TextInputEditText editTextName, editTextLocation, editTextDepartment, editTextPhone;
+        final TextInputEditText editTextName, editTextLocation, editTextDepartment, editTextDesignation;
         Button searchButton;
         editTextName = dialogueView.findViewById(R.id.editTextName);
         editTextLocation = dialogueView.findViewById(R.id.editTextLocation);
         editTextDepartment = dialogueView.findViewById(R.id.editTextDepartment);
+        editTextDesignation = dialogueView.findViewById(R.id.editTextDesignation);
         searchButton = dialogueView.findViewById(R.id.searchButton);
 
         dialogueBuilder.setTitle("Search");
@@ -155,38 +156,7 @@ public class SearchFragment extends Fragment {
                 String name = editTextName.getText().toString().toLowerCase();
                 String location = editTextLocation.getText().toString().toLowerCase();
                 String department = editTextDepartment.getText().toString().toLowerCase();
-                int counter;
-
-//                for (int i = 0; i < userList.size(); i++) {
-////
-//////                    Toast.makeText(getActivity(), "LOL" +userList.size(), Toast.LENGTH_SHORT).show();
-////                    counter = 0;
-////                    if (!TextUtils.isEmpty(name)) {
-////                        if (userList.get(i).getName().toLowerCase().contains(name)) {
-////                            counter++;
-////                        }
-////                    }
-////                    if (!TextUtils.isEmpty(location)) {
-////                        Toast.makeText(getActivity(), "" + userList.get(i).getLocation(), Toast.LENGTH_SHORT).show();
-////                        if (userList.get(i).getLocation().toLowerCase().contains(location))
-////                        {
-////
-////                        Toast.makeText(getActivity(), "scdfgnhjk", Toast.LENGTH_SHORT).show();
-////                            counter++;
-////                        }
-////                    }
-////                    if (!TextUtils.isEmpty(department)) {
-////                        if (userList.get(i).getDesignation().toLowerCase().contains(department))
-////                            counter++;
-////                    }
-////
-////
-////                    if (counter > 0) {
-////                        Toast.makeText(getActivity(), "" + userList.get(i), Toast.LENGTH_SHORT).show();
-////                        sortedArrayList.add(userList.get(i));
-////                    }
-////                }
-
+                String designation = editTextDesignation.getText().toString().toLowerCase();
                 sortedArrayList.addAll(userList);
 
                 Log.i(TAG, "onClick: " + sortedArrayList.size());
@@ -208,10 +178,19 @@ public class SearchFragment extends Fragment {
 
                     }
                     if (!TextUtils.isEmpty(department)) {
-                        if (!sortedArrayList.get(i).getDesignation().toLowerCase().contains(department)) {
+                        if (!sortedArrayList.get(i).getDepartment().toLowerCase().contains(department)) {
+                            sortedArrayList.remove(i);
+                            i--;
+                            continue;
+                        }
+
+                    }
+                    if (!TextUtils.isEmpty(designation)) {
+                        if (!sortedArrayList.get(i).getDesignation().toLowerCase().contains(designation)) {
                             sortedArrayList.remove(i);
                             i--;
                         }
+
                     }
                 }
 

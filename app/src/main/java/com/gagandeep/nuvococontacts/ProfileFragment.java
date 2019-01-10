@@ -32,13 +32,8 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        if (databaseReferenceUser == null) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-//            database.setPersistenceEnabled(true);
         databaseReferenceUser = database.getReference();
-        // ...
-//        }
-
     }
 
     private void findViews(View v) {
@@ -73,20 +68,18 @@ public class ProfileFragment extends Fragment {
         if (TextUtils.isEmpty(name))
             editTextName.setError("Enter Name");
         else if (TextUtils.isEmpty(department))
-            editTextName.setError("Enter Name");
+            editTextDepartment.setError("Enter Department");
         else if (TextUtils.isEmpty(designation))
-            editTextName.setError("Enter Name");
+            editTextDesignation.setError("Enter Designation");
         else if (TextUtils.isEmpty(email))
-            editTextName.setError("Enter Name");
+            editTextEmail.setError("Enter Email");
         else if (TextUtils.isEmpty(location))
-            editTextName.setError("Enter Name");
+            editTextLocation.setError("Enter Location");
         else if (TextUtils.isEmpty(phoneno1))
-            editTextName.setError("Enter Name");
-        else if (TextUtils.isEmpty(phoneno2))
-            editTextName.setError("Enter Name");
+            editTextPhoneNo1.setError("Enter Phone No");
         else {
             String id = databaseReferenceUser.push().getKey();
-            User user = new User(id, name, designation, location, email, null, phoneno1, phoneno2, null);
+            User user = new User(id, name, designation, location, email, null, phoneno1, phoneno2, null, department);
             databaseReferenceUser.child(id).setValue(user);
             Toast.makeText(v.getContext(), "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
             editTextName.setText("");
@@ -96,22 +89,17 @@ public class ProfileFragment extends Fragment {
             editTextEmail.setText("");
             editTextPhoneNo1.setText("");
             editTextPhoneNo2.setText("");
-
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
-
         findViews(v);
         userList = new ArrayList<>();
         databaseReferenceUser = FirebaseDatabase.getInstance().getReference("userinfo");
         databaseReferenceUser.keepSynced(true);
-        // Inflate the layout for this fragment
         return v;
     }
 

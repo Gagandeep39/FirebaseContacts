@@ -13,12 +13,9 @@ public class User {
     private String phoneno_2;
     private String phoneno_3;
 
-    User() {
+    private String department;
 
-    }
-
-
-    public User(String userId, String name, String designation, String location, String email1, String email2, String phoneno_1, String phoneno_2, String phoneno_3) {
+    public User(String userId, String name, String designation, String location, String email1, String email2, String phoneno_1, String phoneno_2, String phoneno_3, String department) {
         this.userId = userId;
         this.name = name;
         this.designation = designation;
@@ -28,6 +25,15 @@ public class User {
         this.phoneno_1 = phoneno_1;
         this.phoneno_2 = phoneno_2;
         this.phoneno_3 = phoneno_3;
+        this.department = department;
+    }
+
+    User() {
+
+    }
+
+    public String getDepartment() {
+        return department;
     }
 
     public String getUserId() {
