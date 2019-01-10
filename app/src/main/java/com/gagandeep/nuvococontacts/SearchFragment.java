@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,6 +32,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 
 public class SearchFragment extends Fragment {
@@ -92,7 +95,7 @@ public class SearchFragment extends Fragment {
 
 
             case R.id.advanced_search:
-                showUpdateDialogue();
+                showAdvancedSearchDialogue();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -128,7 +131,7 @@ public class SearchFragment extends Fragment {
         });
     }
 
-    private void showUpdateDialogue() {
+    private void showAdvancedSearchDialogue() {
         AlertDialog.Builder dialogueBuilder = new AlertDialog.Builder(getContext());
         View dialogueView = getLayoutInflater().inflate(R.layout.advanced_search_dialogue, null);
         dialogueBuilder.setView(dialogueView);
@@ -154,33 +157,61 @@ public class SearchFragment extends Fragment {
                 String department = editTextDepartment.getText().toString().toLowerCase();
                 int counter;
 
-                for (int i = 0; i < userList.size(); i++) {
+//                for (int i = 0; i < userList.size(); i++) {
+////
+//////                    Toast.makeText(getActivity(), "LOL" +userList.size(), Toast.LENGTH_SHORT).show();
+////                    counter = 0;
+////                    if (!TextUtils.isEmpty(name)) {
+////                        if (userList.get(i).getName().toLowerCase().contains(name)) {
+////                            counter++;
+////                        }
+////                    }
+////                    if (!TextUtils.isEmpty(location)) {
+////                        Toast.makeText(getActivity(), "" + userList.get(i).getLocation(), Toast.LENGTH_SHORT).show();
+////                        if (userList.get(i).getLocation().toLowerCase().contains(location))
+////                        {
+////
+////                        Toast.makeText(getActivity(), "scdfgnhjk", Toast.LENGTH_SHORT).show();
+////                            counter++;
+////                        }
+////                    }
+////                    if (!TextUtils.isEmpty(department)) {
+////                        if (userList.get(i).getDesignation().toLowerCase().contains(department))
+////                            counter++;
+////                    }
+////
+////
+////                    if (counter > 0) {
+////                        Toast.makeText(getActivity(), "" + userList.get(i), Toast.LENGTH_SHORT).show();
+////                        sortedArrayList.add(userList.get(i));
+////                    }
+////                }
 
-//                    Toast.makeText(getActivity(), "LOL" +userList.size(), Toast.LENGTH_SHORT).show();
-                    counter = 0;
+                sortedArrayList.addAll(userList);
+
+                Log.i(TAG, "onClick: " + sortedArrayList.size());
+                for (int i = 0; i < sortedArrayList.size(); i++) {
                     if (!TextUtils.isEmpty(name)) {
-                        if (userList.get(i).getName().toLowerCase().contains(name)) {
-                            counter++;
+                        if (!sortedArrayList.get(i).getName().toLowerCase().contains(name)) {
+                            sortedArrayList.remove(i);
+                            i--;
+                            continue;
                         }
+
                     }
                     if (!TextUtils.isEmpty(location)) {
-                        Toast.makeText(getActivity(), "" + userList.get(i).getLocation(), Toast.LENGTH_SHORT).show();
-                        if (userList.get(i).getLocation().toLowerCase().contains(location))
-                        {
-
-                        Toast.makeText(getActivity(), "scdfgnhjk", Toast.LENGTH_SHORT).show();
-                            counter++;
+                        if (!sortedArrayList.get(i).getLocation().toLowerCase().contains(location)) {
+                            sortedArrayList.remove(i);
+                            i--;
+                            continue;
                         }
+
                     }
                     if (!TextUtils.isEmpty(department)) {
-                        if (userList.get(i).getDesignation().toLowerCase().contains(department))
-                            counter++;
-                    }
-
-
-                    if (counter > 0) {
-                        Toast.makeText(getActivity(), "" + userList.get(i), Toast.LENGTH_SHORT).show();
-                        sortedArrayList.add(userList.get(i));
+                        if (!sortedArrayList.get(i).getDesignation().toLowerCase().contains(department)) {
+                            sortedArrayList.remove(i);
+                            i--;
+                        }
                     }
                 }
 
