@@ -16,8 +16,8 @@
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
-            android:layout_height="280dp"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            android:layout_height="240dp"
+            android:src="@drawable/bg_placeholder" />
 
         <View
             android:layout_width="match_parent"
@@ -31,6 +31,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/phoneLayout"
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
@@ -53,6 +54,9 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/messageLayout"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
@@ -63,7 +67,7 @@
                     android:layout_width="50sp"
                     android:layout_height="50sp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_phone_black" />
+                    android:src="@drawable/ic_message" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -73,6 +77,9 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/emailLayout"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
@@ -83,7 +90,7 @@
                     android:layout_width="50sp"
                     android:layout_height="50sp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_phone_black" />
+                    android:src="@drawable/ic_email" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -93,6 +100,9 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/whatsappLayout"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
@@ -143,10 +153,10 @@
                 android:textSize="16sp" />
 
             <ImageView
+                android:layout_weight="0.2"
                 android:layout_width="0sp"
                 android:layout_height="40sp"
-                android:layout_weight="0.2"
-                android:padding="16sp" />
+                android:src="@drawable/ic_message" />
         </LinearLayout>
 
         <LinearLayout
@@ -173,10 +183,10 @@
                 android:textSize="16sp" />
 
             <ImageView
+                android:layout_weight="0.2"
                 android:layout_width="0sp"
                 android:layout_height="40sp"
-                android:layout_weight="0.2"
-                android:padding="16sp" />
+                android:src="@drawable/ic_message" />
         </LinearLayout>
 
         <LinearLayout
@@ -203,10 +213,10 @@
                 android:textSize="16sp" />
 
             <ImageView
+                android:layout_weight="0.2"
                 android:layout_width="0sp"
                 android:layout_height="40sp"
-                android:layout_weight="0.2"
-                android:padding="16sp" />
+                android:src="@drawable/ic_message" />
         </LinearLayout>
 
         <View
