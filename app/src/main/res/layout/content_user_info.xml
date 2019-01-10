@@ -130,6 +130,8 @@
             android:padding="16sp" />
 
         <LinearLayout
+            android:id="@+id/phoneno_1Layout"
+            android:onClick="callFunction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -144,6 +146,7 @@
                 android:src="@drawable/ic_phone_black" />
 
             <TextView
+                android:id="@+id/phoneno_1TextView"
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -153,13 +156,19 @@
                 android:textSize="16sp" />
 
             <ImageView
+                android:id="@+id/message_1ImageView"
                 android:layout_weight="0.2"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:onClick="messageFunction"
                 android:layout_width="0sp"
                 android:layout_height="40sp"
                 android:src="@drawable/ic_message" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/phoneno_2Layout"
+            android:onClick="callFunction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -174,6 +183,7 @@
                 android:src="@drawable/ic_phone_black" />
 
             <TextView
+                android:id="@+id/phoneno_2TextView"
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -183,13 +193,19 @@
                 android:textSize="16sp" />
 
             <ImageView
+                android:id="@+id/message_2ImageView"
+                android:background="?attr/selectableItemBackground"
                 android:layout_weight="0.2"
                 android:layout_width="0sp"
+                android:clickable="true"
+                android:onClick="messageFunction"
                 android:layout_height="40sp"
                 android:src="@drawable/ic_message" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/phoneno_3Layout"
+            android:onClick="callFunction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -204,6 +220,7 @@
                 android:src="@drawable/ic_phone_black" />
 
             <TextView
+                android:id="@+id/phoneno_3TextView"
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -213,9 +230,13 @@
                 android:textSize="16sp" />
 
             <ImageView
-                android:layout_weight="0.2"
+                android:id="@+id/message_3ImageView"
                 android:layout_width="0sp"
                 android:layout_height="40sp"
+                android:layout_weight="0.2"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:onClick="messageFunction"
                 android:src="@drawable/ic_message" />
         </LinearLayout>
 
@@ -226,6 +247,7 @@
             android:padding="16sp" />
 
         <LinearLayout
+            android:id="@+id/email_1Layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -238,6 +260,7 @@
                 android:src="@drawable/ic_email" />
 
             <TextView
+                android:id="@+id/email_1TextView"
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -247,6 +270,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/email_2Layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -259,6 +283,7 @@
                 android:src="@drawable/ic_email" />
 
             <TextView
+                android:id="@+id/email_2TextView"
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

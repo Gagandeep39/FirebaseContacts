@@ -5,15 +5,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class UserInfoActivity extends AppCompatActivity {
-    String name, designation, department, email_1, email_2, phone_1, phone_2, location;
-    LinearLayout phoneLayout, messageLayout, whatsappLayout, emailLayout;
-
+    String name, designation, department, email_1, email_2, phone_1, phone_2, phone_3, location;
+    LinearLayout phoneLayout, messageLayout, whatsappLayout, emailLayout, phoneno_1Layout, phoneno_2Layout, phoneno_3Layout, email_1Layout, email_2Layout;
+    TextView phoneno_1TextView, phoneno_2TextView, phoneno_3TextView, email_1TextView, email_2TextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,34 @@ public class UserInfoActivity extends AppCompatActivity {
         messageLayout = findViewById(R.id.messageLayout);
         whatsappLayout = findViewById(R.id.whatsappLayout);
         emailLayout = findViewById(R.id.emailLayout);
+        phoneno_1Layout = findViewById(R.id.phoneno_1Layout);
+        phoneno_2Layout = findViewById(R.id.phoneno_2Layout);
+        phoneno_3Layout = findViewById(R.id.phoneno_3Layout);
+        email_1Layout = findViewById(R.id.email_1Layout);
+        email_2Layout = findViewById(R.id.email_2Layout);
+        phoneno_1TextView = findViewById(R.id.phoneno_1TextView);
+        phoneno_2TextView = findViewById(R.id.phoneno_2TextView);
+        phoneno_3TextView = findViewById(R.id.phoneno_3TextView);
+        email_1TextView = findViewById(R.id.email_1TextView);
+        email_2TextView = findViewById(R.id.email_2TextView);
+
+        phoneno_1TextView.setText(phone_1);
+        email_1TextView.setText(email_1);
+
+        if (TextUtils.isEmpty(phone_2))
+            phoneno_2Layout.setVisibility(View.GONE);
+        else
+            phoneno_2TextView.setText(phone_2);
+
+        if (TextUtils.isEmpty(phone_3))
+            phoneno_3Layout.setVisibility(View.GONE);
+        else
+            phoneno_2TextView.setText(phone_3);
+
+        if (TextUtils.isEmpty(email_2))
+            email_2Layout.setVisibility(View.GONE);
+        else
+            email_2TextView.setText(email_2);
     }
 
     void onClickListeners() {
@@ -83,6 +113,45 @@ public class UserInfoActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(emailIntent, "Send email..."));
             }
         });
+    }
+
+    void callFunction(View v) {
+
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        switch (v.getId()) {
+            case R.id.phoneno_1Layout:
+                intent.setData(Uri.parse("tel:+91" + phone_1));
+                break;
+            case R.id.phoneno_2Layout:
+                intent.setData(Uri.parse("tel:+91" + phone_2));
+                Toast.makeText(this, "" + phone_2, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.phoneno_3Layout:
+//                intent.setData(Uri.parse("tel:+91" + phone_3));
+                break;
+
+        }
+
+        startActivity(intent);
+    }
+
+    void messageFunction(View v) {
+        Uri sms_uri = null;
+        switch (v.getId()) {
+            case R.id.message_1ImageView:
+                sms_uri = Uri.parse("smsto:+91" + phone_1);
+                break;
+            case R.id.message_2ImageView:
+                sms_uri = Uri.parse("smsto:+91" + phone_2);
+                break;
+            case R.id.message_3ImageView:
+                sms_uri = Uri.parse("smsto:+91" + phone_3);
+                break;
+
+        }
+        Intent sms_intent = new Intent(Intent.ACTION_SENDTO, sms_uri);
+//        sms_intent.putExtra("sms_body", "Good Morning ! how r U ?");
+        startActivity(sms_intent);
     }
 
     @Override
