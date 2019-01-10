@@ -11,12 +11,19 @@ import com.google.firebase.database.FirebaseDatabase;
 
 //implement the interface OnNavigationItemSelectedListener in your activity class
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
-
-
+	static boolean calledAlready = false;
+	FirebaseDatabase database;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+
+		if (!calledAlready) {
+			FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+			calledAlready = true;
+		}
+
+
 		setContentView(R.layout.activity_main);
 		//loading the default fragment
 //        FirebaseApp.initializeApp(this);

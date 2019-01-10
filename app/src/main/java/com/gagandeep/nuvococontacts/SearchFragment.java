@@ -92,7 +92,7 @@ public class SearchFragment extends Fragment {
 
 
             case R.id.advanced_search:
-                showUpdateDialogue();
+                showAdvancedSearchDialogue();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -128,7 +128,7 @@ public class SearchFragment extends Fragment {
         });
     }
 
-    private void showUpdateDialogue() {
+    private void showAdvancedSearchDialogue() {
         AlertDialog.Builder dialogueBuilder = new AlertDialog.Builder(getContext());
         View dialogueView = getLayoutInflater().inflate(R.layout.advanced_search_dialogue, null);
         dialogueBuilder.setView(dialogueView);
