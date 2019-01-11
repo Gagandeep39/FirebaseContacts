@@ -41,7 +41,7 @@ public class SearchFragment extends Fragment {
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
     DatabaseReference databaseReferenceUser;
-    List<User> userList;
+    public static List<User> userList;
     ListView listView;
     CollapsingToolbarLayout mCollapsingToolbarLayout;
     UserList adapter;
@@ -60,8 +60,10 @@ public class SearchFragment extends Fragment {
                 userList.add(user);
 
             }
-            adapter = new UserList(getActivity(), userList);
-            listView.setAdapter(adapter);
+            if (getActivity() != null) {
+                adapter = new UserList(getActivity(), userList);
+                listView.setAdapter(adapter);
+            }
         }
 
         @Override

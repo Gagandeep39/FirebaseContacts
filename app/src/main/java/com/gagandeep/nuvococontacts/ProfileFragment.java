@@ -1,28 +1,54 @@
 package com.gagandeep.nuvococontacts;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
+import static android.support.constraint.Constraints.TAG;
 
 
 public class ProfileFragment extends Fragment {
 
-    Button saveButton;
     TextInputEditText editTextName, editTextDesignation, editTextLocation, editTextDepartment, editTextEmail, editTextPhoneNo1, editTextPhoneNo2;
     DatabaseReference databaseReferenceUser;
     List<User> userList;
+    private static final int PICK_IMAGE_REQUEST = 234;
+    Button saveButton, profileButton;
+    ImageView profileImageView;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
+    Bitmap universalBitmap;
+    Uri filePath;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -46,12 +72,22 @@ public class ProfileFragment extends Fragment {
         editTextLocation = v.findViewById(R.id.editTextLocation);
         editTextPhoneNo1 = v.findViewById(R.id.editTextPhoneNo1);
         editTextPhoneNo2 = v.findViewById(R.id.editTextPhoneNo2);
+        profileButton = v.findViewById(R.id.profileButton);
+        profileImageView = v.findViewById(R.id.profileImageView);
+
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 saveDataToServer(v);
+            }
+        });
+
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFileChooser();
             }
         });
     }
@@ -79,9 +115,11 @@ public class ProfileFragment extends Fragment {
             editTextPhoneNo1.setError("Enter Phone No");
         else {
             String id = databaseReferenceUser.push().getKey();
-            User user = new User(id, name, designation, location, email, null, phoneno1, phoneno2, null, department);
+            String f = uploadImage();
+            User user = new User(id, name, designation, location, email, null, phoneno1, phoneno2, null, department, f);
             databaseReferenceUser.child(id).setValue(user);
             Toast.makeText(v.getContext(), "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+
             editTextName.setText("");
             editTextDepartment.setText("");
             editTextDesignation.setText("");
@@ -89,8 +127,89 @@ public class ProfileFragment extends Fragment {
             editTextEmail.setText("");
             editTextPhoneNo1.setText("");
             editTextPhoneNo2.setText("");
+//            uploadImage(phoneno1);
+        }
+
+    }
+
+
+    private void uploadImage(String phone) {
+        if (filePath != null) {
+
+            final StorageReference childRef = storageRef.child("_" + phone + "_" + ".jpg");
+
+            //uploading the image
+            UploadTask uploadTask = childRef.putFile(filePath);
+
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    childRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Log.i(TAG, "onSuccess: " + uri);
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getActivity(), "Upload Failed -> " + e, Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "onFailure: " + e);
+                }
+            }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    Log.i(TAG, "onComplete: " + task.getResult());
+                    task.getResult().getMetadata().getPath();
+                }
+            });
+        } else {
+            Toast.makeText(getActivity(), "Select an image", Toast.LENGTH_SHORT).show();
         }
     }
+
+    String uploadImage() {
+        Bitmap bmp = null;
+        try {
+            bmp = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 0, bYtE);
+        bmp.recycle();
+        byte[] byteArray = bYtE.toByteArray();
+        String imageFile = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        return imageFile;
+    }
+
+
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 234);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 0, out);
+                profileImageView.setImageBitmap(bitmap);
+                universalBitmap = bitmap;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

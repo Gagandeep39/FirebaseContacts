@@ -13,9 +13,9 @@ public class User {
     private String phoneno_2;
     private String phoneno_3;
 
-    private String department;
+    private String profileUri;
 
-    public User(String userId, String name, String designation, String location, String email1, String email2, String phoneno_1, String phoneno_2, String phoneno_3, String department) {
+    public User(String userId, String name, String designation, String location, String email1, String email2, String phoneno_1, String phoneno_2, String phoneno_3, String department, String profileUri) {
         this.userId = userId;
         this.name = name;
         this.designation = designation;
@@ -26,6 +26,13 @@ public class User {
         this.phoneno_2 = phoneno_2;
         this.phoneno_3 = phoneno_3;
         this.department = department;
+        this.profileUri = profileUri;
+    }
+
+    private String department;
+
+    public String getProfileUri() {
+        return profileUri;
     }
 
     User() {
