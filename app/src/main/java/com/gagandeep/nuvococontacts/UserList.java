@@ -42,12 +42,6 @@ public class UserList extends ArrayAdapter<User> {
             public void onClick(View v) {
                 Bundle b = new Bundle();
                 Toast.makeText(context, "" + userList.get(position).getPhoneno_1(), Toast.LENGTH_SHORT).show();
-//                b.putString(userList.get(position).getName(), "name");
-//                b.putString(userList.get(position).getDesignation(), "designation");
-//                b.putString(userList.get(position).getLocation(), "location");
-//                b.putString(userList.get(position).getPhoneno_1(), "phoneno_1");
-//                b.putString(userList.get(position).getEmail1(), "email_1");
-//
                 Intent intent = new Intent(getContext(), UserInfoActivity.class);
                 intent.putExtra("name", userList.get(position).getName());
                 intent.putExtra("designation", userList.get(position).getDesignation());

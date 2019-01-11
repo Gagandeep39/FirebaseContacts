@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/recents"
-        android:icon="@drawable/ic_recent"
-        android:title="Recents" />
+        android:id="@+id/favourite"
+        android:icon="@drawable/ic_star"
+        android:title="Favourite" />
     <item
         android:id="@+id/search"
         android:icon="@drawable/ic_contacts"

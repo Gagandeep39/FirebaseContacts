@@ -29,11 +29,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //        FirebaseApp.initializeApp(this);
 
 
-		loadFragment(new RecentFragment());
+		loadFragment(new SearchFragment());
 
 		//getting bottom navigation view and attaching the listener
 		BottomNavigationView navigation = findViewById(R.id.navigation);
 		navigation.setOnNavigationItemSelectedListener(this);
+		navigation.setSelectedItemId(R.id.search);
 	}
 
 
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 		Fragment fragment = null;
 		Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
 		switch (item.getItemId()) {
-			case R.id.recents:
+			case R.id.favourite:
 				if (!(currentFragment instanceof RecentFragment))
 					fragment = new RecentFragment();
 				break;
