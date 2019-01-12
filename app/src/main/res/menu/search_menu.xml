@@ -5,7 +5,7 @@
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search"
-        android:title="Search"
+        android:title="Search Name"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always|collapseActionView" />
     <item
@@ -13,4 +13,8 @@
         android:icon="@drawable/ic_menu"
         android:title="Search"
         app:showAsAction="always|collapseActionView" />
+    <item
+        android:id="@+id/add_user"
+        android:title="Add user"
+        app:showAsAction="never" />
 </menu>

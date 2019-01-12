@@ -18,10 +18,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 		super.onCreate(savedInstanceState);
 
 
-		if (!calledAlready) {
-			FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-			calledAlready = true;
-		}
 
 
 		setContentView(R.layout.activity_main);

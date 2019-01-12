@@ -59,7 +59,10 @@ public class UserInfoActivity extends AppCompatActivity {
             location = extras.getString("location");
             department = extras.getString("department");
             phone_1 = extras.getString("phoneno_1");
+            phone_2 = extras.getString("phoneno_2");
+            phone_3 = extras.getString("phoneno_3");
             email_1 = extras.getString("email_1");
+            email_2 = extras.getString("email_2");
             profileUri = extras.getString("profileuri");
             Toast.makeText(this, name + "" + phone_1, Toast.LENGTH_SHORT).show();
             setTitle(name);
@@ -102,7 +105,7 @@ public class UserInfoActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(phone_3))
             phoneno_3Layout.setVisibility(View.GONE);
         else
-            phoneno_2TextView.setText(phone_3);
+            phoneno_3TextView.setText(phone_3);
 
         if (TextUtils.isEmpty(email_2))
             email_2Layout.setVisibility(View.GONE);

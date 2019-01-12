@@ -41,8 +41,9 @@
             android:id="@+id/gridview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:columnWidth="90sp"
+            android:layout_gravity="center"
             android:gravity="center"
+            android:columnWidth="10sp"
             android:numColumns="2"
             android:stretchMode="columnWidth" />
 

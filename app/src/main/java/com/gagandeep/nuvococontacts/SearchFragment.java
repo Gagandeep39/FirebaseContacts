@@ -1,5 +1,6 @@
 package com.gagandeep.nuvococontacts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -99,6 +100,9 @@ public class SearchFragment extends Fragment {
             case R.id.advanced_search:
                 showAdvancedSearchDialogue();
                 break;
+
+            case R.id.add_user:
+                startActivity(new Intent(getActivity(), AddUserActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

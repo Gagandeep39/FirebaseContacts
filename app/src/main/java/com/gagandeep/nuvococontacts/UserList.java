@@ -58,7 +58,10 @@ public class UserList extends ArrayAdapter<User> {
                 intent.putExtra("department", user.getDepartment());
                 intent.putExtra("location", user.getLocation());
                 intent.putExtra("email_1", user.getEmail1());
+                intent.putExtra("email_2", user.getEmail2());
                 intent.putExtra("phoneno_1", user.getPhoneno_1());
+                intent.putExtra("phoneno_2", user.getPhoneno_2());
+                intent.putExtra("phoneno_3", user.getPhoneno_3());
                 intent.putExtra("profileuri", user.getProfileUri());
                 getContext().startActivity(intent);
             }
