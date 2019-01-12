@@ -4,7 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
+import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -40,7 +41,7 @@ public class UserList extends ArrayAdapter<User> {
         imageViewDetails = listViewItem.findViewById(R.id.info);
         profileImageView = listViewItem.findViewById(R.id.imageView);
 
-        User user = userList.get(position);
+        final User user = userList.get(position);
         String profileString = user.getProfileUri();
         if (!TextUtils.isEmpty(profileString)) {
             Bitmap b = stringToBitMap(profileString);
@@ -50,17 +51,35 @@ public class UserList extends ArrayAdapter<User> {
         imageViewDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle b = new Bundle();
                 Toast.makeText(context, "" + userList.get(position).getPhoneno_1(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), UserInfoActivity.class);
-                intent.putExtra("name", userList.get(position).getName());
-                intent.putExtra("designation", userList.get(position).getDesignation());
-                intent.putExtra("department", userList.get(position).getDepartment());
-                intent.putExtra("location", userList.get(position).getLocation());
-                intent.putExtra("email_1", userList.get(position).getEmail1());
-                intent.putExtra("phoneno_1", userList.get(position).getPhoneno_1());
-                intent.putExtra("profileuri", userList.get(position).getProfileUri());
+                intent.putExtra("name", user.getName());
+                intent.putExtra("designation", user.getDesignation());
+                intent.putExtra("department", user.getDepartment());
+                intent.putExtra("location", user.getLocation());
+                intent.putExtra("email_1", user.getEmail1());
+                intent.putExtra("phoneno_1", user.getPhoneno_1());
+                intent.putExtra("profileuri", user.getProfileUri());
                 getContext().startActivity(intent);
+            }
+        });
+
+
+        imageViewPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(user.getPhoneno_2()))
+                    showAlertDialogue(user);
+                else callFunction(user.getPhoneno_1());
+            }
+        });
+
+        imageViewMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(user.getPhoneno_2()))
+                    showEmailAlertDialogue(user);
+                else emailFunction(user.getPhoneno_1());
             }
         });
 
@@ -68,6 +87,95 @@ public class UserList extends ArrayAdapter<User> {
         songTextView.setText(user.getLocation());
         return listViewItem;
     }
+
+    private void showEmailAlertDialogue(final User user) {
+        AlertDialog.Builder dialogueBuilder = new AlertDialog.Builder(getContext());
+        View dialogueView = context.getLayoutInflater().inflate(R.layout.select_phone_dialogue, null);
+        dialogueBuilder.setView(dialogueView);
+
+        TextView email_1TextView, email_2TextView, email_3TextView;
+        email_1TextView = dialogueView.findViewById(R.id.phoneno_1TextView);
+        email_2TextView = dialogueView.findViewById(R.id.phoneno_2TextView);
+        email_3TextView = dialogueView.findViewById(R.id.phoneno_3TextView);
+
+        email_1TextView.setText(user.getEmail1());
+        email_2TextView.setVisibility(View.VISIBLE);
+        email_2TextView.setText(user.getEmail2());
+
+
+        email_1TextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                emailFunction(user.getPhoneno_1());
+            }
+        });
+        email_2TextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                emailFunction(user.getPhoneno_2());
+            }
+        });
+
+        dialogueBuilder.setTitle("Email");
+        final AlertDialog alertDialog = dialogueBuilder.create();
+        alertDialog.show();
+    }
+
+    private void showAlertDialogue(final User user) {
+        AlertDialog.Builder dialogueBuilder = new AlertDialog.Builder(getContext());
+        View dialogueView = context.getLayoutInflater().inflate(R.layout.select_phone_dialogue, null);
+        dialogueBuilder.setView(dialogueView);
+
+        TextView phoneno_1TextView, phoneno_2TextView, phoneno_3TextView;
+        phoneno_1TextView = dialogueView.findViewById(R.id.phoneno_1TextView);
+        phoneno_2TextView = dialogueView.findViewById(R.id.phoneno_2TextView);
+        phoneno_3TextView = dialogueView.findViewById(R.id.phoneno_3TextView);
+
+        phoneno_1TextView.setText(user.getPhoneno_1());
+        phoneno_2TextView.setVisibility(View.VISIBLE);
+        phoneno_2TextView.setText(user.getPhoneno_2());
+
+        if (!TextUtils.isEmpty(user.getPhoneno_3())) {
+            phoneno_3TextView.setVisibility(View.VISIBLE);
+            phoneno_3TextView.setText(user.getPhoneno_3());
+        }
+
+        phoneno_1TextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callFunction(user.getPhoneno_1());
+            }
+        });
+        phoneno_2TextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callFunction(user.getPhoneno_2());
+            }
+        });
+        phoneno_3TextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callFunction(user.getPhoneno_3());
+            }
+        });
+
+        dialogueBuilder.setTitle("Call");
+        final AlertDialog alertDialog = dialogueBuilder.create();
+        alertDialog.show();
+    }
+
+    private void callFunction(String num) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:+91" + num));
+        context.startActivity(intent);
+    }
+
+    private void emailFunction(String email) {
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto", email, null));
+        context.startActivity(Intent.createChooser(emailIntent, "Send email..."));
+    }
+
 
     public Bitmap stringToBitMap(String encodedString) {
         try {

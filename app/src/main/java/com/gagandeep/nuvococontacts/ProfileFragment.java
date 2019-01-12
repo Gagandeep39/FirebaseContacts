@@ -2,6 +2,7 @@ package com.gagandeep.nuvococontacts;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -177,6 +178,7 @@ public class ProfileFragment extends Fragment {
             e.printStackTrace();
         }
         ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
+        bmp = getResizedBitmap(bmp, 800, 600);
         bmp.compress(Bitmap.CompressFormat.JPEG, 0, bYtE);
         bmp.recycle();
         byte[] byteArray = bYtE.toByteArray();
@@ -184,6 +186,21 @@ public class ProfileFragment extends Fragment {
         return imageFile;
     }
 
+    public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+        // RESIZE THE BIT MAP
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        // "RECREATE" THE NEW BITMAP
+        Bitmap resizedBitmap = Bitmap.createBitmap(
+                bm, 0, 0, width, height, matrix, false);
+        return resizedBitmap;
+    }
 
     private void showFileChooser() {
         Intent intent = new Intent();
