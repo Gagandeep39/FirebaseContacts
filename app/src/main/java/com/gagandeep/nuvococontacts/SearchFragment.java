@@ -257,5 +257,7 @@ public class SearchFragment extends Fragment {
     public void onStart() {
         super.onStart();
         databaseReferenceUser.addValueEventListener(valueEventListener);
+
+
     }
 }
