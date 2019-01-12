@@ -224,6 +224,7 @@ public class SearchFragment extends Fragment {
 
     }
 
+
     private void findViews(View v) {
         listView = v.findViewById(R.id.listView);
         clearSearchFAB = v.findViewById(R.id.fab);
