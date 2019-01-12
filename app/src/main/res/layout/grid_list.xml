@@ -36,6 +36,6 @@
             android:padding="8sp"
             android:text="User Name"
             android:textColor="#ffffff"
-            android:textSize="18sp"></TextView>
+            android:textSize="18sp" />
     </FrameLayout>
 </LinearLayout>
