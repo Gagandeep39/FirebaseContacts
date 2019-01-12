@@ -21,25 +21,30 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.gagandeep.nuvococontacts.MainActivity.calledAlready;
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
-
+    public static User currentUser;
     public static final String MY_PREFS_NAME = "user_mobile_number";
     EditText editTextPhone;
     Button button;
     String number;
+    static boolean calledAlready = false;
+    ArrayList<User> userArrayList;
     int counter = 0;
     DatabaseReference databaseReference;
     ValueEventListener view = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             if (dataSnapshot.exists()) {
-                counter++;
+//                counter++;
 //                Toast.makeText(LoginActivity.this, "User Found", Toast.LENGTH_SHORT).show();
-//                for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                for (DataSnapshot issue : dataSnapshot.getChildren()) {
 //                    // do something with the individual "issues"
-//                }
+                    counter++;
+                    currentUser = issue.getValue(User.class);
+//                    Log.e("LOL", "onDataChange: " + user.getPhoneno_1());
+                }
             } else {
             }
         }
@@ -57,11 +62,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         TelephonyManager tMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         String mPhoneNumber;
+        userArrayList = new ArrayList<>();
 
-        if (!calledAlready) {
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-            calledAlready = true;
-        }
+
 
         authenticationCheck();
 
@@ -84,13 +87,13 @@ public class LoginActivity extends AppCompatActivity {
 
         Query query1 = FirebaseDatabase.getInstance().getReference("userinfo")
                 .orderByChild("phoneno_1")
-                .startAt(number);
+                .equalTo(number);
         Query query2 = FirebaseDatabase.getInstance().getReference("userinfo")
                 .orderByChild("phoneno_2")
-                .startAt(number);
+                .equalTo(number);
         Query query3 = FirebaseDatabase.getInstance().getReference("userinfo")
                 .orderByChild("phoneno_3")
-                .startAt(number);
+                .equalTo(number);
 
 
         query1.addListenerForSingleValueEvent(view);
@@ -105,11 +108,13 @@ public class LoginActivity extends AppCompatActivity {
                 if (counter == 0)
                     Toast.makeText(LoginActivity.this, "User Not Registered", Toast.LENGTH_SHORT).show();
                 else {
+                    counter = 0;
                     Toast.makeText(LoginActivity.this, "FOUND", Toast.LENGTH_SHORT).show();
                     SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                     editor.putString("phone", number);
                     editor.apply();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
                 }
             }
         }, 2000);   //2000ms->2s
@@ -119,8 +124,10 @@ public class LoginActivity extends AppCompatActivity {
     private void authenticationCheck() {
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         number = sharedPref.getString("phone", "");
-        if (!TextUtils.isEmpty(number)) {
-            searchFirebase(number);
+        if (!TextUtils.isEmpty(number) && !number.equals("XXXX")) {
+
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
         }
     }
 

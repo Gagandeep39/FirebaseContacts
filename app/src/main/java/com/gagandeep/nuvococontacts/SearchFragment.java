@@ -1,6 +1,7 @@
 package com.gagandeep.nuvococontacts;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -35,6 +36,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
+import static com.gagandeep.nuvococontacts.LoginActivity.MY_PREFS_NAME;
 
 
 public class SearchFragment extends Fragment {
@@ -103,6 +106,14 @@ public class SearchFragment extends Fragment {
 
             case R.id.add_user:
                 startActivity(new Intent(getActivity(), AddUserActivity.class));
+                break;
+
+            case R.id.log_out:
+                SharedPreferences.Editor editor = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                editor.putString("phone", "XXXX");
+                editor.apply();
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                getActivity().finish();
         }
         return super.onOptionsItemSelected(item);
     }

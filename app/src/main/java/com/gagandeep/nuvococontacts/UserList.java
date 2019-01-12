@@ -37,7 +37,7 @@ public class UserList extends ArrayAdapter<User> {
         TextView songTextView = listViewItem.findViewById(R.id.textViewLocation);
         imageViewPhone = listViewItem.findViewById(R.id.phone);
         imageViewMail = listViewItem.findViewById(R.id.email);
-        imageViewWhatsApp = listViewItem.findViewById(R.id.whatsapp);
+        imageViewWhatsApp = listViewItem.findViewById(R.id.message);
         imageViewDetails = listViewItem.findViewById(R.id.info);
         profileImageView = listViewItem.findViewById(R.id.imageView);
 
