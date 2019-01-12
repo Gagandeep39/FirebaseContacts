@@ -1,5 +1,6 @@
 package com.gagandeep.nuvococontacts;
 
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -27,8 +28,8 @@ import java.util.List;
 
 public class UserInfoActivity extends AppCompatActivity {
     String name, designation, department, email_1, email_2, phone_1, phone_2, phone_3, location, profileUri;
-    LinearLayout phoneLayout, messageLayout, whatsappLayout, emailLayout, phoneno_1Layout, phoneno_2Layout, phoneno_3Layout, email_1Layout, email_2Layout;
-    TextView phoneno_1TextView, phoneno_2TextView, phoneno_3TextView, email_1TextView, email_2TextView;
+    LinearLayout phoneLayout, messageLayout, whatsappLayout, emailLayout, phoneno_1Layout, phoneno_2Layout, phoneno_3Layout, email_1Layout, email_2Layout, whatsapp_1Layout, whatsapp_2Layout, whatsapp_3Layout;
+    TextView phoneno_1TextView, phoneno_2TextView, phoneno_3TextView, email_1TextView, email_2TextView, whatsapp_1TextView, whatsapp_2TextView, whatsapp_3TextView;
     ImageView profileImageView;
 
     //Database vriable
@@ -70,7 +71,6 @@ public class UserInfoActivity extends AppCompatActivity {
         findViews();
         onClickListeners();
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
@@ -85,27 +85,44 @@ public class UserInfoActivity extends AppCompatActivity {
         phoneno_3Layout = findViewById(R.id.phoneno_3Layout);
         email_1Layout = findViewById(R.id.email_1Layout);
         email_2Layout = findViewById(R.id.email_2Layout);
+        whatsapp_1Layout = findViewById(R.id.whatsapp_1Layout);
+        whatsapp_2Layout = findViewById(R.id.whatsapp_2Layout);
+        whatsapp_3Layout = findViewById(R.id.whatsapp_3Layout);
         phoneno_1TextView = findViewById(R.id.phoneno_1TextView);
         phoneno_2TextView = findViewById(R.id.phoneno_2TextView);
         phoneno_3TextView = findViewById(R.id.phoneno_3TextView);
         email_1TextView = findViewById(R.id.email_1TextView);
         email_2TextView = findViewById(R.id.email_2TextView);
+        whatsapp_1TextView = findViewById(R.id.whatsapp_1TextView);
+        whatsapp_2TextView = findViewById(R.id.whatsapp_2TextView);
+        whatsapp_3TextView = findViewById(R.id.whatsapp_3TextView);
+
+
+
         profileImageView = findViewById(R.id.profileImageView);
+
         mDbHelper = new FavouriteDbHelper(this);
         itemIds = new ArrayList<>();
 
         phoneno_1TextView.setText(phone_1);
         email_1TextView.setText(email_1);
+        whatsapp_1TextView.setText("WhatsApp to +91" + phone_1);
 
-        if (TextUtils.isEmpty(phone_2))
+        if (TextUtils.isEmpty(phone_2)) {
             phoneno_2Layout.setVisibility(View.GONE);
-        else
+            whatsapp_2Layout.setVisibility(View.GONE);
+        } else {
             phoneno_2TextView.setText(phone_2);
+            whatsapp_2TextView.setText("WhatsApp to +91" + phone_2);
+        }
 
-        if (TextUtils.isEmpty(phone_3))
+        if (TextUtils.isEmpty(phone_3)) {
             phoneno_3Layout.setVisibility(View.GONE);
-        else
+            whatsapp_3Layout.setVisibility(View.GONE);
+        } else {
             phoneno_3TextView.setText(phone_3);
+            whatsapp_3TextView.setText("WhatsApp to +91" + phone_3);
+        }
 
         if (TextUtils.isEmpty(email_2))
             email_2Layout.setVisibility(View.GONE);
@@ -154,23 +171,43 @@ public class UserInfoActivity extends AppCompatActivity {
         whatsappLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                whatsappFunction(v);
             }
         });
 
         emailLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto", email_1, null));
-                startActivity(Intent.createChooser(emailIntent, "Send email..."));
+                emailFunction(v);
             }
         });
     }
 
-    void callFunction(View v) {
+    void emailFunction(View view) {
+
+        String email = "";
+        switch (view.getId()) {
+            case R.id.email_1Layout:
+                email = email_1;
+                break;
+            case R.id.email_2Layout:
+                email = email_2;
+                break;
+            case R.id.emailLayout:
+                email = email_1;
+                break;
+        }
+
+
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto", email, null));
+        startActivity(Intent.createChooser(emailIntent, "Send email..."));
+    }
+
+    void callFunction(View view) {
 
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        switch (v.getId()) {
+        switch (view.getId()) {
             case R.id.phoneno_1Layout:
                 intent.setData(Uri.parse("tel:+91" + phone_1));
                 break;
@@ -187,9 +224,9 @@ public class UserInfoActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    void messageFunction(View v) {
+    void messageFunction(View view) {
         Uri sms_uri = null;
-        switch (v.getId()) {
+        switch (view.getId()) {
             case R.id.message_1ImageView:
                 sms_uri = Uri.parse("smsto:+91" + phone_1);
                 break;
@@ -205,6 +242,7 @@ public class UserInfoActivity extends AppCompatActivity {
 //        sms_intent.putExtra("sms_body", "Good Morning ! how r U ?");
         startActivity(sms_intent);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -331,4 +369,40 @@ public class UserInfoActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+
+    public void whatsappFunction(View view) {
+
+        String smsNumber = ""; //without '+'
+
+        switch (view.getId()) {
+            case R.id.whatsapp_1Layout:
+                smsNumber = phone_1;
+                break;
+            case R.id.whatsapp_2Layout:
+                smsNumber = phone_2;
+                break;
+            case R.id.whatsapp_3Layout:
+                smsNumber = phone_3;
+                break;
+            case R.id.whatsappLayout:
+                smsNumber = phone_1;
+                break;
+        }
+
+        String formattedNumber = "91" + smsNumber;
+        try {
+            Intent sendIntent = new Intent("android.intent.action.MAIN");
+            sendIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.setType("text/plain");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "");
+            sendIntent.putExtra("jid", formattedNumber + "@s.whatsapp.net");
+            sendIntent.setPackage("com.whatsapp");
+            startActivity(sendIntent);
+        } catch (Exception e) {
+            Toast.makeText(UserInfoActivity.this, "Error/n" + e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
 }

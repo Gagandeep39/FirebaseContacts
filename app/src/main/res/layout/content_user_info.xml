@@ -114,7 +114,7 @@
                     android:layout_width="50sp"
                     android:layout_height="50sp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_phone_black" />
+                    android:src="@drawable/ic_whatsapp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -303,5 +303,90 @@
             android:background="#22222222"
             android:padding="16sp" />
 
+        <LinearLayout
+            android:id="@+id/whatsapp_1Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:onClick="whatsappFunction"
+            android:orientation="horizontal"
+            android:padding="16sp">
+
+            <ImageView
+                android:layout_width="0sp"
+                android:layout_height="40sp"
+                android:layout_weight="0.15"
+                android:src="@drawable/ic_whatsapp" />
+
+            <TextView
+                android:id="@+id/whatsapp_1TextView"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.8"
+                android:text="Gagandeep Singh"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/whatsapp_2Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:onClick="whatsappFunction"
+            android:orientation="horizontal"
+            android:padding="16sp">
+
+            <ImageView
+                android:layout_width="0sp"
+                android:layout_height="40sp"
+                android:layout_weight="0.15"
+                android:src="@drawable/ic_whatsapp" />
+
+            <TextView
+                android:id="@+id/whatsapp_2TextView"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.8"
+                android:text="Gagandeep Singh"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/whatsapp_3Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:onClick="whatsappFunction"
+            android:orientation="horizontal"
+            android:padding="16sp">
+
+            <ImageView
+                android:layout_width="0sp"
+                android:layout_height="40sp"
+                android:layout_weight="0.15"
+                android:src="@drawable/ic_whatsapp" />
+
+            <TextView
+                android:id="@+id/whatsapp_3TextView"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.8"
+                android:text="Gagandeep Singh"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2sp"
+            android:background="#22222222"
+            android:padding="16sp" />
     </LinearLayout>
+
+
 </ScrollView>

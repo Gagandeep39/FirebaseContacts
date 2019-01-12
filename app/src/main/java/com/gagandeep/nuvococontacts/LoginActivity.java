@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
@@ -110,7 +111,8 @@ public class LoginActivity extends AppCompatActivity {
                 else {
                     counter = 0;
                     Toast.makeText(LoginActivity.this, "FOUND", Toast.LENGTH_SHORT).show();
-                    SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                    SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("phone", number);
                     editor.apply();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -122,10 +124,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void authenticationCheck() {
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        number = sharedPref.getString("phone", "");
-        if (!TextUtils.isEmpty(number) && !number.equals("XXXX")) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String name = preferences.getString("phone", "");
+        Toast.makeText(this, "" + name, Toast.LENGTH_SHORT).show();
 
+        if (!TextUtils.isEmpty(name) && !name.equals("XXXX")) {
+            Toast.makeText(this, "TEST", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
