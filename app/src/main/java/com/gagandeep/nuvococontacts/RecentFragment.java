@@ -84,15 +84,14 @@ public class RecentFragment extends Fragment {
 //                Toast.makeText(getActivity(), itemIds.size() + " " + userList.size(), Toast.LENGTH_SHORT).show();
                 for (int i = 0; i < userList.size(); i++) {
                     for (int j = 0; j < itemIds.size(); j++) {
-                        if (itemIds.get(j).getName().contains(userList.get(i).getName())) {
-
+                        if (itemIds.get(j).getName().equals(userList.get(i).getName())) {
                             favouriteList.add(userList.get(i));
                         }
                     }
 
                 }
 
-                adapter = new GridViewAdapter(getActivity(), userList);
+                adapter = new GridViewAdapter(getActivity(), favouriteList);
 //                Toast.makeText(getActivity(), "" + adapter.getCount(), Toast.LENGTH_SHORT).show();
                 gridview.setAdapter(adapter);
                 adapter.notifyDataSetChanged();

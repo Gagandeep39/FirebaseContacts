@@ -31,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 		navigation.setSelectedItemId(R.id.search);
 	}
 
+	Fragment recentFragment = null, profileFragment = null, searchFragment = null;
+	int recentCounter = 0, profileCounter = 0, searchCounter = 0;
+
 
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -38,8 +41,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
 		switch (item.getItemId()) {
 			case R.id.favourite:
-                if (!(currentFragment instanceof RecentFragment))
-                    fragment = new RecentFragment();
+				if (!(currentFragment instanceof RecentFragment))
+					fragment = new RecentFragment();
 
 
                 break;
@@ -47,12 +50,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 			case R.id.search:
                 if (!(currentFragment instanceof SearchFragment))
                     fragment = new SearchFragment();
-                break;
+
+				break;
 
 			case R.id.profile:
                 if (!(currentFragment instanceof ProfileFragment))
                     fragment = new ProfileFragment();
-                break;
+
+				break;
 
         }
 

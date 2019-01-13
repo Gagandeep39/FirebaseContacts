@@ -3,6 +3,8 @@ package com.gagandeep.nuvococontacts;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -13,6 +15,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText editTextPhone;
     Button button;
     String number;
+    TextView versionTextView;
     static boolean calledAlready = false;
     ArrayList<User> userArrayList;
     int counter = 0;
@@ -71,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         editTextPhone = findViewById(R.id.editTextPhone);
+        versionTextView = findViewById(R.id.versionTextView);
         button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +86,14 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            String version = pInfo.versionName;
+            versionTextView.setText("Version " + version);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 
