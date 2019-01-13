@@ -113,7 +113,8 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "FOUND", Toast.LENGTH_SHORT).show();
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                     SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("phone", number);
+                    String id = currentUser.getUserId();
+                    editor.putString("userid", id);
                     editor.apply();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
@@ -125,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void authenticationCheck() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String name = preferences.getString("phone", "");
+        String name = preferences.getString("userid", "");
         Toast.makeText(this, "" + name, Toast.LENGTH_SHORT).show();
 
         if (!TextUtils.isEmpty(name) && !name.equals("XXXX")) {

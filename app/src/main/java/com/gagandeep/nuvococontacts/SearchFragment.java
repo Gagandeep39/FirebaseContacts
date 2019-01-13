@@ -110,7 +110,7 @@ public class SearchFragment extends Fragment {
 
             case R.id.log_out:
                 SharedPreferences.Editor editor = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                editor.putString("phone", "XXXX");
+                editor.putString("userid", "XXXX");
                 editor.apply();
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 getActivity().finish();

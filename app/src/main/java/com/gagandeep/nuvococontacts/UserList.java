@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class UserList extends ArrayAdapter<User> {
     private Activity context;
     private List<User> userList;
@@ -30,7 +32,8 @@ public class UserList extends ArrayAdapter<User> {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ImageView imageViewPhone, imageViewMail, imageViewWhatsApp, imageViewDetails, profileImageView;
+        ImageView imageViewPhone, imageViewMail, imageViewWhatsApp, imageViewDetails;
+        CircleImageView profileImageView;
         LayoutInflater inflater = context.getLayoutInflater();
         View listViewItem = inflater.inflate(R.layout.list_layout, null, true);
         TextView nameTextView = listViewItem.findViewById(R.id.textViewName);
@@ -80,7 +83,7 @@ public class UserList extends ArrayAdapter<User> {
         imageViewMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(user.getPhoneno_2()))
+                if (!TextUtils.isEmpty(user.getEmail2()))
                     showEmailAlertDialogue(user);
                 else emailFunction(user.getPhoneno_1());
             }
