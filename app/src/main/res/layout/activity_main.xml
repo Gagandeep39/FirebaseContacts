@@ -7,16 +7,27 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!-- Appbar -->
+
+    <!-- Fragments Container -->
+
+    <include
+        layout="@layout/content_main"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Bottom Navigation View -->
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        app:labelVisibilityMode="labeled"
         android:layout_marginEnd="0dp"
-        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
-        app:itemHorizontalTranslationEnabled="true"
+        android:layout_marginStart="0dp"
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
