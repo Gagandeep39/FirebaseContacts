@@ -204,16 +204,16 @@ public class ProfileFragment extends Fragment {
                         phoneno_3Layout.setVisibility(View.GONE);
 
 
-                    newName = "";
-                    newLocation = "";
-                    newDepartment = "";
-                    newDesignation = "";
-                    newPhone_1 = "";
-                    newPhone_2 = "";
-                    newPhone_3 = "";
-                    newEmail_1 = "";
-                    newEmail_2 = "";
-                    newImageString = "";
+//                    newName = "";
+//                    newLocation = "";
+//                    newDepartment = "";
+//                    newDesignation = "";
+//                    newPhone_1 = "";
+//                    newPhone_2 = "";
+//                    newPhone_3 = "";
+//                    newEmail_1 = "";
+//                    newEmail_2 = "";
+//                    newImageString = "";
                 }
 
             }

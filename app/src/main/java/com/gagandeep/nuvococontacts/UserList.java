@@ -20,6 +20,8 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.gagandeep.nuvococontacts.LoginActivity.applicationUser;
+
 public class UserList extends ArrayAdapter<User> {
     private Activity context;
     private List<User> userList;
@@ -116,7 +118,11 @@ public class UserList extends ArrayAdapter<User> {
             }
         });
 
-        nameTextView.setText(user.getName());
+        String name = user.getUserId();
+        if (name.equals(applicationUser))
+            nameTextView.setText("You");
+        else
+            nameTextView.setText(user.getName());
         songTextView.setText(user.getLocation());
         return listViewItem;
     }

@@ -3,6 +3,8 @@ package com.gagandeep.nuvococontacts;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -13,11 +15,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -26,25 +29,23 @@ import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
     public static User currentUser;
-    public static final String MY_PREFS_NAME = "user_mobile_number";
     EditText editTextPhone;
     Button button;
     String number;
-    static boolean calledAlready = false;
+    TextView versionTextView;
+
+    public static String applicationUser;
+    //firebase auth object
+    private FirebaseAuth mAuth;
     ArrayList<User> userArrayList;
     int counter = 0;
-    DatabaseReference databaseReference;
     ValueEventListener view = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             if (dataSnapshot.exists()) {
-//                counter++;
-//                Toast.makeText(LoginActivity.this, "User Found", Toast.LENGTH_SHORT).show();
                 for (DataSnapshot issue : dataSnapshot.getChildren()) {
-//                    // do something with the individual "issues"
                     counter++;
                     currentUser = issue.getValue(User.class);
-//                    Log.e("LOL", "onDataChange: " + user.getPhoneno_1());
                 }
             } else {
             }
@@ -59,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_login);
         TelephonyManager tMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         String mPhoneNumber;
@@ -71,6 +72,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
         editTextPhone = findViewById(R.id.editTextPhone);
+        versionTextView = findViewById(R.id.versionTextView);
+
         button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +84,14 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            String version = pInfo.versionName;
+            versionTextView.setText("Version " + version);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -110,23 +121,20 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "User Not Registered", Toast.LENGTH_SHORT).show();
                 else {
                     counter = 0;
-//                    Toast.makeText(LoginActivity.this, "FOUND", Toast.LENGTH_SHORT).show();
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    String id = currentUser.getUserId();
-                    editor.putString("userid", id);
-                    editor.apply();
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
+                    Intent intent = new Intent(LoginActivity.this, VerifyPhoneActivity.class);
+                    intent.putExtra("mobile", currentUser.getPhoneno_1());
+                    startActivity(intent);
                 }
             }
         }, 2000);   //2000ms->2s
 
     }
 
+
     private void authenticationCheck() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String name = preferences.getString("userid", "");
+        applicationUser = name;
         Toast.makeText(this, "" + name, Toast.LENGTH_SHORT).show();
 
         if (!TextUtils.isEmpty(name) && !name.equals("XXXX")) {
@@ -135,5 +143,6 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
     }
+
 
 }

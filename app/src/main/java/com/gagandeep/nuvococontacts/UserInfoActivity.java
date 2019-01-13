@@ -182,7 +182,7 @@ public class UserInfoActivity extends AppCompatActivity {
         });
     }
 
-    void emailFunction(View view) {
+    public void emailFunction(View view) {
 
         String email = "";
         switch (view.getId()) {
@@ -203,7 +203,7 @@ public class UserInfoActivity extends AppCompatActivity {
         startActivity(Intent.createChooser(emailIntent, "Send email..."));
     }
 
-    void callFunction(View view) {
+    public void callFunction(View view) {
 
         Intent intent = new Intent(Intent.ACTION_DIAL);
         switch (view.getId()) {
@@ -222,7 +222,7 @@ public class UserInfoActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    void messageFunction(View view) {
+    public void messageFunction(View view) {
         Uri sms_uri = null;
         switch (view.getId()) {
             case R.id.message_1ImageView:
