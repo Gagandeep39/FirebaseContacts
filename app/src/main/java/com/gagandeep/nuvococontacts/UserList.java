@@ -80,7 +80,7 @@ public class UserList extends ArrayAdapter<User> {
         imageViewMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(user.getPhoneno_2()))
+                if (!TextUtils.isEmpty(user.getEmail2()))
                     showEmailAlertDialogue(user);
                 else emailFunction(user.getPhoneno_1());
             }
