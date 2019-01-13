@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +81,7 @@ public class RecentFragment extends Fragment {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getActivity(), itemIds.size() + " " + userList.size(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), itemIds.size() + " " + userList.size(), Toast.LENGTH_SHORT).show();
                 for (int i = 0; i < userList.size(); i++) {
                     for (int j = 0; j < itemIds.size(); j++) {
                         if (itemIds.get(j).getName().contains(userList.get(i).getName())) {
@@ -94,7 +93,7 @@ public class RecentFragment extends Fragment {
                 }
 
                 adapter = new GridViewAdapter(getActivity(), userList);
-                Toast.makeText(getActivity(), "" + adapter.getCount(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "" + adapter.getCount(), Toast.LENGTH_SHORT).show();
                 gridview.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
 

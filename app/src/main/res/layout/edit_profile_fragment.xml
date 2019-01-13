@@ -18,10 +18,11 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:onClick="showFileChooser" />
+            android:clickable="true" />
 
         <TextView
+            android:padding="8sp"
+            android:visibility="gone"
             android:id="@+id/addImageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

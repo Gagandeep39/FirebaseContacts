@@ -120,7 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Phone" />
+                    android:text="WhatsApp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -250,6 +250,7 @@
         <LinearLayout
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
+            android:onClick="emailFunction"
             android:id="@+id/email_1Layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -273,6 +274,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:onClick="emailFunction"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:id="@+id/email_2Layout"

@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:orientation="horizontal"
+    android:id="@+id/rootLayout"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
     android:layout_height="wrap_content">
 
 
@@ -62,12 +65,12 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutLocation">
         <FrameLayout
             android:layout_width="wrap_content"
-            android:clickable="true"
-            android:background="?attr/selectableItemBackground"
             android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/phone"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_phone_black" />
@@ -78,7 +81,7 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:clickable="true"
-            android:background="?attr/selectableItemBackground"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_height="wrap_content">
 
 
@@ -92,7 +95,7 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:clickable="true"
-            android:background="?attr/selectableItemBackground"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_height="wrap_content">
 
         <ImageView
@@ -105,7 +108,7 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:clickable="true"
-            android:background="?attr/selectableItemBackground"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/info"

@@ -3,6 +3,7 @@ package com.gagandeep.nuvococontacts;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -23,7 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -36,8 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
-import static android.content.Context.MODE_PRIVATE;
-import static com.gagandeep.nuvococontacts.LoginActivity.MY_PREFS_NAME;
 
 
 public class SearchFragment extends Fragment {
@@ -109,8 +107,9 @@ public class SearchFragment extends Fragment {
                 break;
 
             case R.id.log_out:
-                SharedPreferences.Editor editor = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                editor.putString("userid", "XXXX");
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("userid", "");
                 editor.apply();
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 getActivity().finish();
@@ -127,7 +126,6 @@ public class SearchFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchViewAndroidActionBar.clearFocus();
-                Toast.makeText(getActivity(), ""  + userList.size(), Toast.LENGTH_SHORT).show();
                 for (int i=0; i<userList.size(); i++){
                     if (userList.get(i).getName().toLowerCase().contains(query.toLowerCase()))
                         sortedArrayList.add(userList.get(i));
@@ -139,6 +137,7 @@ public class SearchFragment extends Fragment {
 
                 return true;
             }
+
 
             @Override
             public boolean onQueryTextChange(String newText) {

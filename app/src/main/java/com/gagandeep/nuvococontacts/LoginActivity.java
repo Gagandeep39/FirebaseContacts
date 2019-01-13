@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "User Not Registered", Toast.LENGTH_SHORT).show();
                 else {
                     counter = 0;
-                    Toast.makeText(LoginActivity.this, "FOUND", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(LoginActivity.this, "FOUND", Toast.LENGTH_SHORT).show();
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                     SharedPreferences.Editor editor = preferences.edit();
                     String id = currentUser.getUserId();

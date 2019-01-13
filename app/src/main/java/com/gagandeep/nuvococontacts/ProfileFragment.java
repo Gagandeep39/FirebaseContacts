@@ -68,7 +68,6 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
     }
 
     private void findViews(View v) {
@@ -91,6 +90,7 @@ public class ProfileFragment extends Fragment {
         email_2Layout = v.findViewById(R.id.email_2EditTextLayout);
         addImageTextView = v.findViewById(R.id.addImageTextView);
         fab = v.findViewById(R.id.fab);
+        getActivity().setTitle("YOUR_TITLE");
 
 
 
@@ -109,7 +109,7 @@ public class ProfileFragment extends Fragment {
         ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
         bmp = getResizedBitmap(bmp, 800, 600);
         bmp.compress(Bitmap.CompressFormat.JPEG, 0, bYtE);
-        bmp.recycle();
+//        bmp.recycle();
         byte[] byteArray = bYtE.toByteArray();
         String imageFile = Base64.encodeToString(byteArray, Base64.DEFAULT);
         return imageFile;
@@ -173,7 +173,7 @@ public class ProfileFragment extends Fragment {
                 if (userList != null) {
                     for (int i = 0; i < userList.size(); i++) {
                         if (userid.equals(userList.get(i).getUserId())) {
-                            Toast.makeText(getActivity(), "FOUND", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getActivity(), "FOUND", Toast.LENGTH_SHORT).show();
                             currentUser = userList.get(i);
                             fillData();
                         }
@@ -194,6 +194,26 @@ public class ProfileFragment extends Fragment {
                     fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_done));
                 } else {
                     updateData();
+                    fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_edit));
+                    addImageTextView.setVisibility(View.GONE);
+                    if (TextUtils.isEmpty(newEmail_2))
+                        email_2Layout.setVisibility(View.GONE);
+                    if (TextUtils.isEmpty(newPhone_2))
+                        phoneno_2Layout.setVisibility(View.GONE);
+                    if (TextUtils.isEmpty(newPhone_3))
+                        phoneno_3Layout.setVisibility(View.GONE);
+
+
+                    newName = "";
+                    newLocation = "";
+                    newDepartment = "";
+                    newDesignation = "";
+                    newPhone_1 = "";
+                    newPhone_2 = "";
+                    newPhone_3 = "";
+                    newEmail_1 = "";
+                    newEmail_2 = "";
+                    newImageString = "";
                 }
 
             }
@@ -239,7 +259,8 @@ public class ProfileFragment extends Fragment {
                 dataSnapshot.getRef().child("location").setValue(newLocation);
                 dataSnapshot.getRef().child("department").setValue(newDepartment);
                 dataSnapshot.getRef().child("designation").setValue(newDesignation);
-                dataSnapshot.getRef().child("profileUri").setValue(newImageString);
+                if (filePath != null)
+                    dataSnapshot.getRef().child("profileUri").setValue(newImageString);
                 Toast.makeText(getActivity(), "Updated Successfully", Toast.LENGTH_SHORT).show();
                 disableKeyListeners();
 
@@ -279,6 +300,7 @@ public class ProfileFragment extends Fragment {
         phoneno_2Layout.setVisibility(View.VISIBLE);
         phoneno_3Layout.setVisibility(View.VISIBLE);
         email_2Layout.setVisibility(View.VISIBLE);
+        addImageTextView.setVisibility(View.VISIBLE);
 
         editTextName.setKeyListener(nameKeyListener);
         editTextDepartment.setKeyListener(departmentKeyListener);

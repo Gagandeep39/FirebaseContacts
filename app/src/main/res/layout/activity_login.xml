@@ -5,14 +5,16 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:gravity="center"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
     <EditText
+        android:hint="Enter Phone Number"
         android:id="@+id/editTextPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Phone Number"
+        android:padding="24sp"
         android:textSize="18sp" />
 
     <Button

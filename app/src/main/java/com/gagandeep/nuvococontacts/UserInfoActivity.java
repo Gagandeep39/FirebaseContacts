@@ -65,7 +65,6 @@ public class UserInfoActivity extends AppCompatActivity {
             email_1 = extras.getString("email_1");
             email_2 = extras.getString("email_2");
             profileUri = extras.getString("profileuri");
-            Toast.makeText(this, name + "" + phone_1, Toast.LENGTH_SHORT).show();
             setTitle(name);
         }
         findViews();
@@ -213,7 +212,6 @@ public class UserInfoActivity extends AppCompatActivity {
                 break;
             case R.id.phoneno_2Layout:
                 intent.setData(Uri.parse("tel:+91" + phone_2));
-                Toast.makeText(this, "" + phone_2, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.phoneno_3Layout:
 //                intent.setData(Uri.parse("tel:+91" + phone_3));
