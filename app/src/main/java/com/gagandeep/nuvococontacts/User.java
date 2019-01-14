@@ -19,6 +19,7 @@ public class User {
     private String adminRights;
     private String deskNumber;
     private String emergencyNumber;
+    private String sapId;
 
 
     private String profileUri;
@@ -39,7 +40,8 @@ public class User {
             , String profileCacheUri
             , String employeeId
             , String adminRights
-            , String deskNumber) {
+            , String deskNumber
+            , String sapId) {
         this.userId = userId;
         this.firstName = firstName;
         this.designation = designation;
@@ -57,10 +59,15 @@ public class User {
         this.adminRights = adminRights;
         this.deskNumber = deskNumber;
         this.lastName = lastName;
+        this.sapId = sapId;
     }
 
     User() {
 
+    }
+
+    public String getSapId() {
+        return sapId;
     }
 
     public String getFirstName() {

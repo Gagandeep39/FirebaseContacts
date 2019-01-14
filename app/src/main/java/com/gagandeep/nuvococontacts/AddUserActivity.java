@@ -6,6 +6,7 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,6 +31,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -47,11 +50,12 @@ public class AddUserActivity extends AppCompatActivity {
     StorageReference storageRef = storage.getReference();
     Uri filePath;
     FrameLayout frameLayout;
-    TextInputEditText editTextFirstName, editTextLastName, editTextDesignation, editTextLocation, editTextDepartment, editTextEmail, editTextEmail2, editTextPhoneNo1, editTextPhoneNo2, editTextPhoneNo3, editTextEmployeeId, editTextDeskNumber, editTextEmergencyNumber;
+    TextInputEditText editTextFirstName, editTextLastName, editTextDesignation, editTextLocation, editTextDepartment, editTextEmail, editTextEmail2, editTextPhoneNo1, editTextPhoneNo2, editTextPhoneNo3, editTextEmployeeId, editTextDeskNumber, editTextEmergencyNumber, editTextSapId;
     String cacheUri;
     AppCompatSpinner adminRightsSpinner;
     String adminRights = "0";  //0 for no , 1 for yes
-    String id, firstName, lastName, location, department, designation, deskNo, phoneno1, phoneno2, phoneno3, emergencyNumber, email, email2, employeeId, profileUri, profileCacheUri;
+    String id, firstName, lastName, location, department, designation, deskNo, phoneno1, phoneno2, phoneno3, emergencyNumber, email, email2, employeeId, profileUri, profileCacheUri, sapId;
+    ProgressBar uploadProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +118,8 @@ public class AddUserActivity extends AppCompatActivity {
         editTextLastName = findViewById(R.id.editTextLastName);
         editTextDeskNumber = findViewById(R.id.editTextDeskNumber);
         frameLayout = findViewById(R.id.frameLayout);
+        editTextSapId = findViewById(R.id.editTextSapId);
+        uploadProgressBar = findViewById(R.id.uploadProgressBar);
 
         chooseImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +129,7 @@ public class AddUserActivity extends AppCompatActivity {
         });
 
 
+        id = databaseReferenceUser.push().getKey();
     }
 
     private void saveDataToServer() {
@@ -139,6 +146,8 @@ public class AddUserActivity extends AppCompatActivity {
         employeeId = editTextEmployeeId.getText().toString();
         emergencyNumber = editTextEmergencyNumber.getText().toString();
         lastName = editTextLastName.getText().toString();
+        sapId = editTextSapId.getText().toString();
+
 
 
         if (TextUtils.isEmpty(employeeId))
@@ -161,20 +170,27 @@ public class AddUserActivity extends AppCompatActivity {
             editTextEmergencyNumber.setError("Enter Emergency no");
         else if (TextUtils.isEmpty(deskNo))
             editTextDeskNumber.setError("Enter Desk No");
+        else if (TextUtils.isEmpty(sapId))
+            editTextSapId.setError("Enter Sap ID");
         else {
-            id = databaseReferenceUser.push().getKey();
 //             (String userId, String firstName, String lastName, String designation, String location, String email1, String email2, String phoneno_1
 //                    , String phoneno_2, String phoneno_3, String emergencyNumber, String department, String profileUri, String profileCacheUri, String employeeId, String adminRights, String deskNumber)
 
-            if (filePath != null) {
 
-                profileCacheUri = uploadCachedImage(id);
-                profileUri = uploadImage(id);
-            }
-            User user = new User(id, firstName, lastName, designation, location, email, email2, phoneno1, phoneno2, phoneno3, emergencyNumber, department, profileUri, profileCacheUri, employeeId, adminRights, deskNo);
-            databaseReferenceUser.child(id).setValue(user);
-            Toast.makeText(this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-            finish();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    User user = new User(id, firstName, lastName, designation, location, email, email2, phoneno1, phoneno2, phoneno3, emergencyNumber, department, profileUri, profileCacheUri, employeeId, adminRights, deskNo, sapId);
+                    databaseReferenceUser.child(id).setValue(user);
+                    if (TextUtils.isEmpty(profileUri))
+                        Toast.makeText(AddUserActivity.this, "Profile Picture could not be Uploaded\nOther data inserted successfully", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(AddUserActivity.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }, 2000);   //2000ms->2s
+
 
         }
 
@@ -194,6 +210,8 @@ public class AddUserActivity extends AppCompatActivity {
                 profileImageView.setVisibility(View.VISIBLE);
                 frameLayout.setVisibility(View.GONE);
                 profileImageView.setImageBitmap(bitmap);
+                profileCacheUri = uploadCachedImage(id);
+                profileUri = uploadImage(id);
                 Toast.makeText(this, "Displayed Image", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -242,6 +260,7 @@ public class AddUserActivity extends AppCompatActivity {
     String uploadImage(String id) {
         profileImageView.setDrawingCacheEnabled(true);
         profileImageView.buildDrawingCache();
+        uploadProgressBar.setVisibility(View.VISIBLE);
 
         final StorageReference nameReference = storageRef.child(id + ".jpg");
         Bitmap bitmap = ((BitmapDrawable) profileImageView.getDrawable()).getBitmap();
@@ -269,10 +288,23 @@ public class AddUserActivity extends AppCompatActivity {
         }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                Log.e(TAG, "onComplete: " + task.getResult().getMetadata().getPath());
+                uploadProgressBar.setVisibility(View.GONE);
 
             }
         });
+
+        uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                System.out.println("Upload is " + progress + "% done");
+                int currentprogress = (int) progress;
+                uploadProgressBar.setProgress(currentprogress);
+            }
+        });
+
+
+
 
         return profileUri;
     }

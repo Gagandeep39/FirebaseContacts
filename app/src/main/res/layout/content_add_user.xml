@@ -32,11 +32,18 @@
         <ImageView
             android:id="@+id/profileImageView"
             android:layout_width="match_parent"
-            android:layout_height="260dp"
+            android:layout_height="250dp"
             android:layout_gravity="center"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:scaleType="centerCrop"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/uploadProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:visibility="gone" />
 
         <LinearLayout
@@ -52,6 +59,7 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editTextEmployeeId"
                     android:layout_width="match_parent"
+                    android:inputType="number"
                     android:layout_height="wrap_content"
                     android:hint="Employee ID" />
             </android.support.design.widget.TextInputLayout>
@@ -64,6 +72,7 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editTextName"
                     android:layout_width="match_parent"
+                    android:inputType="textPersonName"
                     android:layout_height="wrap_content"
                     android:hint="First Name" />
             </android.support.design.widget.TextInputLayout>
@@ -76,6 +85,7 @@
                     android:id="@+id/editTextLastName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
                     android:hint="Last Name" />
             </android.support.design.widget.TextInputLayout>
 
@@ -87,6 +97,7 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editTextDepartment"
                     android:layout_width="match_parent"
+                    android:inputType="text"
                     android:layout_height="wrap_content"
                     android:hint="Department" />
             </android.support.design.widget.TextInputLayout>
@@ -98,6 +109,7 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editTextLocation"
                     android:layout_width="match_parent"
+                    android:inputType="text"
                     android:layout_height="wrap_content"
                     android:hint="Location" />
             </android.support.design.widget.TextInputLayout>
@@ -109,6 +121,7 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editTextDesignation"
                     android:layout_width="match_parent"
+                    android:inputType="text"
                     android:layout_height="wrap_content"
                     android:hint="Designation" />
             </android.support.design.widget.TextInputLayout>
@@ -120,6 +133,7 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editTextDeskNumber"
                     android:layout_width="match_parent"
+                    android:inputType="number"
                     android:layout_height="wrap_content"
                     android:hint="Desk Number" />
             </android.support.design.widget.TextInputLayout>
@@ -129,8 +143,21 @@
                 android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/editTextSapId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Sap ID"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputEditText
                     android:id="@+id/editTextEmailId"
                     android:layout_width="match_parent"
+                    android:inputType="textEmailAddress"
                     android:layout_height="wrap_content"
                     android:hint="Email ID 1" />
             </android.support.design.widget.TextInputLayout>
@@ -142,6 +169,7 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editTextEmailId2"
                     android:layout_width="match_parent"
+                    android:inputType="textEmailAddress"
                     android:layout_height="wrap_content"
                     android:hint="Email ID 2" />
             </android.support.design.widget.TextInputLayout>
@@ -153,6 +181,7 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editTextPhoneNo1"
                     android:layout_width="match_parent"
+                    android:inputType="phone"
                     android:layout_height="wrap_content"
                     android:hint="Phone Number 1" />
             </android.support.design.widget.TextInputLayout>
@@ -164,6 +193,7 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editTextPhoneNo2"
                     android:layout_width="match_parent"
+                    android:inputType="phone"
                     android:layout_height="wrap_content"
                     android:hint="Phone Number 2" />
             </android.support.design.widget.TextInputLayout>
@@ -175,6 +205,7 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editTextPhoneNo3"
                     android:layout_width="match_parent"
+                    android:inputType="phone"
                     android:layout_height="wrap_content"
                     android:hint="Phone Number 3" />
             </android.support.design.widget.TextInputLayout>
@@ -186,14 +217,27 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editTextEmergencyNumber"
                     android:layout_width="match_parent"
+                    android:inputType="phone"
                     android:layout_height="wrap_content"
                     android:hint="Emergency Number" />
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/adminRightsSpinner"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Give Admin Rights" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/adminRightsSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

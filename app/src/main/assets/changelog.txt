@@ -1,3 +1,9 @@
+v0.48
+*Added Sap ID to user list
+*Specified Input type for Values in AddUserActivity
+*Fixed Image URI not saving in Database in userinfoactivity
+*Added a progressbar for android in userinfoactivity
+*Data now saves after 2 seconds of clicking save in userinfoactivity
 v0.47
 *Image is now stored at firebase storage (1 as cache and 1 as original)
 *Added new info in AddUserActivity(desknumber, employeeid, emergencynumber, lastname, profileUri, profilecacheUri)
