@@ -4,7 +4,8 @@ public class User {
 
 
     private String userId;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String designation;
     private String location;
     private String email1;
@@ -12,12 +13,35 @@ public class User {
     private String phoneno_1;
     private String phoneno_2;
     private String phoneno_3;
+    private String profileCacheUri;
+    private String department;
+    private String employeeId;
+    private String adminRights;
+    private String deskNumber;
+    private String emergencyNumber;
+
 
     private String profileUri;
 
-    public User(String userId, String name, String designation, String location, String email1, String email2, String phoneno_1, String phoneno_2, String phoneno_3, String department, String profileUri) {
+    public User(String userId
+            , String firstName
+            , String lastName
+            , String designation
+            , String location
+            , String email1
+            , String email2
+            , String phoneno_1
+            , String phoneno_2
+            , String phoneno_3
+            , String emergencyNumber
+            , String department
+            , String profileUri
+            , String profileCacheUri
+            , String employeeId
+            , String adminRights
+            , String deskNumber) {
         this.userId = userId;
-        this.name = name;
+        this.firstName = firstName;
         this.designation = designation;
         this.location = location;
         this.email1 = email1;
@@ -27,16 +51,49 @@ public class User {
         this.phoneno_3 = phoneno_3;
         this.department = department;
         this.profileUri = profileUri;
+        this.profileCacheUri = profileCacheUri;
+        this.emergencyNumber = emergencyNumber;
+        this.employeeId = employeeId;
+        this.adminRights = adminRights;
+        this.deskNumber = deskNumber;
+        this.lastName = lastName;
     }
 
-    private String department;
+    User() {
+
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmployeeId() {
+        return employeeId;
+    }
+
+    public String getAdminRights() {
+        return adminRights;
+    }
+
+    public String getDeskNumber() {
+        return deskNumber;
+    }
+
+    public String getEmergencyNumber() {
+        return emergencyNumber;
+    }
 
     public String getProfileUri() {
         return profileUri;
     }
 
-    User() {
 
+    public String getProfileCacheUri() {
+        return profileCacheUri;
     }
 
     public String getDepartment() {
@@ -47,9 +104,6 @@ public class User {
         return userId;
     }
 
-    public String getName() {
-        return name;
-    }
 
     public String getDesignation() {
         return designation;

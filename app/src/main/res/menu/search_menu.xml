@@ -21,4 +21,8 @@
         android:id="@+id/log_out"
         android:title="Log Out"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/changelog"
+        android:title="Changelog"
+        app:showAsAction="never" />
 </menu>

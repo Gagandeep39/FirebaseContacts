@@ -41,7 +41,7 @@ public class GridViewAdapter extends ArrayAdapter<User> {
             public void onClick(View v) {
                 Toast.makeText(context, "" + user.getPhoneno_1(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), UserInfoActivity.class);
-                intent.putExtra("name", user.getName());
+                intent.putExtra("name", user.getFirstName());
                 intent.putExtra("designation", user.getDesignation());
                 intent.putExtra("department", user.getDepartment());
                 intent.putExtra("location", user.getLocation());
@@ -52,7 +52,7 @@ public class GridViewAdapter extends ArrayAdapter<User> {
             }
         });
         String imageString = user.getProfileUri();
-        nameTextView.setText(user.getName());
+        nameTextView.setText(user.getFirstName());
         if (!TextUtils.isEmpty(imageString))
             profileImageView.setImageBitmap(stringToBitMap(imageString));
         return listViewItem;

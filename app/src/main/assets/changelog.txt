@@ -1,0 +1,8 @@
+v0.47
+*Image is now stored at firebase storage (1 as cache and 1 as original)
+*Added new info in AddUserActivity(desknumber, employeeid, emergencynumber, lastname, profileUri, profilecacheUri)
+v0.46
+Changed MainActivity Layout to Run all 3 fragments to run parallely and multiple clicks doesnt crash(worked because collapsing toolbar removed, somehow Collapsingtoolbar was causing issues)
+v0.45
+*Implemented Changelog Activity
+*Fixed Add User crash

@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
@@ -45,7 +44,6 @@ public class SearchFragment extends Fragment {
     DatabaseReference databaseReferenceUser;
     public static List<User> userList;
     ListView listView;
-    CollapsingToolbarLayout mCollapsingToolbarLayout;
     UserList adapter;
     ArrayList<User> sortedArrayList, backupArrayList;
     FloatingActionButton clearSearchFAB;
@@ -59,6 +57,7 @@ public class SearchFragment extends Fragment {
             userList.clear();
             for (DataSnapshot artistSnapShot : dataSnapshot.getChildren()) {
                 User user = artistSnapShot.getValue(User.class);
+                Log.e(TAG, "onDataChange: " + user.getFirstName());
                 userList.add(user);
 
             }
@@ -113,6 +112,11 @@ public class SearchFragment extends Fragment {
                 editor.apply();
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 getActivity().finish();
+                break;
+
+            case R.id.changelog:
+                startActivity(new Intent(getActivity(), ChangelogActivity.class));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -127,7 +131,7 @@ public class SearchFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 searchViewAndroidActionBar.clearFocus();
                 for (int i=0; i<userList.size(); i++){
-                    if (userList.get(i).getName().toLowerCase().contains(query.toLowerCase()))
+                    if (userList.get(i).getFirstName().toLowerCase().contains(query.toLowerCase()))
                         sortedArrayList.add(userList.get(i));
                 }
 
@@ -178,7 +182,7 @@ public class SearchFragment extends Fragment {
                 Log.i(TAG, "onClick: " + sortedArrayList.size());
                 for (int i = 0; i < sortedArrayList.size(); i++) {
                     if (!TextUtils.isEmpty(name)) {
-                        if (!sortedArrayList.get(i).getName().toLowerCase().contains(name)) {
+                        if (!sortedArrayList.get(i).getFirstName().toLowerCase().contains(name)) {
                             sortedArrayList.remove(i);
                             i--;
                             continue;
@@ -239,8 +243,6 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        mCollapsingToolbarLayout = v.findViewById(R.id.collapsing);
-        mCollapsingToolbarLayout.setTitleEnabled(false);
 
         backupArrayList = new ArrayList<>();
         userList = new ArrayList<>();

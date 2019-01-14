@@ -315,7 +315,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void fillData() {
-        name = currentUser.getName();
+        name = currentUser.getFirstName();
         phone_1 = currentUser.getPhoneno_1();
         phone_2 = currentUser.getPhoneno_2();
         phone_3 = currentUser.getPhoneno_3();

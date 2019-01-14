@@ -59,7 +59,7 @@ public class UserList extends ArrayAdapter<User> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), UserInfoActivity.class);
-                intent.putExtra("name", user.getName());
+                intent.putExtra("name", user.getFirstName());
                 intent.putExtra("designation", user.getDesignation());
                 intent.putExtra("department", user.getDepartment());
                 intent.putExtra("location", user.getLocation());
@@ -104,7 +104,7 @@ public class UserList extends ArrayAdapter<User> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), UserInfoActivity.class);
-                intent.putExtra("name", user.getName());
+                intent.putExtra("name", user.getFirstName());
                 intent.putExtra("designation", user.getDesignation());
                 intent.putExtra("department", user.getDepartment());
                 intent.putExtra("location", user.getLocation());
@@ -122,7 +122,7 @@ public class UserList extends ArrayAdapter<User> {
         if (name.equals(applicationUser))
             nameTextView.setText("You");
         else
-            nameTextView.setText(user.getName());
+            nameTextView.setText(user.getFirstName());
         songTextView.setText(user.getLocation());
         return listViewItem;
     }
