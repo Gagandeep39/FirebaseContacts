@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     Button button;
     String number;
     TextView versionTextView;
+    public static boolean isAdmin = false;
 
     public static String applicationUser;
     //firebase auth object

@@ -1,9 +1,12 @@
+v0.49
+*Added Picasso Library for listview
+*Intent to UserInfoActivity now sends all data
 v0.48
 *Added Sap ID to user list
 *Specified Input type for Values in AddUserActivity
-*Fixed Image URI not saving in Database in userinfoactivity
-*Added a progressbar for android in userinfoactivity
-*Data now saves after 2 seconds of clicking save in userinfoactivity
+*Fixed Image URI not saving in Database in adduseractivity
+*Added a progressbar for android in adduseractivity
+*Data now saves after 2 seconds of clicking save in adduseractivity
 v0.47
 *Image is now stored at firebase storage (1 as cache and 1 as original)
 *Added new info in AddUserActivity(desknumber, employeeid, emergencynumber, lastname, profileUri, profilecacheUri)
