@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:scaleType="centerCrop"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true" />
 
@@ -31,6 +32,16 @@
             android:text="Add Image" />
 
     </android.support.design.widget.CoordinatorLayout>
+
+    <TextView
+        android:id="@+id/uploadInfoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:clickable="true"
+        android:padding="8sp"
+        android:text="Add Image"
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/progressBarUploadImage"
@@ -53,6 +64,8 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextEmployeeId"
                 android:layout_width="match_parent"
+                android:inputType="number"
+                android:nextFocusDown="@id/editTextSapId"
                 android:layout_height="wrap_content"
                 android:hint="Employee ID" />
         </android.support.design.widget.TextInputLayout>
@@ -63,6 +76,8 @@
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextSapId"
+                android:inputType="number"
+                android:nextFocusDown="@id/editTextFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="SAP ID" />
@@ -76,6 +91,8 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextFirstName"
                 android:layout_width="match_parent"
+                android:inputType="textPersonName"
+                android:nextFocusDown="@id/editTextLastName"
                 android:layout_height="wrap_content"
                 android:hint="First Name" />
         </android.support.design.widget.TextInputLayout>
@@ -87,6 +104,8 @@
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextLastName"
+                android:inputType="textPersonName"
+                android:nextFocusDown="@id/editTextDepartment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Last Name" />
@@ -100,7 +119,9 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextDepartment"
                 android:layout_width="match_parent"
+                android:inputType="textPersonName"
                 android:layout_height="wrap_content"
+                android:nextFocusDown="@id/editTextLocation"
                 android:hint="Department" />
         </android.support.design.widget.TextInputLayout>
 
@@ -110,6 +131,8 @@
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextLocation"
+                android:inputType="textPersonName"
+                android:nextFocusDown="@id/editTextDesignation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Location" />
@@ -122,6 +145,8 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextDesignation"
                 android:layout_width="match_parent"
+                android:inputType="textPersonName"
+                android:nextFocusDown="@id/editTextDeskNumber"
                 android:layout_height="wrap_content"
                 android:hint="Designation" />
         </android.support.design.widget.TextInputLayout>
@@ -133,6 +158,8 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextDeskNumber"
                 android:layout_width="match_parent"
+                android:inputType="number"
+                android:nextFocusDown="@id/editTextEmailId"
                 android:layout_height="wrap_content"
                 android:hint="Desk Number" />
         </android.support.design.widget.TextInputLayout>
@@ -144,6 +171,8 @@
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextEmailId"
+                android:inputType="textEmailAddress"
+                android:nextFocusDown="@id/editTextEmailId2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email ID 1" />
@@ -157,8 +186,10 @@
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextEmailId2"
+                android:inputType="textEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nextFocusDown="@id/editTextPhoneNo1"
                 android:hint="Email ID 2" />
         </android.support.design.widget.TextInputLayout>
 
@@ -170,6 +201,8 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextPhoneNo1"
                 android:layout_width="match_parent"
+                android:inputType="phone"
+                android:nextFocusDown="@id/editTextPhoneNo2"
                 android:layout_height="wrap_content"
                 android:hint="Phone Number 1" />
         </android.support.design.widget.TextInputLayout>
@@ -183,6 +216,9 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextPhoneNo2"
                 android:layout_width="match_parent"
+                android:inputType="phone"
+                android:nextFocusDown="@id/editTextPhoneNo3"
+                android:nextFocusForward="@id/editTextPhoneNo3"
                 android:layout_height="wrap_content"
                 android:hint="Phone Number 2" />
         </android.support.design.widget.TextInputLayout>
@@ -195,7 +231,10 @@
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextPhoneNo3"
+                android:inputType="phone"
+                android:nextFocusDown="@id/editTextEmergencyPhone"
                 android:layout_width="match_parent"
+                android:nextFocusForward="@id/editTextEmergencyPhone"
                 android:layout_height="wrap_content"
                 android:hint="Phone Number 3" />
         </android.support.design.widget.TextInputLayout>
@@ -208,6 +247,7 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextEmergencyPhone"
                 android:layout_width="match_parent"
+                android:inputType="phone"
                 android:layout_height="wrap_content"
                 android:hint="Emergency Phone Number" />
         </android.support.design.widget.TextInputLayout>

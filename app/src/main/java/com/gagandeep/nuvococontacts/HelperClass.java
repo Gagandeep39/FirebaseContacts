@@ -8,25 +8,30 @@ import android.widget.Toast;
 
 public class HelperClass {
 
+//Class to keep some commonly used functions
 
+    //    call Intent
     public static void initiateCallTo(String number, Context context) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:+91" + number));
         context.startActivity(intent);
     }
 
+    //Message Intent
     public static void sendMessageTo(String number, Context context) {
         Uri sms_uri = Uri.parse("smsto:+91" + number);
         Intent sms_intent = new Intent(Intent.ACTION_SENDTO, sms_uri);
         context.startActivity(sms_intent);
     }
 
+    //Mail Intent
     public static void sendMailTo(String emailId, Context context) {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                 "mailto", emailId, null));
         context.startActivity(Intent.createChooser(emailIntent, "Send email..."));
     }
 
+    //WhatsApp Intent
     public static void sendWhatsAppMessageTo(String number, Context context) {
         String formattedNumber = "91" + number;
         try {

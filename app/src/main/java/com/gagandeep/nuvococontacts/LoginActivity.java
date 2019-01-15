@@ -6,14 +6,13 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,15 +25,19 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_1;
+import static com.gagandeep.nuvococontacts.Constants.FIREBASE_USERINFO;
+import static com.gagandeep.nuvococontacts.Constants.PACKAGE_NAME;
+
 public class LoginActivity extends AppCompatActivity {
     public static User currentUser;
     EditText editTextPhone;
     Button button;
     String number;
     TextView versionTextView;
-    public static boolean isAdmin = true;
+    public static boolean isAdmin = false;
+    ProgressBar progressBar;
 
-    public static String applicationUser;
     //firebase auth object
     private FirebaseAuth mAuth;
     ArrayList<User> userArrayList;
@@ -46,6 +49,16 @@ public class LoginActivity extends AppCompatActivity {
                 for (DataSnapshot issue : dataSnapshot.getChildren()) {
                     counter++;
                     currentUser = issue.getValue(User.class);
+
+                }
+                if (counter == 0)
+                    Toast.makeText(LoginActivity.this, "User Not Registered", Toast.LENGTH_SHORT).show();
+                else {
+                    counter = 0;
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Intent intent = new Intent(LoginActivity.this, VerifyPhoneActivity.class);
+                    intent.putExtra("mobile", currentUser.getPhoneno_1());
+                    startActivity(intent);
                 }
             } else {
             }
@@ -62,8 +75,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_login);
-        TelephonyManager tMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        String mPhoneNumber;
         userArrayList = new ArrayList<>();
 
 
@@ -73,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
 
         editTextPhone = findViewById(R.id.editTextPhone);
         versionTextView = findViewById(R.id.versionTextView);
+        progressBar = findViewById(R.id.progressBar);
 
         button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +92,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 number = editTextPhone.getText().toString();
                 if (!TextUtils.isEmpty(number)) {
+                    progressBar.setVisibility(View.VISIBLE);
                     searchFirebase(number);
+                } else {
+                    editTextPhone.setError("Phone number required.");
                 }
             }
         });
@@ -95,63 +110,21 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    //Perform search for phone_1 in database
     private void searchFirebase(final String number) {
 
-        Query query1 = FirebaseDatabase.getInstance().getReference("userinfo")
-                .orderByChild("phoneno_1")
+        Query query1 = FirebaseDatabase.getInstance().getReference(FIREBASE_USERINFO)
+                .orderByChild(COLUMN_PHONENO_1)
                 .equalTo(number);
-        Query query2 = FirebaseDatabase.getInstance().getReference("userinfo")
-                .orderByChild("phoneno_2")
-                .equalTo(number);
-        Query query3 = FirebaseDatabase.getInstance().getReference("userinfo")
-                .orderByChild("phoneno_3")
-                .equalTo(number);
-
 
         query1.addListenerForSingleValueEvent(view);
-        query2.addListenerForSingleValueEvent(view);
-        query3.addListenerForSingleValueEvent(view);
-
-
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (counter == 0)
-                    Toast.makeText(LoginActivity.this, "User Not Registered", Toast.LENGTH_SHORT).show();
-                else {
-                    counter = 0;
-                    Intent intent = new Intent(LoginActivity.this, VerifyPhoneActivity.class);
-                    intent.putExtra("mobile", currentUser.getPhoneno_1());
-                    startActivity(intent);
-                }
-            }
-        }, 2000);   //2000ms->2s
-
     }
 
 
-//    private void authenticationCheck() {
-//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        String name = preferences.getString("userid", "");
-//        applicationUser = name;
-//
-//        Toast.makeText(this, "" + name, Toast.LENGTH_SHORT).show();
-//
-//        if (!TextUtils.isEmpty(name) && !name.equals("XXXX")) {
-//            FirebaseDatabase.getInstance().getReference("userinfo")
-//                    .orderByChild("userId")
-//                    .equalTo(number);
-//
-//            Toast.makeText(this, "TEST", Toast.LENGTH_SHORT).show();
-//            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//            finish();
-//        }
-//    }
-
+    //check if user is previously autenticated and logged in from locally stored data
     private User authenticationCheck() {
         ArrayList<String> newArralist = new ArrayList<>();
-        SharedPreferences sharedPreferences = getSharedPreferences("com.gagandeep.nuvococontacts", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(PACKAGE_NAME, Context.MODE_PRIVATE);
         User user = null;
         newArralist = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("currentuser", ObjectSerializer.serialize(new ArrayList<String>())));
         if (newArralist.size() != 0)
@@ -178,11 +151,14 @@ public class LoginActivity extends AppCompatActivity {
         String name = "";
         if (user != null)
             name = user.getFirstName();
-        Toast.makeText(this, "" + name, Toast.LENGTH_SHORT).show();
 
-        if (!TextUtils.isEmpty(name) && !name.equals("XXXX")) {
-            Toast.makeText(this, "TEST", Toast.LENGTH_SHORT).show();
+        if (!TextUtils.isEmpty(name)) {
             currentUser = user;
+            if (!TextUtils.isEmpty(currentUser.getAdminRights())) {
+                if (currentUser.getAdminRights().equals("true"))
+                    isAdmin = true;
+            }
+            Toast.makeText(this, "Entered", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }

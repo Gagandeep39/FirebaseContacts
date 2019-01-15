@@ -4,11 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -17,7 +17,6 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.text.method.KeyListener;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +40,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -66,9 +66,9 @@ public class ProfileFragment extends Fragment {
     StorageReference storageRef = storage.getReference();
     ImageView chooseImageView;
     String id, firstName, lastName, designation, department, email_1, email_2, phone_1, phone_2, phone_3, location, profileUri, profileCacheUri, sapId, emergencyNumber, employeeId, deskNumber;
-    KeyListener nameKeyListener, locationKeyListener, designationKeyListener, departmentKeyListener, email_1KeyListener, email_2KeyListener, phoneno_1KeyListener, phoneno_2KeyListener, phoneno_3KeyListener;
-    String newName, newDesignation, newDepartment, newEmail_1, newEmail_2, newPhone_1, newPhone_2, newPhone_3, newLocation, newImageString;
-    TextView addImageTextView, phoneno_1TextView, phoneno_2TextView, phoneno_3TextView, email_1TextView, email_2TextView, whatsapp_1TextView, whatsapp_2TextView, whatsapp_3TextView;
+    KeyListener nameKeyListener, locationKeyListener, designationKeyListener, departmentKeyListener, email_1KeyListener, email_2KeyListener, phoneno_1KeyListener, phoneno_2KeyListener, phoneno_3KeyListener, sapIdKeyListener, employeeIdKeyListener, deskNumberKeyListener, emergencyNumberKeyListener, lastNameKeyListener;
+    String newName, newDesignation, newDepartment, newEmail_1, newEmail_2, newPhone_1, newPhone_2, newPhone_3, newLocation, newImageString, newProfileUri, newProfileCacheUri;
+    TextView addImageTextView, uploadInfoTextView, phoneno_1TextView, phoneno_2TextView, phoneno_3TextView, email_1TextView, email_2TextView, whatsapp_1TextView, whatsapp_2TextView, whatsapp_3TextView;
     FrameLayout frameLayout;
     ProgressBar uploadProgressBar;
     FloatingActionButton fab;
@@ -110,6 +110,7 @@ public class ProfileFragment extends Fragment {
         editTextSapId = v.findViewById(R.id.editTextSapId);
         editTextEmployeeId = v.findViewById(R.id.editTextEmployeeId);
         fab = v.findViewById(R.id.fab);
+        uploadInfoTextView = v.findViewById(R.id.uploadInfoTextView);
 
 
 
@@ -117,22 +118,6 @@ public class ProfileFragment extends Fragment {
 
     }
 
-
-    String getImageString() {
-        Bitmap bmp = null;
-        try {
-            bmp = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
-        bmp = getResizedBitmap(bmp, 800, 600);
-        bmp.compress(Bitmap.CompressFormat.JPEG, 0, bYtE);
-//        bmp.recycle();
-        byte[] byteArray = bYtE.toByteArray();
-        String imageFile = Base64.encodeToString(byteArray, Base64.DEFAULT);
-        return imageFile;
-    }
 
     public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
         int width = bm.getWidth();
@@ -167,11 +152,9 @@ public class ProfileFragment extends Fragment {
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 bitmap = getResizedBitmap(bitmap, 800, 600);
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                frameLayout.setVisibility(View.GONE);
                 chooseImageView.setImageBitmap(bitmap);
-                profileCacheUri = uploadCachedImage(id);
-                profileUri = uploadImage(id);
-                Toast.makeText(getContext(), "Displayed Image", Toast.LENGTH_SHORT).show();
+                newProfileCacheUri = uploadCachedImage(id);
+                newProfileUri = uploadImage(id);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -201,7 +184,7 @@ public class ProfileFragment extends Fragment {
                 nameReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        profileCacheUri = uri.toString();
+                        newProfileCacheUri = uri.toString();
                     }
                 });
             }
@@ -213,13 +196,14 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        return profileCacheUri;
+        return newProfileCacheUri;
     }
 
     String uploadImage(String id) {
         chooseImageView.setDrawingCacheEnabled(true);
         chooseImageView.buildDrawingCache();
         uploadProgressBar.setVisibility(View.VISIBLE);
+        uploadInfoTextView.setVisibility(View.VISIBLE);
 
         final StorageReference nameReference = storageRef.child(id + ".jpg");
         Bitmap bitmap = ((BitmapDrawable) chooseImageView.getDrawable()).getBitmap();
@@ -240,7 +224,7 @@ public class ProfileFragment extends Fragment {
                 nameReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        profileUri = uri.toString();
+                        newProfileUri = uri.toString();
                     }
                 });
             }
@@ -248,6 +232,18 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                 uploadProgressBar.setVisibility(View.GONE);
+                uploadInfoTextView.setText("Completed");
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        uploadInfoTextView.setVisibility(View.GONE);
+
+                    }
+                }, 2000);   //2000ms->2s
+
+
+
 
             }
         });
@@ -259,11 +255,15 @@ public class ProfileFragment extends Fragment {
                 System.out.println("Upload is " + progress + "% done");
                 int currentprogress = (int) progress;
                 uploadProgressBar.setProgress(currentprogress);
+                uploadInfoTextView.setText("Uploading...." + currentprogress + "%");
+
+
+
             }
         });
 
 
-        return profileUri;
+        return newProfileUri;
     }
 
     @Override
@@ -311,19 +311,24 @@ public class ProfileFragment extends Fragment {
         return v;
     }
 
+    //fetch data from text views
     private void updateData() {
-        newName = editTextFirstName.getText().toString();
-        newLocation = editTextLocation.getText().toString();
-        newDesignation = editTextDesignation.getText().toString();
-        newDepartment = editTextDepartment.getText().toString();
-        newPhone_1 = editTextPhoneNo1.getText().toString();
-        newPhone_2 = editTextPhoneNo2.getText().toString();
-        newPhone_3 = editTextPhoneNo3.getText().toString();
-        newEmail_1 = editTextEmail.getText().toString();
-        newEmail_2 = editTextEmail2.getText().toString();
+        firstName = editTextFirstName.getText().toString();
+        lastName = editTextFirstName.getText().toString();
+        location = editTextLocation.getText().toString();
+        designation = editTextDesignation.getText().toString();
+        department = editTextDepartment.getText().toString();
+        phone_1 = editTextPhoneNo1.getText().toString();
+        phone_2 = editTextPhoneNo2.getText().toString();
+        phone_3 = editTextPhoneNo3.getText().toString();
+        email_1 = editTextEmail.getText().toString();
+        email_2 = editTextEmail2.getText().toString();
+        emergencyNumber = editTextEmergencyPhone.getText().toString();
+        deskNumber = editTextDeskNumber.getText().toString();
+        sapId = editTextSapId.getText().toString();
+        employeeId = editTextEmployeeId.getText().toString();
 
-        if (filePath != null)
-            newImageString = getImageString();
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabaseRef = database.getReference();
 
@@ -332,33 +337,50 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                dataSnapshot.getRef().child("name").setValue(newName);
-                dataSnapshot.getRef().child("email1").setValue(newEmail_1);
-                dataSnapshot.getRef().child("email2").setValue(newEmail_2);
-                dataSnapshot.getRef().child("phoneno_1").setValue(newPhone_1);
-                dataSnapshot.getRef().child("phoneno_2").setValue(newPhone_2);
-                dataSnapshot.getRef().child("phoneno_3").setValue(newPhone_3);
-                dataSnapshot.getRef().child("location").setValue(newLocation);
-                dataSnapshot.getRef().child("department").setValue(newDepartment);
-                dataSnapshot.getRef().child("designation").setValue(newDesignation);
+                dataSnapshot.getRef().child("firstName").setValue(firstName);
+                dataSnapshot.getRef().child("lastName").setValue(lastName);
+                dataSnapshot.getRef().child("email1").setValue(email_1);
+                dataSnapshot.getRef().child("email2").setValue(email_2);
+                dataSnapshot.getRef().child("phoneno_1").setValue(phone_1);
+                dataSnapshot.getRef().child("phoneno_2").setValue(phone_2);
+                dataSnapshot.getRef().child("phoneno_3").setValue(phone_3);
+                dataSnapshot.getRef().child("location").setValue(location);
+                dataSnapshot.getRef().child("department").setValue(department);
+                dataSnapshot.getRef().child("designation").setValue(designation);
+                if (filePath != null && !TextUtils.isEmpty(newProfileUri)) {
+
+                    dataSnapshot.getRef().child("profileUri").setValue(profileUri);
+                    dataSnapshot.getRef().child("profileCacheUri").setValue(profileCacheUri);
+                }
+                dataSnapshot.getRef().child("sapId").setValue(sapId);
+                dataSnapshot.getRef().child("employeeId").setValue(employeeId);
+                dataSnapshot.getRef().child("deskNumber").setValue(deskNumber);
+                dataSnapshot.getRef().child("emergencyNumber").setValue(emergencyNumber);
                 if (filePath != null)
-                    dataSnapshot.getRef().child("profileUri").setValue(newImageString);
-                Toast.makeText(getActivity(), "Updated Successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "" + filePath, Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(profileUri)) {
+
+                    Toast.makeText(getActivity(), "Profile Image was not updated, other data uploaded successfully", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(getActivity(), "Updated Successfully", Toast.LENGTH_SHORT).show();
                 disableKeyListeners();
+                saveUserInfo();
 
 
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.d("User", databaseError.getMessage());
             }
         });
     }
 
+    //Prevent User from Typing in below Text Views
     private void disableKeyListeners() {
         nameKeyListener = editTextFirstName.getKeyListener();
         editTextFirstName.setKeyListener(null);
+        lastNameKeyListener = editTextLastName.getKeyListener();
+        editTextLastName.setKeyListener(null);
         locationKeyListener = editTextLocation.getKeyListener();
         editTextLocation.setKeyListener(null);
         designationKeyListener = editTextDesignation.getKeyListener();
@@ -375,9 +397,24 @@ public class ProfileFragment extends Fragment {
         editTextEmail.setKeyListener(null);
         email_2KeyListener = editTextEmail2.getKeyListener();
         editTextEmail2.setKeyListener(null);
+        employeeIdKeyListener = editTextEmployeeId.getKeyListener();
+        editTextEmployeeId.setKeyListener(null);
+        sapIdKeyListener = editTextSapId.getKeyListener();
+        editTextSapId.setKeyListener(null);
+        emergencyNumberKeyListener = editTextEmergencyPhone.getKeyListener();
+        editTextEmergencyPhone.setKeyListener(null);
+        deskNumberKeyListener = editTextDeskNumber.getKeyListener();
+        editTextDeskNumber.setKeyListener(null);
+
+        if (!TextUtils.isEmpty(phone_2))
+            phoneno_2Layout.setVisibility(View.VISIBLE);
+        if (!TextUtils.isEmpty(phone_3))
+            phoneno_3Layout.setVisibility(View.VISIBLE);
+        if (!TextUtils.isEmpty(email_2))
+            email_2Layout.setVisibility(View.VISIBLE);
     }
 
-
+    //Show edit box for field which previously were empty and also enable the ability to type in textboxes
     private void showAllEditBox() {
         phoneno_2Layout.setVisibility(View.VISIBLE);
         phoneno_3Layout.setVisibility(View.VISIBLE);
@@ -393,9 +430,15 @@ public class ProfileFragment extends Fragment {
         editTextPhoneNo1.setKeyListener(phoneno_1KeyListener);
         editTextPhoneNo2.setKeyListener(phoneno_2KeyListener);
         editTextPhoneNo3.setKeyListener(phoneno_3KeyListener);
+        editTextDeskNumber.setKeyListener(deskNumberKeyListener);
+        editTextEmergencyPhone.setKeyListener(emergencyNumberKeyListener);
+        editTextSapId.setKeyListener(sapIdKeyListener);
+        editTextEmployeeId.setKeyListener(employeeIdKeyListener);
+        editTextLastName.setKeyListener(lastNameKeyListener);
 
     }
 
+    //Fetch
     private void fillData() {
         firstName = currentUser.getFirstName();
         phone_1 = currentUser.getPhoneno_1();
@@ -415,13 +458,17 @@ public class ProfileFragment extends Fragment {
         emergencyNumber = currentUser.getEmergencyNumber();
         lastName = currentUser.getLastName();
 
-        editTextFirstName.setText(firstName);
-        editTextLastName.setText(lastName);
-        editTextDepartment.setText(department);
-        editTextDesignation.setText(designation);
-        editTextLocation.setText(location);
-        editTextPhoneNo1.setText(phone_1);
-        editTextEmail.setText(email_1);
+        editTextFirstName.setText("" + firstName);
+        editTextLastName.setText("" + lastName);
+        editTextDepartment.setText("" + department);
+        editTextDesignation.setText("" + designation);
+        editTextLocation.setText("" + location);
+        editTextPhoneNo1.setText("" + phone_1);
+        editTextEmail.setText("" + email_1);
+        editTextEmployeeId.setText("" + employeeId);
+        editTextSapId.setText("" + sapId);
+        editTextDeskNumber.setText("" + deskNumber);
+        editTextEmergencyPhone.setText("" + emergencyNumber);
 
 
         if (!TextUtils.isEmpty(phone_2)) {
@@ -445,73 +492,41 @@ public class ProfileFragment extends Fragment {
             email_2Layout.setVisibility(View.GONE);
         }
 
+
         if (!TextUtils.isEmpty(profileUri)) {
-            Bitmap b = stringToBitMap(profileUri);
-            chooseImageView.setImageBitmap(b);
+            Picasso.get().load(Uri.parse(profileUri)).placeholder(R.drawable.bg_placeholder).into(chooseImageView);
         }
 
     }
 
-    public Bitmap stringToBitMap(String encodedString) {
-        try {
-            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        } catch (Exception e) {
-            e.getMessage();
-            return null;
-        }
-    }
-
-    // Allows user to login without credentials if already had Logged in before
-    private User getUserInfo() {
-        ArrayList<String> newArralist = new ArrayList<>();
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("com.gagandeep.nuvococontacts", Context.MODE_PRIVATE);
-        User user = null;
-        newArralist = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("currentuser", ObjectSerializer.serialize(new ArrayList<String>())));
-        if (newArralist.size() != 0)
-            user = new User(newArralist.get(0)
-                    , newArralist.get(1)
-                    , newArralist.get(2)
-                    , newArralist.get(3)
-                    , newArralist.get(4)
-                    , newArralist.get(5)
-                    , newArralist.get(6)
-                    , newArralist.get(7)
-                    , newArralist.get(8)
-                    , newArralist.get(9)
-                    , newArralist.get(10)
-                    , newArralist.get(11)
-                    , newArralist.get(12)
-                    , newArralist.get(13)
-                    , newArralist.get(14)
-                    , newArralist.get(15)
-                    , newArralist.get(16)
-                    , newArralist.get(17));
-
-        return user;
-    }
 
     void saveUserInfo() {
         ArrayList<String> set = new ArrayList<>();
         set.add(id);
-        set.add(currentUser.getFirstName());
-        set.add(currentUser.getLastName());
-        set.add(currentUser.getDesignation());
-        set.add(currentUser.getLocation());
-        set.add(currentUser.getEmail1());
-        set.add(currentUser.getEmail2());
-        set.add(currentUser.getPhoneno_1());
-        set.add(currentUser.getPhoneno_2());
-        set.add(currentUser.getPhoneno_3());
-        set.add(currentUser.getEmergencyNumber());
-        set.add(currentUser.getDepartment());
-        set.add(currentUser.getProfileUri());
-        set.add(currentUser.getProfileCacheUri());
-        set.add(currentUser.getEmployeeId());
+        set.add(firstName);
+        set.add(lastName);
+        set.add(designation);
+        set.add(location);
+        set.add(email_1);
+        set.add(email_2);
+        set.add(phone_1);
+        set.add(phone_2);
+        set.add(phone_3);
+        set.add(emergencyNumber);
+        set.add(department);
+        if (filePath != null && !TextUtils.isEmpty(newProfileUri)) {
+            set.add(newProfileUri);
+            set.add(newProfileCacheUri);
+        } else {
+
+            set.add(profileUri);
+            set.add(profileCacheUri);
+        }
+
+        set.add(employeeId);
         set.add(currentUser.getAdminRights());
-        set.add(currentUser.getDeskNumber());
-        set.add(currentUser.getSapId());
+        set.add(deskNumber);
+        set.add(sapId);
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("com.gagandeep.nuvococontacts", Context.MODE_PRIVATE);
 

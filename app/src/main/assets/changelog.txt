@@ -1,3 +1,10 @@
+
+*Add Placeholder images in Favouritess
+*Added inputTypes in ProfileFragment
+*Login Activity now checks phoneno_1 only
+*Added constatnts in LoginActivity
+*Added constants in UserList
+*Added Comments in User Info Activity
 v.50
 All user information is saved using sharedpreference
 v0.49

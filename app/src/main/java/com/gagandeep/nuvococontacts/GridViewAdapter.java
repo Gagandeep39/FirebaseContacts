@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+//Adapter to show items in Favourites list
 public class GridViewAdapter extends ArrayAdapter<User> {
     private Activity context;
     private List<User> userList;
@@ -25,6 +26,8 @@ public class GridViewAdapter extends ArrayAdapter<User> {
         this.userList = userList;
     }
 
+
+    //Show Text at the bottom of image
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView profileImageView;
@@ -41,13 +44,14 @@ public class GridViewAdapter extends ArrayAdapter<User> {
                 intentFunction(user);
             }
         });
-        String imageString = user.getProfileUri();
+        String imageString = user.getProfileCacheUri();
         nameTextView.setText(user.getFirstName());
         if (!TextUtils.isEmpty(imageString))
-            Picasso.get().load(Uri.parse(imageString)).into(profileImageView);
+            Picasso.get().load(Uri.parse(imageString)).placeholder(R.drawable.bg_placeholder).into(profileImageView);
         return listViewItem;
     }
 
+    //To pass data to other activity
     private void intentFunction(User user) {
         Intent intent = new Intent(getContext(), UserInfoActivity.class);
         intent.putExtra("firstname", user.getFirstName());

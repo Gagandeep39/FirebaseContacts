@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent"
     android:layout_width="match_parent"
@@ -7,10 +8,15 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="0dp"
+        android:layout_height="260dp"
+        android:layout_marginBottom="285dp"
         android:background="@color/colorPrimary"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPhone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="120dp"
@@ -20,58 +26,62 @@
 
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_below="@id/relativeLayout"
-        android:layout_marginTop="-50dp" />
 
-    <RelativeLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/imageView"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="72dp"
-        android:orientation="vertical"
-        android:padding="20dp">
+    <EditText
+        android:id="@+id/editTextPhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginRight="55dp"
+        android:layout_marginBottom="15dp"
+        android:drawablePadding="10dp"
+        android:hint="Enter Phone Number"
+        android:inputType="phone"
+        android:maxLength="10"
+        android:nextFocusDown="@id/button"
+        android:nextFocusForward="@id/button"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="86dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Sign In"
+        android:textAllCaps="false"
+        android:textColor="#cdd8f1"
+        app:layout_constraintBottom_toTopOf="@+id/versionTextView"
+        app:layout_constraintEnd_toEndOf="@+id/editTextPhone"
+        app:layout_constraintStart_toStartOf="@+id/editTextPhone"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
+
+    <TextView
+        android:id="@+id/versionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="33dp"
+        android:text="App 1.11"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPhone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
-        <EditText
-            android:id="@+id/editTextPhone"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="31dp"
-            android:drawablePadding="10dp"
-            android:hint="Enter Phone Number"
-            android:inputType="phone"
-            android:maxLength="10" />
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/editTextPhone"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:background="@color/colorPrimaryDark"
-            android:text="Sign In"
-            android:textAllCaps="false"
-            android:textColor="#cdd8f1" />
-
-        <TextView
-            android:id="@+id/versionTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="13dp"
-            android:text="App 1.11" />
-
-    </RelativeLayout>
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

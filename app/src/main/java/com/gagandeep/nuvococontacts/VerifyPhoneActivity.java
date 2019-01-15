@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -131,16 +132,12 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-
-                            //verification successful we will start the profile activity
                             saveUserInfo();
                             Intent intent = new Intent(VerifyPhoneActivity.this, MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
 
                         } else {
-
-                            //verification unsuccessful.. display an error message
 
                             String message = "Somthing is wrong, we will fix it soon...";
 
@@ -160,14 +157,6 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                     }
                 });
     }
-
-//    void saveUserInfo(){
-//            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(VerifyPhoneActivity.this);
-//            SharedPreferences.Editor editor = preferences.edit();
-//            String id = currentUser.getUserId();
-//            editor.putString("userid", id);
-//            editor.apply();
-//        }
 
 
     void saveUserInfo() {
@@ -190,7 +179,10 @@ public class VerifyPhoneActivity extends AppCompatActivity {
         set.add(currentUser.getAdminRights());
         set.add(currentUser.getDeskNumber());
         set.add(currentUser.getSapId());
-
+        if (!TextUtils.isEmpty(currentUser.getAdminRights())) {
+            if (currentUser.getAdminRights().equals("true"))
+                LoginActivity.isAdmin = true;
+        }
         SharedPreferences sharedPreferences = getSharedPreferences("com.gagandeep.nuvococontacts", Context.MODE_PRIVATE);
 
         sharedPreferences.edit().putString("currentuser", ObjectSerializer.serialize(set)).apply();

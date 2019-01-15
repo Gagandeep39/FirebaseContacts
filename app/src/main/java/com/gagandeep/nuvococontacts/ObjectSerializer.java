@@ -10,7 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-
+//Class to save Array using Shared Preference without breaking their order
 public class ObjectSerializer {
 
 

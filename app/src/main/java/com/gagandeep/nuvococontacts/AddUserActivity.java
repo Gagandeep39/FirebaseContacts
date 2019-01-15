@@ -40,6 +40,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.gagandeep.nuvococontacts.Constants.FIREBASE_USERINFO;
+
 public class AddUserActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 234;
     public static final String TAG = "AddUser Activity";
@@ -51,11 +53,10 @@ public class AddUserActivity extends AppCompatActivity {
     Uri filePath;
     FrameLayout frameLayout;
     TextInputEditText editTextFirstName, editTextLastName, editTextDesignation, editTextLocation, editTextDepartment, editTextEmail, editTextEmail2, editTextPhoneNo1, editTextPhoneNo2, editTextPhoneNo3, editTextEmployeeId, editTextDeskNumber, editTextEmergencyNumber, editTextSapId;
-    String cacheUri;
     AppCompatSpinner adminRightsSpinner;
-    String adminRights = "0";  //0 for no , 1 for yes
     String id, firstName, lastName, location, department, designation, deskNo, phoneno1, phoneno2, phoneno3, emergencyNumber, email, email2, employeeId, profileUri, profileCacheUri, sapId;
     ProgressBar uploadProgressBar;
+    String adminRights;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class AddUserActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         userList = new ArrayList<>();
-        databaseReferenceUser = FirebaseDatabase.getInstance().getReference("userinfo");
+        databaseReferenceUser = FirebaseDatabase.getInstance().getReference(FIREBASE_USERINFO);
         databaseReferenceUser.keepSynced(true);
 
         findViews();
@@ -79,6 +80,7 @@ public class AddUserActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    //Drop down menu to select Yes or No for Admin rights
     private void fillSpinner() {
         adminRightsSpinner = findViewById(R.id.adminRightsSpinner);
         final String[] decision = {"true", "false"};
@@ -89,7 +91,10 @@ public class AddUserActivity extends AppCompatActivity {
         adminRightsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                adminRights = decision[position];
+                if (position == 0) {
+                    adminRights = "true";
+                } else
+                    adminRights = "false";
             }
 
             @Override
@@ -99,7 +104,7 @@ public class AddUserActivity extends AppCompatActivity {
         });
     }
 
-
+    //Link widgets with variables
     private void findViews() {
 
         editTextFirstName = findViewById(R.id.editTextFirstName);
@@ -132,6 +137,7 @@ public class AddUserActivity extends AppCompatActivity {
         id = databaseReferenceUser.push().getKey();
     }
 
+    //fetch data from textbox and performvalidation and save to server
     private void saveDataToServer() {
         firstName = editTextFirstName.getText().toString();
         department = editTextDepartment.getText().toString();
@@ -147,7 +153,6 @@ public class AddUserActivity extends AppCompatActivity {
         emergencyNumber = editTextEmergencyNumber.getText().toString();
         lastName = editTextLastName.getText().toString();
         sapId = editTextSapId.getText().toString();
-
 
 
         if (TextUtils.isEmpty(employeeId))
@@ -173,9 +178,6 @@ public class AddUserActivity extends AppCompatActivity {
         else if (TextUtils.isEmpty(sapId))
             editTextSapId.setError("Enter Sap ID");
         else {
-//             (String userId, String firstName, String lastName, String designation, String location, String email1, String email2, String phoneno_1
-//                    , String phoneno_2, String phoneno_3, String emergencyNumber, String department, String profileUri, String profileCacheUri, String employeeId, String adminRights, String deskNumber)
-
 
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -196,7 +198,7 @@ public class AddUserActivity extends AppCompatActivity {
 
     }
 
-
+    //Operations performed once we select an Image from gallery
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -212,13 +214,13 @@ public class AddUserActivity extends AppCompatActivity {
                 profileImageView.setImageBitmap(bitmap);
                 profileCacheUri = uploadCachedImage(id);
                 profileUri = uploadImage(id);
-                Toast.makeText(this, "Displayed Image", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
+    //Save a cache image to server (smaller version of actual image)
     String uploadCachedImage(String id) {
         profileImageView.setDrawingCacheEnabled(true);
         profileImageView.buildDrawingCache();
@@ -257,6 +259,7 @@ public class AddUserActivity extends AppCompatActivity {
         return profileCacheUri;
     }
 
+    //Save an image to server (actual one)
     String uploadImage(String id) {
         profileImageView.setDrawingCacheEnabled(true);
         profileImageView.buildDrawingCache();
@@ -304,12 +307,10 @@ public class AddUserActivity extends AppCompatActivity {
         });
 
 
-
-
         return profileUri;
     }
 
-
+    //Resize image to specific size
     public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
         int width = bm.getWidth();
         int height = bm.getHeight();
@@ -326,6 +327,7 @@ public class AddUserActivity extends AppCompatActivity {
         return resizedBitmap;
     }
 
+    //Intent to open gallery app
     private void showFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");

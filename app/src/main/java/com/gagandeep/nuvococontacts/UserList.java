@@ -19,7 +19,24 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.gagandeep.nuvococontacts.LoginActivity.applicationUser;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_DEPARTMENT;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_DESIGNATION;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_DESK_NUMBER;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMAIL_1;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMERGENCY_NUMBER;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMPLOYEE_ID;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_FIRST_NAME;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_LAST_NAME;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_LOCATION;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_1;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_2;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_3;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_PROFILE_CACHE_URI;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_PROFILE_URI;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_SAP_ID;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_USER_ID;
+import static com.gagandeep.nuvococontacts.LoginActivity.currentUser;
+
 
 public class UserList extends ArrayAdapter<User> {
     private Activity context;
@@ -100,7 +117,7 @@ public class UserList extends ArrayAdapter<User> {
         });
 
         String name = user.getUserId();
-        if (name.equals(applicationUser))
+        if (name.equals(currentUser.getFirstName()))
             nameTextView.setText("You");
         else
             nameTextView.setText(user.getFirstName() + " " + user.getLastName());
@@ -110,22 +127,23 @@ public class UserList extends ArrayAdapter<User> {
 
     private void intentFunction(User user) {
         Intent intent = new Intent(getContext(), UserInfoActivity.class);
-        intent.putExtra("firstname", user.getFirstName());
-        intent.putExtra("lastname", user.getFirstName());
-        intent.putExtra("designation", user.getDesignation());
-        intent.putExtra("department", user.getDepartment());
-        intent.putExtra("location", user.getLocation());
-        intent.putExtra("email_1", user.getEmail1());
-        intent.putExtra("email_2", user.getEmail2());
-        intent.putExtra("phoneno_1", user.getPhoneno_1());
-        intent.putExtra("phoneno_2", user.getPhoneno_2());
-        intent.putExtra("phoneno_3", user.getPhoneno_3());
-        intent.putExtra("profileuri", user.getProfileUri());
-        intent.putExtra("employeeid", user.getEmployeeId());
-        intent.putExtra("desknumber", user.getDeskNumber());
-        intent.putExtra("sapid", user.getSapId());
-        intent.putExtra("emergencynumber", user.getEmergencyNumber());
-        intent.putExtra("employeeid", user.getEmployeeId());
+        intent.putExtra(COLUMN_FIRST_NAME, user.getFirstName());
+        intent.putExtra(COLUMN_LAST_NAME, user.getLastName());
+        intent.putExtra(COLUMN_DESIGNATION, user.getDesignation());
+        intent.putExtra(COLUMN_DEPARTMENT, user.getDepartment());
+        intent.putExtra(COLUMN_LOCATION, user.getLocation());
+        intent.putExtra(COLUMN_EMAIL_1, user.getEmail1());
+        intent.putExtra(COLUMN_EMAIL_1, user.getEmail2());
+        intent.putExtra(COLUMN_PHONENO_1, user.getPhoneno_1());
+        intent.putExtra(COLUMN_PHONENO_2, user.getPhoneno_2());
+        intent.putExtra(COLUMN_PHONENO_3, user.getPhoneno_3());
+        intent.putExtra(COLUMN_PROFILE_URI, user.getProfileUri());
+        intent.putExtra(COLUMN_EMPLOYEE_ID, user.getEmployeeId());
+        intent.putExtra(COLUMN_DESK_NUMBER, user.getDeskNumber());
+        intent.putExtra(COLUMN_SAP_ID, user.getSapId());
+        intent.putExtra(COLUMN_EMERGENCY_NUMBER, user.getEmergencyNumber());
+        intent.putExtra(COLUMN_PROFILE_CACHE_URI, user.getProfileCacheUri());
+        intent.putExtra(COLUMN_USER_ID, user.getUserId());
         getContext().startActivity(intent);
     }
 

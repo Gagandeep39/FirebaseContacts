@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class FavouriteDbHelper extends SQLiteOpenHelper {
-    // If you change the database schema, you must increment the database version.
+
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "FeedReader.db";
     private static final String SQL_CREATE_ENTRIES =
@@ -21,6 +21,7 @@ public class FavouriteDbHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    // To create a database
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
