@@ -1,9 +1,9 @@
 package com.gagandeep.nuvococontacts;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
+import static com.gagandeep.nuvococontacts.Constants.PACKAGE_NAME;
 
 
 public class SearchFragment extends Fragment {
@@ -57,7 +58,6 @@ public class SearchFragment extends Fragment {
             userList.clear();
             for (DataSnapshot artistSnapShot : dataSnapshot.getChildren()) {
                 User user = artistSnapShot.getValue(User.class);
-                Log.e(TAG, "onDataChange: " + user.getFirstName());
                 userList.add(user);
 
             }
@@ -106,10 +106,9 @@ public class SearchFragment extends Fragment {
                 break;
 
             case R.id.log_out:
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("userid", "");
-                editor.apply();
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences(PACKAGE_NAME, Context.MODE_PRIVATE);
+                sharedPreferences.edit().clear().apply();
+
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 getActivity().finish();
                 break;
@@ -158,7 +157,7 @@ public class SearchFragment extends Fragment {
 
         final TextInputEditText editTextName, editTextLocation, editTextDepartment, editTextDesignation;
         Button searchButton;
-        editTextName = dialogueView.findViewById(R.id.editTextName);
+        editTextName = dialogueView.findViewById(R.id.editTextFirstName);
         editTextLocation = dialogueView.findViewById(R.id.editTextLocation);
         editTextDepartment = dialogueView.findViewById(R.id.editTextDepartment);
         editTextDesignation = dialogueView.findViewById(R.id.editTextDesignation);

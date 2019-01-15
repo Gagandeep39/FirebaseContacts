@@ -1,6 +1,9 @@
+v.50
+All user information is saved using sharedpreference
 v0.49
 *Added Picasso Library for listview
-*Intent to UserInfoActivity now sends all data
+*Intent to start UserInfoActivity now sends all data
+*Added other information to be displayed in UserInfo Activity
 v0.48
 *Added Sap ID to user list
 *Specified Input type for Values in AddUserActivity

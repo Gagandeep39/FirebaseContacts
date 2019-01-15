@@ -1,6 +1,6 @@
 package com.gagandeep.nuvococontacts;
 
-public class DbContract {
+public class Constants {
     public static final String NAME = "name";
     public static final String DEPARTMENT = "department";
     public static final String DESIGNATION = "designation";
@@ -10,4 +10,5 @@ public class DbContract {
     public static final String PHONENO_1 = "phoneno_1";
     public static final String PHONENO_2 = "phoneno_2";
     public static final String PHONENO_3 = "phoneno_3";
+    public static final String PACKAGE_NAME = "com.gagandeep.nuvococontacts";
 }

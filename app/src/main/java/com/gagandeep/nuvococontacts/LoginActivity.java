@@ -7,7 +7,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
@@ -33,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     Button button;
     String number;
     TextView versionTextView;
-    public static boolean isAdmin = false;
+    public static boolean isAdmin = true;
 
     public static String applicationUser;
     //firebase auth object
@@ -132,17 +131,63 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void authenticationCheck() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String name = preferences.getString("userid", "");
-        applicationUser = name;
+//    private void authenticationCheck() {
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        String name = preferences.getString("userid", "");
+//        applicationUser = name;
+//
+//        Toast.makeText(this, "" + name, Toast.LENGTH_SHORT).show();
+//
+//        if (!TextUtils.isEmpty(name) && !name.equals("XXXX")) {
+//            FirebaseDatabase.getInstance().getReference("userinfo")
+//                    .orderByChild("userId")
+//                    .equalTo(number);
+//
+//            Toast.makeText(this, "TEST", Toast.LENGTH_SHORT).show();
+//            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//            finish();
+//        }
+//    }
+
+    private User authenticationCheck() {
+        ArrayList<String> newArralist = new ArrayList<>();
+        SharedPreferences sharedPreferences = getSharedPreferences("com.gagandeep.nuvococontacts", Context.MODE_PRIVATE);
+        User user = null;
+        newArralist = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("currentuser", ObjectSerializer.serialize(new ArrayList<String>())));
+        if (newArralist.size() != 0)
+            user = new User(newArralist.get(0)
+                    , newArralist.get(1)
+                    , newArralist.get(2)
+                    , newArralist.get(3)
+                    , newArralist.get(4)
+                    , newArralist.get(5)
+                    , newArralist.get(6)
+                    , newArralist.get(7)
+                    , newArralist.get(8)
+                    , newArralist.get(9)
+                    , newArralist.get(10)
+                    , newArralist.get(11)
+                    , newArralist.get(12)
+                    , newArralist.get(13)
+                    , newArralist.get(14)
+                    , newArralist.get(15)
+                    , newArralist.get(16)
+                    , newArralist.get(17));
+
+
+        String name = "";
+        if (user != null)
+            name = user.getFirstName();
         Toast.makeText(this, "" + name, Toast.LENGTH_SHORT).show();
 
         if (!TextUtils.isEmpty(name) && !name.equals("XXXX")) {
             Toast.makeText(this, "TEST", Toast.LENGTH_SHORT).show();
+            currentUser = user;
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
+
+        return user;
     }
 
 

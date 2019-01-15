@@ -1,20 +1,14 @@
 package com.gagandeep.nuvococontacts;
 
-import android.content.ComponentName;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,13 +17,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.gagandeep.nuvococontacts.FavouriteContract.Favourite.COLUMN_NAME_TITLE;
+import static com.gagandeep.nuvococontacts.HelperClass.initiateCallTo;
+import static com.gagandeep.nuvococontacts.HelperClass.sendMailTo;
+import static com.gagandeep.nuvococontacts.HelperClass.sendMessageTo;
+import static com.gagandeep.nuvococontacts.HelperClass.sendWhatsAppMessageTo;
+import static com.gagandeep.nuvococontacts.LoginActivity.isAdmin;
+
 public class UserInfoActivity extends AppCompatActivity {
-    String name, designation, department, email_1, email_2, phone_1, phone_2, phone_3, location, profileUri;
-    LinearLayout phoneLayout, messageLayout, whatsappLayout, emailLayout, phoneno_1Layout, phoneno_2Layout, phoneno_3Layout, email_1Layout, email_2Layout, whatsapp_1Layout, whatsapp_2Layout, whatsapp_3Layout;
-    TextView phoneno_1TextView, phoneno_2TextView, phoneno_3TextView, email_1TextView, email_2TextView, whatsapp_1TextView, whatsapp_2TextView, whatsapp_3TextView;
+    String firstName, designation, department, email_1, email_2, phone_1, phone_2, phone_3, location, profileUri, lastName, desknumber, employeeid, emergencyNumber, sapid;
+    LinearLayout phoneLayout, messageLayout, whatsappLayout, emailLayout, phoneno_1Layout, phoneno_2Layout, phoneno_3Layout, email_1Layout, email_2Layout, whatsapp_1Layout, whatsapp_2Layout, whatsapp_3Layout, emergencyPhoneLayout, emergencyWhatsAppLayout;
+    TextView phoneno_1TextView, phoneno_2TextView, phoneno_3TextView, email_1TextView, email_2TextView, whatsapp_1TextView, whatsapp_2TextView, whatsapp_3TextView, emergencyPhoneTextView, emergencyWhatsAppTextView, locationTextView, sapIdTextView, deskNumberTextView, employeeIdTextView, departmentTextView, designationTextView;
     ImageView profileImageView;
 
     //Database vriable
@@ -38,12 +41,11 @@ public class UserInfoActivity extends AppCompatActivity {
     List<FavouriteItem> itemIds;
     String[] projection = {
             BaseColumns._ID,
-            FavouriteContract.Favourite.COLUMN_NAME_TITLE,
+            COLUMN_NAME_TITLE,
             FavouriteContract.Favourite.COLUMN_NAME_SUBTITLE
     };
 
-    // Filter results WHERE "title" = 'My Title'
-    String selection = FavouriteContract.Favourite.COLUMN_NAME_TITLE + " = ?";
+    String selection = COLUMN_NAME_TITLE + " = ?";
 
 
     @Override
@@ -53,9 +55,8 @@ public class UserInfoActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Bundle extras = getIntent().getExtras();
-        String value;
         if (extras != null) {
-            name = extras.getString("name");
+            firstName = extras.getString("firstname");
             designation = extras.getString("designation");
             location = extras.getString("location");
             department = extras.getString("department");
@@ -65,7 +66,12 @@ public class UserInfoActivity extends AppCompatActivity {
             email_1 = extras.getString("email_1");
             email_2 = extras.getString("email_2");
             profileUri = extras.getString("profileuri");
-            setTitle(name);
+            employeeid = extras.getString("employeeid");
+            desknumber = extras.getString("desknumber");
+            lastName = extras.getString("lastname");
+            sapid = extras.getString("sapid");
+            emergencyNumber = extras.getString("emergencynumber");
+            setTitle(firstName + " " + lastName);
         }
         findViews();
         onClickListeners();
@@ -95,7 +101,16 @@ public class UserInfoActivity extends AppCompatActivity {
         whatsapp_1TextView = findViewById(R.id.whatsapp_1TextView);
         whatsapp_2TextView = findViewById(R.id.whatsapp_2TextView);
         whatsapp_3TextView = findViewById(R.id.whatsapp_3TextView);
-
+        emergencyPhoneLayout = findViewById(R.id.emergencyPhoneLayout);
+        emergencyPhoneTextView = findViewById(R.id.emergencyPhoneTextView);
+        emergencyWhatsAppLayout = findViewById(R.id.emergencyWhatsAppLayout);
+        emergencyWhatsAppTextView = findViewById(R.id.emergencyWhatsAppTextView);
+        locationTextView = findViewById(R.id.locationTextView);
+        departmentTextView = findViewById(R.id.departmentTextView);
+        designationTextView = findViewById(R.id.designationTextView);
+        deskNumberTextView = findViewById(R.id.deskNumberTextView);
+        sapIdTextView = findViewById(R.id.sapIdTextView);
+        employeeIdTextView = findViewById(R.id.employeeIdTextView);
 
 
         profileImageView = findViewById(R.id.profileImageView);
@@ -105,7 +120,20 @@ public class UserInfoActivity extends AppCompatActivity {
 
         phoneno_1TextView.setText(phone_1);
         email_1TextView.setText(email_1);
+        locationTextView.append(location);
+        designationTextView.append("" + designation);
+        departmentTextView.append("" + department);
+        sapIdTextView.append("" + sapid);
+        employeeIdTextView.append("" + employeeid);
+
         whatsapp_1TextView.setText("WhatsApp to +91" + phone_1);
+
+        if (isAdmin) {
+            emergencyPhoneLayout.setVisibility(View.VISIBLE);
+            emergencyPhoneTextView.setText("Emergency Call to " + emergencyNumber);
+            emergencyWhatsAppLayout.setVisibility(View.VISIBLE);
+            emergencyWhatsAppTextView.setText("Emergency text to +91" + emergencyNumber);
+        }
 
         if (TextUtils.isEmpty(phone_2)) {
             phoneno_2Layout.setVisibility(View.GONE);
@@ -129,30 +157,18 @@ public class UserInfoActivity extends AppCompatActivity {
             email_2TextView.setText(email_2);
 
         if (!TextUtils.isEmpty(profileUri)) {
-            Bitmap b = stringToBitMap(profileUri);
-            profileImageView.setImageBitmap(b);
+            Picasso.get().load(profileUri).error(R.drawable.bg_placeholder).into(profileImageView);
 
         }
     }
 
-    public Bitmap stringToBitMap(String encodedString) {
-        try {
-            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        } catch (Exception e) {
-            e.getMessage();
-            return null;
-        }
-    }
+
 
     void onClickListeners() {
         phoneLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:+91" + phone_1));
-                startActivity(intent);
+                initiateCallTo(phone_1, UserInfoActivity.this);
             }
         });
 
@@ -160,10 +176,7 @@ public class UserInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Uri sms_uri = Uri.parse("smsto:+91" + phone_1);
-                Intent sms_intent = new Intent(Intent.ACTION_SENDTO, sms_uri);
-                sms_intent.putExtra("sms_body", "Good Morning ! how r U ?");
-                startActivity(sms_intent);
+                sendMessageTo(phone_1, UserInfoActivity.this);
             }
         });
 
@@ -183,74 +196,62 @@ public class UserInfoActivity extends AppCompatActivity {
     }
 
     public void emailFunction(View view) {
-
-        String email = "";
         switch (view.getId()) {
             case R.id.email_1Layout:
-                email = email_1;
+                sendMailTo(email_1, UserInfoActivity.this);
                 break;
             case R.id.email_2Layout:
-                email = email_2;
+                sendMailTo(email_2, UserInfoActivity.this);
                 break;
             case R.id.emailLayout:
-                email = email_1;
+                sendMailTo(email_1, UserInfoActivity.this);
                 break;
         }
 
 
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                "mailto", email, null));
-        startActivity(Intent.createChooser(emailIntent, "Send email..."));
+
     }
 
     public void callFunction(View view) {
-
-        Intent intent = new Intent(Intent.ACTION_DIAL);
         switch (view.getId()) {
             case R.id.phoneno_1Layout:
-                intent.setData(Uri.parse("tel:+91" + phone_1));
+                initiateCallTo(phone_1, UserInfoActivity.this);
                 break;
             case R.id.phoneno_2Layout:
-                intent.setData(Uri.parse("tel:+91" + phone_2));
+                initiateCallTo(phone_2, UserInfoActivity.this);
                 break;
             case R.id.phoneno_3Layout:
-//                intent.setData(Uri.parse("tel:+91" + phone_3));
+                initiateCallTo(phone_3, UserInfoActivity.this);
                 break;
-
+            case R.id.emergencyPhoneLayout:
+                initiateCallTo(emergencyNumber, UserInfoActivity.this);
+                break;
         }
-
-        startActivity(intent);
     }
 
     public void messageFunction(View view) {
-        Uri sms_uri = null;
         switch (view.getId()) {
             case R.id.message_1ImageView:
-                sms_uri = Uri.parse("smsto:+91" + phone_1);
+                sendMessageTo(phone_1, UserInfoActivity.this);
                 break;
             case R.id.message_2ImageView:
-                sms_uri = Uri.parse("smsto:+91" + phone_2);
+                sendMessageTo(phone_2, UserInfoActivity.this);
                 break;
             case R.id.message_3ImageView:
-                sms_uri = Uri.parse("smsto:+91" + phone_3);
+                sendMessageTo(phone_3, UserInfoActivity.this);
                 break;
-
+            case R.id.emergencyPhoneImageView:
+                sendMessageTo(emergencyNumber, UserInfoActivity.this);
+                break;
         }
-        Intent sms_intent = new Intent(Intent.ACTION_SENDTO, sms_uri);
-//        sms_intent.putExtra("sms_body", "Good Morning ! how r U ?");
-        startActivity(sms_intent);
     }
 
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-//        moveTaskToBack(true);
     }
 
-    /**
-     * react to the user tapping the back/up icon in the action bar
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -270,7 +271,7 @@ public class UserInfoActivity extends AppCompatActivity {
         while (cursor.moveToNext()) {
             int itemId = cursor.getInt(
                     cursor.getColumnIndexOrThrow(FavouriteContract.Favourite._ID));
-            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_NAME_TITLE));
+            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_TITLE));
             String itemPhone = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_NAME_SUBTITLE));
             itemIds.add(new FavouriteItem(itemId, itemName, itemPhone));
         }
@@ -284,7 +285,7 @@ public class UserInfoActivity extends AppCompatActivity {
                 if (itemIds.isEmpty())
                     addToFavourites(item);
                 for (int i = 0; i < itemIds.size(); i++) {
-                    if (itemIds.get(i).getName().contains(name))
+                    if (itemIds.get(i).getName().contains(firstName))
                         counter = 1;
                 }
 
@@ -304,9 +305,9 @@ public class UserInfoActivity extends AppCompatActivity {
 
     private void deleteFavourites(MenuItem item) {
 // Define 'where' part of query.
-        String selection = FavouriteContract.Favourite.COLUMN_NAME_TITLE + " LIKE ?";
+        String selection = COLUMN_NAME_TITLE + " LIKE ?";
 // Specify arguments in placeholder order.
-        String[] selectionArgs = {name};
+        String[] selectionArgs = {firstName};
 // Issue SQL statement.
         int deletedRows = db.delete(FavouriteContract.Favourite.TABLE_NAME, selection, selectionArgs);
         Toast.makeText(this, "Removed", Toast.LENGTH_SHORT).show();
@@ -319,7 +320,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
 // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(FavouriteContract.Favourite.COLUMN_NAME_TITLE, name);
+        values.put(COLUMN_NAME_TITLE, firstName);
         values.put(FavouriteContract.Favourite.COLUMN_NAME_SUBTITLE, phone_1);
 
 // Insert the new row, returning the primary key value of the new row
@@ -331,35 +332,48 @@ public class UserInfoActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_user_info, menu);    // Define a projection that specifies which columns from the database
 // you will actually use after this query.
+        String[] selectionArgs = {firstName};
 
-        String[] selectionArgs = {name};
+        String whereNotNull = COLUMN_NAME_TITLE + "= ?";
+        String whereNull = COLUMN_NAME_TITLE + " IS NULL";
+        String[] whereArgs = {firstName};
+
 
         // How you want the results sorted in the resulting Cursor
         String sortOrder =
                 FavouriteContract.Favourite.COLUMN_NAME_SUBTITLE + " DESC";
 
         db = mDbHelper.getReadableDatabase();
-        Cursor cursor = db.query(
+        Cursor cursor = whereArgs == null
+                ? db.query(
                 FavouriteContract.Favourite.TABLE_NAME,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
-                selection,              // The columns for the WHERE clause
-                selectionArgs,          // The values for the WHERE clause
+                whereNull,              // The columns for the WHERE clause
+                whereArgs,          // The values for the WHERE clause
                 null,                   // don't group the rows
                 null,                   // don't filter by row groups
-                sortOrder               // The sort order
+                sortOrder)              // The sort order
+                : db.query(
+                FavouriteContract.Favourite.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                whereNotNull,              // The columns for the WHERE clause
+                whereArgs,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                sortOrder
         );
 
 
         while (cursor.moveToNext()) {
             int itemId = cursor.getInt(
                     cursor.getColumnIndexOrThrow(FavouriteContract.Favourite._ID));
-            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_NAME_TITLE));
+            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_TITLE));
             String itemPhone = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_NAME_SUBTITLE));
             itemIds.add(new FavouriteItem(itemId, itemName, itemPhone));
         }
         cursor.close();
         for (int i = 0; i < itemIds.size(); i++) {
-            if (itemIds.get(i).getName().contains(name)) {
+            if (itemIds.get(i).getName().contains(firstName)) {
                 menu.getItem(0).setIcon(R.drawable.ic_star_filled);
                 break;
             }
@@ -385,22 +399,10 @@ public class UserInfoActivity extends AppCompatActivity {
             case R.id.whatsappLayout:
                 smsNumber = phone_1;
                 break;
+            case R.id.emergencyWhatsAppLayout:
+                smsNumber = phone_1;
+                break;
         }
-
-        String formattedNumber = "91" + smsNumber;
-        try {
-            Intent sendIntent = new Intent("android.intent.action.MAIN");
-            sendIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.setType("text/plain");
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "");
-            sendIntent.putExtra("jid", formattedNumber + "@s.whatsapp.net");
-            sendIntent.setPackage("com.whatsapp");
-            startActivity(sendIntent);
-        } catch (Exception e) {
-            Toast.makeText(UserInfoActivity.this, "Error/n" + e.toString(), Toast.LENGTH_SHORT).show();
-        }
-
-
+        sendWhatsAppMessageTo(smsNumber, UserInfoActivity.this);
     }
 }

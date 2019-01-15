@@ -81,7 +81,7 @@ public class AddUserActivity extends AppCompatActivity {
 
     private void fillSpinner() {
         adminRightsSpinner = findViewById(R.id.adminRightsSpinner);
-        final String[] decision = {"Yes", "No"};
+        final String[] decision = {"true", "false"};
         ArrayAdapter<String> spin_adapter = new ArrayAdapter<String>(AddUserActivity.this, android.R.layout.simple_spinner_item, decision);
 
         // setting adapteers to spinners
@@ -102,7 +102,7 @@ public class AddUserActivity extends AppCompatActivity {
 
     private void findViews() {
 
-        editTextFirstName = findViewById(R.id.editTextName);
+        editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextDepartment = findViewById(R.id.editTextDepartment);
         editTextDesignation = findViewById(R.id.editTextDesignation);
         editTextEmail = findViewById(R.id.editTextEmailId);

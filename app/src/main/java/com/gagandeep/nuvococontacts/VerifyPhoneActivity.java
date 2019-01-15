@@ -1,9 +1,9 @@
 package com.gagandeep.nuvococontacts;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import static com.gagandeep.nuvococontacts.LoginActivity.currentUser;
@@ -77,7 +78,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
 
         //initializing objects
         mAuth = FirebaseAuth.getInstance();
-        editTextCode = findViewById(R.id.editTextCode);
+        editTextCode = findViewById(R.id.editTextPhone);
 
 
         //getting mobile number from the previous activity
@@ -132,7 +133,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
 
 
                             //verification successful we will start the profile activity
-                            performPostOperations();
+                            saveUserInfo();
                             Intent intent = new Intent(VerifyPhoneActivity.this, MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
@@ -160,13 +161,41 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                 });
     }
 
-    private void performPostOperations() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(VerifyPhoneActivity.this);
-        SharedPreferences.Editor editor = preferences.edit();
-        String id = currentUser.getUserId();
-        editor.putString("userid", id);
-        editor.apply();
+//    void saveUserInfo(){
+//            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(VerifyPhoneActivity.this);
+//            SharedPreferences.Editor editor = preferences.edit();
+//            String id = currentUser.getUserId();
+//            editor.putString("userid", id);
+//            editor.apply();
+//        }
+
+
+    void saveUserInfo() {
+        ArrayList<String> set = new ArrayList<>();
+        set.add(currentUser.getUserId());
+        set.add(currentUser.getFirstName());
+        set.add(currentUser.getLastName());
+        set.add(currentUser.getDesignation());
+        set.add(currentUser.getLocation());
+        set.add(currentUser.getEmail1());
+        set.add(currentUser.getEmail2());
+        set.add(currentUser.getPhoneno_1());
+        set.add(currentUser.getPhoneno_2());
+        set.add(currentUser.getPhoneno_3());
+        set.add(currentUser.getEmergencyNumber());
+        set.add(currentUser.getDepartment());
+        set.add(currentUser.getProfileUri());
+        set.add(currentUser.getProfileCacheUri());
+        set.add(currentUser.getEmployeeId());
+        set.add(currentUser.getAdminRights());
+        set.add(currentUser.getDeskNumber());
+        set.add(currentUser.getSapId());
+
+        SharedPreferences sharedPreferences = getSharedPreferences("com.gagandeep.nuvococontacts", Context.MODE_PRIVATE);
+
+        sharedPreferences.edit().putString("currentuser", ObjectSerializer.serialize(set)).apply();
+        sharedPreferences.edit().apply();
+    }
     }
 
 
-}

@@ -123,6 +123,76 @@
                     android:text="WhatsApp" />
             </LinearLayout>
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2sp"
+            android:background="#22222222"
+            android:padding="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="8sp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_location" />
+
+            <TextView
+                android:id="@+id/locationTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mumbai" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/employeeIdTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4sp"
+            android:text="Employee ID : "
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/sapIdTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4sp"
+            android:text="SAP ID : "
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/departmentTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4sp"
+            android:text="Department : "
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/deskNumberTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4sp"
+            android:text="Desk No. : "
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/designationTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4sp"
+            android:text="Designation : "
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <View
             android:layout_width="match_parent"
@@ -138,7 +208,7 @@
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:orientation="horizontal"
-            android:padding="16sp">
+            android:padding="8sp">
 
             <ImageView
                 android:layout_width="0sp"
@@ -175,7 +245,7 @@
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:orientation="horizontal"
-            android:padding="16sp">
+            android:padding="8sp">
 
             <ImageView
                 android:layout_width="0sp"
@@ -206,13 +276,13 @@
 
         <LinearLayout
             android:id="@+id/phoneno_3Layout"
-            android:onClick="callFunction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
+            android:onClick="callFunction"
             android:orientation="horizontal"
-            android:padding="16sp">
+            android:padding="8sp">
 
             <ImageView
                 android:layout_width="0sp"
@@ -241,6 +311,44 @@
                 android:src="@drawable/ic_message" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/emergencyPhoneLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:onClick="callFunction"
+            android:orientation="horizontal"
+            android:padding="8sp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="0sp"
+                android:layout_height="40sp"
+                android:layout_weight="0.2"
+                android:src="@drawable/ic_phone_black" />
+
+            <TextView
+                android:id="@+id/emergencyPhoneTextView"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.8"
+                android:gravity="left"
+                android:text="1234567890"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/emergencyPhoneImageView"
+                android:layout_width="0sp"
+                android:layout_height="40sp"
+                android:layout_weight="0.2"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:onClick="messageFunction"
+                android:src="@drawable/ic_message" />
+        </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="2sp"
@@ -255,7 +363,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16sp">
+            android:padding="8sp">
 
             <ImageView
                 android:layout_width="0sp"
@@ -281,7 +389,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16sp">
+            android:padding="8sp">
 
             <ImageView
                 android:layout_width="0sp"
@@ -313,7 +421,7 @@
             android:clickable="true"
             android:onClick="whatsappFunction"
             android:orientation="horizontal"
-            android:padding="16sp">
+            android:padding="8sp">
 
             <ImageView
                 android:layout_width="0sp"
@@ -339,7 +447,7 @@
             android:clickable="true"
             android:onClick="whatsappFunction"
             android:orientation="horizontal"
-            android:padding="16sp">
+            android:padding="8sp">
 
             <ImageView
                 android:layout_width="0sp"
@@ -365,7 +473,7 @@
             android:clickable="true"
             android:onClick="whatsappFunction"
             android:orientation="horizontal"
-            android:padding="16sp">
+            android:padding="8sp">
 
             <ImageView
                 android:layout_width="0sp"
@@ -375,6 +483,33 @@
 
             <TextView
                 android:id="@+id/whatsapp_3TextView"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.8"
+                android:text="Gagandeep Singh"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/emergencyWhatsAppLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:onClick="whatsappFunction"
+            android:orientation="horizontal"
+            android:padding="8sp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="0sp"
+                android:layout_height="40sp"
+                android:layout_weight="0.15"
+                android:src="@drawable/ic_whatsapp" />
+
+            <TextView
+                android:id="@+id/emergencyWhatsAppTextView"
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

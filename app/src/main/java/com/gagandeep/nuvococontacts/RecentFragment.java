@@ -99,21 +99,6 @@ public class RecentFragment extends Fragment {
             }
         }, 500);   //2000ms->2s
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         return v;
     }
 
