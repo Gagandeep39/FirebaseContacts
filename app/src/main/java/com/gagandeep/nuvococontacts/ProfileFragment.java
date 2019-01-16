@@ -328,7 +328,6 @@ public class ProfileFragment extends Fragment {
         sapId = editTextSapId.getText().toString();
         employeeId = editTextEmployeeId.getText().toString();
 
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabaseRef = database.getReference();
 

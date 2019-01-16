@@ -52,9 +52,8 @@ public class LoginActivity extends AppCompatActivity {
                     break;
 
                 }
-                if (counter == 0)
-                    Toast.makeText(LoginActivity.this, "User Not Registered", Toast.LENGTH_SHORT).show();
-                else {
+                if (counter == 0) {
+                } else {
                     counter = 0;
                     progressBar.setVisibility(View.INVISIBLE);
                     Intent intent = new Intent(LoginActivity.this, VerifyPhoneActivity.class);
@@ -62,6 +61,9 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             } else {
+                progressBar.setVisibility(View.INVISIBLE);
+                Toast.makeText(LoginActivity.this, "User Not Registered", Toast.LENGTH_SHORT).show();
+
             }
         }
 

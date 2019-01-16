@@ -189,7 +189,7 @@ public class SearchFragment extends Fragment {
 
                     }
                     if (!TextUtils.isEmpty(location)) {
-                        if (!sortedArrayList.get(i).getLocation().toLowerCase().contains(location)) {
+                        if (!(sortedArrayList.get(i).getLocation() + "").toLowerCase().contains(location)) {
                             sortedArrayList.remove(i);
                             i--;
                             continue;

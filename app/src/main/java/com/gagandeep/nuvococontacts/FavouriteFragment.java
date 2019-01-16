@@ -60,14 +60,15 @@ public class FavouriteFragment extends Fragment {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < userList.size(); i++) {
-                    for (int j = 0; j < itemIds.size(); j++) {
-                        if (itemIds.get(j).getPhoneno().equals(userList.get(i).getPhoneno_1())) {
-                            favouriteList.add(userList.get(i));
+                if (userList != null)
+                    for (int i = 0; i < userList.size(); i++) {
+                        for (int j = 0; j < itemIds.size(); j++) {
+                            if (itemIds.get(j).getPhoneno().equals(userList.get(i).getPhoneno_1())) {
+                                favouriteList.add(userList.get(i));
+                            }
                         }
-                    }
 
-                }
+                    }
 
 
                 Toast.makeText(getActivity(), "" + favouriteList.size(), Toast.LENGTH_SHORT).show();
@@ -77,7 +78,7 @@ public class FavouriteFragment extends Fragment {
                 adapter.notifyDataSetChanged();
 
             }
-        }, 500);   //2000ms->2s
+        }, 200);   //2000ms->2s
 
         return v;
     }
