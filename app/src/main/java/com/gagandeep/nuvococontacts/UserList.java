@@ -116,7 +116,8 @@ public class UserList extends ArrayAdapter<User> {
             }
         });
 
-        String name = user.getUserId();
+        String name = user.getFirstName();
+        if (name != null)
         if (name.equals(currentUser.getFirstName()))
             nameTextView.setText("You");
         else

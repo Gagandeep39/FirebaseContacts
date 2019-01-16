@@ -12,7 +12,7 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     //Create an Instance of Each Fragment
-    final Fragment fragment1 = new RecentFragment();
+    final Fragment fragment1 = new FavouriteFragment();
     final Fragment fragment2 = new SearchFragment();
     final Fragment fragment3 = new ProfileFragment();
     final FragmentManager fm = getSupportFragmentManager();

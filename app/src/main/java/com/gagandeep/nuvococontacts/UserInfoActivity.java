@@ -48,7 +48,7 @@ public class UserInfoActivity extends AppCompatActivity {
     LinearLayout phoneLayout, messageLayout, whatsappLayout, emailLayout, phoneno_1Layout, phoneno_2Layout, phoneno_3Layout, email_1Layout, email_2Layout, whatsapp_1Layout, whatsapp_2Layout, whatsapp_3Layout, emergencyPhoneLayout, emergencyWhatsAppLayout;
     TextView phoneno_1TextView, phoneno_2TextView, phoneno_3TextView, email_1TextView, email_2TextView, whatsapp_1TextView, whatsapp_2TextView, whatsapp_3TextView, emergencyPhoneTextView, emergencyWhatsAppTextView, locationTextView, sapIdTextView, deskNumberTextView, employeeIdTextView, departmentTextView, designationTextView;
     ImageView profileImageView;
-
+    int counter = 0;
     //Database vriable
     SQLiteDatabase db;
     FavouriteDbHelper mDbHelper;
@@ -132,9 +132,9 @@ public class UserInfoActivity extends AppCompatActivity {
         mDbHelper = new FavouriteDbHelper(this);
         itemIds = new ArrayList<>();
 
-        phoneno_1TextView.setText(phone_1);
-        email_1TextView.setText(email_1);
-        locationTextView.append(location);
+        phoneno_1TextView.setText("" + phone_1);
+        email_1TextView.setText("" + email_1);
+        locationTextView.setText("" + location);
         designationTextView.append("" + designation);
         departmentTextView.append("" + department);
         sapIdTextView.append("" + sapid);
@@ -268,8 +268,44 @@ public class UserInfoActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        readDatabase();
 
 
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.action_favourite:
+
+                if (itemIds.isEmpty()) {
+
+
+                    addToFavourites(item);
+                } else {
+                    for (int i = 0; i < itemIds.size(); i++) {
+                        if (itemIds.get(i).getName().contains(firstName))
+                            counter = 1;
+                    }
+
+                    if (counter == 1) {
+                        deleteFavourites(item);
+                        counter = 0;
+                        readDatabase();
+                    } else {
+
+                        addToFavourites(item);
+                        readDatabase();
+                    }
+                }
+
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void readDatabase() {
         db = mDbHelper.getReadableDatabase();
         Cursor cursor = db.query(
                 FavouriteContract.Favourite.TABLE_NAME,   // The table to query
@@ -290,30 +326,6 @@ public class UserInfoActivity extends AppCompatActivity {
             itemIds.add(new FavouriteItem(itemId, itemName, itemPhone));
         }
         cursor.close();
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            case R.id.action_favourite:
-                int counter = 0;
-                if (itemIds.isEmpty())
-                    addToFavourites(item);
-                for (int i = 0; i < itemIds.size(); i++) {
-                    if (itemIds.get(i).getName().contains(firstName))
-                        counter = 1;
-                }
-
-                if (counter == 1) {
-                    deleteFavourites(item);
-                    counter = 0;
-                } else
-                    addToFavourites(item);
-
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 

@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                 for (DataSnapshot issue : dataSnapshot.getChildren()) {
                     counter++;
                     currentUser = issue.getValue(User.class);
+                    break;
 
                 }
                 if (counter == 0)

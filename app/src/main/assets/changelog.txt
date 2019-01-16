@@ -1,4 +1,9 @@
-
+TO_DO - update favourite list when starting favourite or adding an item in favourite(try using static or maybe a function)
+*Fixed a crash occuring when ciked on an item in Favourite list(changed the keys to constants of Key-Value pairs)
+*Renamed RecentsFragment to FavouriteFragments
+*Fixed a crash occuring due to null values in name in UserList
+*Fixed a crash occuring due to null location in UserInfoActivity
+v0.51
 *Add Placeholder images in Favouritess
 *Added inputTypes in ProfileFragment
 *Login Activity now checks phoneno_1 only

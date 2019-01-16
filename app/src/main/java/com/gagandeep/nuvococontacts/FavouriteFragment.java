@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
 import static android.support.constraint.Constraints.TAG;
 import static com.gagandeep.nuvococontacts.SearchFragment.userList;
 
-public class RecentFragment extends Fragment {
+public class FavouriteFragment extends Fragment {
     ListView listView;
     GridView gridview;
     SQLiteDatabase db;
@@ -35,7 +36,7 @@ public class RecentFragment extends Fragment {
     };
 
 
-    public RecentFragment() {
+    public FavouriteFragment() {
 
     }
 
@@ -89,6 +90,9 @@ public class RecentFragment extends Fragment {
                     }
 
                 }
+
+
+                Toast.makeText(getActivity(), "" + favouriteList.size(), Toast.LENGTH_SHORT).show();
 
                 adapter = new GridViewAdapter(getActivity(), favouriteList);
                 gridview.setAdapter(adapter);
