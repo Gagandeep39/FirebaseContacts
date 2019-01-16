@@ -42,7 +42,6 @@
                 android:value="com.gagandeep.nuvococontacts.MainActivity" />
         </activity>
         <activity
-            android:windowSoftInputMode="adjustResize"
             android:name=".MainActivity"
             android:label="@string/app_name" />
     </application>

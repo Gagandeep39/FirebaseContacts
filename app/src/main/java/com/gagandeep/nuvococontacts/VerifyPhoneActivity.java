@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import static com.gagandeep.nuvococontacts.LoginActivity.currentUser;
+import static com.gagandeep.nuvococontacts.LoginActivity.temporaryUser;
 
 public class VerifyPhoneActivity extends AppCompatActivity {
 
@@ -131,7 +132,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
+                            currentUser = temporaryUser;
                             saveUserInfo();
                             Intent intent = new Intent(VerifyPhoneActivity.this, MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -161,6 +162,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
 
     void saveUserInfo() {
         ArrayList<String> set = new ArrayList<>();
+        Toast.makeText(this, "" + currentUser.getUserId(), Toast.LENGTH_SHORT).show();
         set.add(currentUser.getUserId());
         set.add(currentUser.getFirstName());
         set.add(currentUser.getLastName());

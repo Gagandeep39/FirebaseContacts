@@ -55,29 +55,7 @@ public class FavouriteFragment extends Fragment {
         gridview = v.findViewById(R.id.gridview);
 
 
-        mDbHelper = new FavouriteDbHelper(getContext());
-        itemIds = new ArrayList<>();
-        favouriteList = new ArrayList<>();
-        db = mDbHelper.getReadableDatabase();
-        Cursor cursor = db.query(
-                FavouriteContract.Favourite.TABLE_NAME,   // The table to query
-                projection,             // The array of columns to return (pass null to get all)
-                null,              // The columns for the WHERE clause
-                null,          // The values for the WHERE clause
-                null,                   // don't group the rows
-                null,                   // don't filter by row groups
-                null               // The sort order
-        );
-
-        Log.e(TAG, "onCreateView: " + cursor);
-        while (cursor.moveToNext()) {
-            int itemId = cursor.getInt(
-                    cursor.getColumnIndexOrThrow(FavouriteContract.Favourite._ID));
-            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_NAME_TITLE));
-            String itemPhone = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_NAME_SUBTITLE));
-            itemIds.add(new FavouriteItem(itemId, itemName, itemPhone));
-        }
-        cursor.close();
+        readValuesFromFavouritesDatabase();
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -102,6 +80,32 @@ public class FavouriteFragment extends Fragment {
         }, 500);   //2000ms->2s
 
         return v;
+    }
+
+    private void readValuesFromFavouritesDatabase() {
+        mDbHelper = new FavouriteDbHelper(getContext());
+        itemIds = new ArrayList<>();
+        favouriteList = new ArrayList<>();
+        db = mDbHelper.getReadableDatabase();
+        Cursor cursor = db.query(
+                FavouriteContract.Favourite.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                null,              // The columns for the WHERE clause
+                null,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                null               // The sort order
+        );
+
+        Log.e(TAG, "onCreateView: " + cursor);
+        while (cursor.moveToNext()) {
+            int itemId = cursor.getInt(
+                    cursor.getColumnIndexOrThrow(FavouriteContract.Favourite._ID));
+            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_NAME_TITLE));
+            String itemPhone = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_NAME_SUBTITLE));
+            itemIds.add(new FavouriteItem(itemId, itemName, itemPhone));
+        }
+        cursor.close();
     }
 
 

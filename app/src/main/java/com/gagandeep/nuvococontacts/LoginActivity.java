@@ -30,7 +30,7 @@ import static com.gagandeep.nuvococontacts.Constants.FIREBASE_USERINFO;
 import static com.gagandeep.nuvococontacts.Constants.PACKAGE_NAME;
 
 public class LoginActivity extends AppCompatActivity {
-    public static User currentUser;
+    public static User currentUser, temporaryUser;
     EditText editTextPhone;
     Button button;
     String number;
@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
             if (dataSnapshot.exists()) {
                 for (DataSnapshot issue : dataSnapshot.getChildren()) {
                     counter++;
-                    currentUser = issue.getValue(User.class);
+                    temporaryUser = issue.getValue(User.class);
                     break;
 
                 }
@@ -152,6 +152,7 @@ public class LoginActivity extends AppCompatActivity {
         String name = "";
         if (user != null)
             name = user.getFirstName();
+
 
         if (!TextUtils.isEmpty(name)) {
             currentUser = user;

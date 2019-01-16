@@ -81,7 +81,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Toast.makeText(getActivity(), "" + currentUser.getUserId(), Toast.LENGTH_SHORT).show();
     }
 
     private void findViews(View v) {
@@ -332,7 +332,7 @@ public class ProfileFragment extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabaseRef = database.getReference();
 
-        mDatabaseRef = database.getReference();
+        if (!TextUtils.isEmpty(currentUser.getUserId()))
         mDatabaseRef.child("userinfo").child(currentUser.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -356,8 +356,8 @@ public class ProfileFragment extends Fragment {
                 dataSnapshot.getRef().child("employeeId").setValue(employeeId);
                 dataSnapshot.getRef().child("deskNumber").setValue(deskNumber);
                 dataSnapshot.getRef().child("emergencyNumber").setValue(emergencyNumber);
-                if (filePath != null)
-                    Toast.makeText(getActivity(), "" + filePath, Toast.LENGTH_SHORT).show();
+//                if (filePath != null)
+//                    Toast.makeText(getActivity(), "" + filePath, Toast.LENGTH_SHORT).show();
                 if (TextUtils.isEmpty(profileUri)) {
 
                     Toast.makeText(getActivity(), "Profile Image was not updated, other data uploaded successfully", Toast.LENGTH_SHORT).show();
