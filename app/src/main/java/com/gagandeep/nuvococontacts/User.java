@@ -20,8 +20,6 @@ public class User {
     private String deskNumber;
     private String emergencyNumber;
     private String sapId;
-
-
     private String profileUri;
 
     public User(String userId

@@ -1,3 +1,4 @@
+*All local database comparison now use Phone number
 *Added a method to prevent Login In by restarting app using "temporaryUser"
 TO_DO - update favourite list when starting favourite or adding an item in favourite(try using static or maybe a function)
 *Fits system windows -flase cause botto naigation to behave weird;y so removed from recents activities

@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                     counter = 0;
                     progressBar.setVisibility(View.INVISIBLE);
                     Intent intent = new Intent(LoginActivity.this, VerifyPhoneActivity.class);
-                    intent.putExtra("mobile", currentUser.getPhoneno_1());
+                    intent.putExtra("mobile", number);
                     startActivity(intent);
                 }
             } else {

@@ -62,7 +62,7 @@ public class FavouriteFragment extends Fragment {
             public void run() {
                 for (int i = 0; i < userList.size(); i++) {
                     for (int j = 0; j < itemIds.size(); j++) {
-                        if (itemIds.get(j).getName().equals(userList.get(i).getFirstName())) {
+                        if (itemIds.get(j).getPhoneno().equals(userList.get(i).getPhoneno_1())) {
                             favouriteList.add(userList.get(i));
                         }
                     }

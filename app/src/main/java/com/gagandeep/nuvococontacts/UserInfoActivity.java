@@ -283,7 +283,7 @@ public class UserInfoActivity extends AppCompatActivity {
                     addToFavourites(item);
                 } else {
                     for (int i = 0; i < itemIds.size(); i++) {
-                        if (itemIds.get(i).getName().contains(firstName))
+                        if (itemIds.get(i).getPhoneno().contains(phone_1))
                             counter = 1;
                     }
 
@@ -346,7 +346,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
 // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME_TITLE, firstName);
+        values.put(COLUMN_NAME_TITLE, firstName);           //data is stored in key value pair
         values.put(FavouriteContract.Favourite.COLUMN_NAME_SUBTITLE, phone_1);
 
 // Insert the new row, returning the primary key value of the new row
