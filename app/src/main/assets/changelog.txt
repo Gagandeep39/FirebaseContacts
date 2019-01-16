@@ -1,7 +1,7 @@
 v0.52
-*All local database comparison now use Phone number
+*All local database comparison now use Phone number(Fixed data duplication)
 *Added a method to prevent Login In by restarting app using "temporaryUser"
-TO_DO - update favourite list when starting favourite or adding an item in favourite(try using static or maybe a function)
+**Fixed favourite not updating until restart(used onHiddenChanged)
 *Fits system windows -flase cause botto naigation to behave weird;y so removed from recents activities
 *Fixed a crash occuring when ciked on an item in Favourite list(changed the keys to constants of Key-Value pairs)
 *Renamed RecentsFragment to FavouriteFragments

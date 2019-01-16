@@ -109,5 +109,36 @@ public class FavouriteFragment extends Fragment {
         cursor.close();
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+            Toast.makeText(getActivity(), "HIDDEN", Toast.LENGTH_SHORT).show();
+        } else {
+            readValuesFromFavouritesDatabase();
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (userList != null)
+                        for (int i = 0; i < userList.size(); i++) {
+                            for (int j = 0; j < itemIds.size(); j++) {
+                                if (itemIds.get(j).getPhoneno().equals(userList.get(i).getPhoneno_1())) {
+                                    favouriteList.add(userList.get(i));
+                                }
+                            }
 
+                        }
+
+
+                    Toast.makeText(getActivity(), "" + favouriteList.size(), Toast.LENGTH_SHORT).show();
+
+                    adapter = new GridViewAdapter(getActivity(), favouriteList);
+                    gridview.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+
+                }
+            }, 200);   //2000ms->2s
+        }
+    }
 }
