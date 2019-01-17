@@ -4,6 +4,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.InputFilter;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class HelperClass {
@@ -45,6 +47,33 @@ public class HelperClass {
             context.startActivity(sendIntent);
         } catch (Exception e) {
             Toast.makeText(context, "Error/n" + e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static void setMaxLength(EditText view, int length) {
+        InputFilter[] curFilters;
+        InputFilter.LengthFilter lengthFilter;
+        int idx;
+
+        lengthFilter = new InputFilter.LengthFilter(length);
+
+        curFilters = view.getFilters();
+        if (curFilters != null) {
+            for (idx = 0; idx < curFilters.length; idx++) {
+                if (curFilters[idx] instanceof InputFilter.LengthFilter) {
+                    curFilters[idx] = lengthFilter;
+                    return;
+                }
+            }
+
+            // since the length filter was not part of the list, but
+            // there are filters, then add the length filter
+            InputFilter[] newFilters = new InputFilter[curFilters.length + 1];
+            System.arraycopy(curFilters, 0, newFilters, 0, curFilters.length);
+            newFilters[curFilters.length] = lengthFilter;
+            view.setFilters(newFilters);
+        } else {
+            view.setFilters(new InputFilter[]{lengthFilter});
         }
     }
 

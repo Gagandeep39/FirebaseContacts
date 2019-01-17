@@ -41,6 +41,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.gagandeep.nuvococontacts.Constants.FIREBASE_USERINFO;
+import static com.gagandeep.nuvococontacts.Constants.PHONE_NUMBER_LENGTH;
+import static com.gagandeep.nuvococontacts.HelperClass.setMaxLength;
 
 public class AddUserActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 234;
@@ -125,6 +127,11 @@ public class AddUserActivity extends AppCompatActivity {
         frameLayout = findViewById(R.id.frameLayout);
         editTextSapId = findViewById(R.id.editTextSapId);
         uploadProgressBar = findViewById(R.id.uploadProgressBar);
+
+        setMaxLength(editTextPhoneNo3, PHONE_NUMBER_LENGTH);
+        setMaxLength(editTextPhoneNo2, PHONE_NUMBER_LENGTH);
+        setMaxLength(editTextPhoneNo1, PHONE_NUMBER_LENGTH);
+        setMaxLength(editTextEmergencyNumber, PHONE_NUMBER_LENGTH);
 
         chooseImageView.setOnClickListener(new View.OnClickListener() {
             @Override

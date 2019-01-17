@@ -117,9 +117,9 @@ public class UserList extends ArrayAdapter<User> {
             }
         });
 
-        String name = user.getFirstName();
-        if (name != null)
-        if (name.equals(currentUser.getFirstName()))
+        String phone = user.getPhoneno_1();
+        if (phone != null)
+            if (phone.equals(currentUser.getPhoneno_1()))
             nameTextView.setText("You");
         else
             nameTextView.setText(user.getFirstName() + " " + user.getLastName());

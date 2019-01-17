@@ -28,4 +28,5 @@ public class Constants {
     public static final String WHATSAPP_TO = "WhatsApp to +91";
     public static final String FIREBASE_USERINFO = "userinfo";
     public static final String PACKAGE_NAME = "com.gagandeep.nuvococontacts";
+    public static final int PHONE_NUMBER_LENGTH = 10;
 }

@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -108,6 +109,7 @@ public class SearchFragment extends Fragment {
             case R.id.log_out:
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences(PACKAGE_NAME, Context.MODE_PRIVATE);
                 sharedPreferences.edit().clear().apply();
+                FirebaseAuth.getInstance().signOut();
 
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 getActivity().finish();
@@ -262,5 +264,11 @@ public class SearchFragment extends Fragment {
 
     }
 
-
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            databaseReferenceUser.addValueEventListener(valueEventListener);
+        }
+    }
 }

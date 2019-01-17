@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,6 +41,8 @@ public class VerifyPhoneActivity extends AppCompatActivity {
     private EditText editTextCode;
     private Button buttonSignIn;
 
+    ProgressBar progressBar;
+
     //firebase auth object
     private FirebaseAuth mAuth;
     //the callback to detect the verification status
@@ -62,14 +65,17 @@ public class VerifyPhoneActivity extends AppCompatActivity {
 
         @Override
         public void onVerificationFailed(FirebaseException e) {
+            progressBar.setVisibility(View.GONE);
             Toast.makeText(VerifyPhoneActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+            startActivity(new Intent(VerifyPhoneActivity.this, LoginActivity.class));
+            finish();
         }
 
         @Override
         public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
-
-            //storing the verification id that is sent to the user
+            Toast.makeText(VerifyPhoneActivity.this, "Code Sent", Toast.LENGTH_SHORT).show();
+            //storing the verification id that is s ent to the user
             mVerificationId = s;
         }
     };
@@ -82,6 +88,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
         //initializing objects
         mAuth = FirebaseAuth.getInstance();
         editTextCode = findViewById(R.id.editTextPhone);
+        progressBar = findViewById(R.id.progressBar);
 
 
         //getting mobile number from the previous activity
@@ -121,10 +128,17 @@ public class VerifyPhoneActivity extends AppCompatActivity {
 
     private void verifyVerificationCode(String code) {
         //creating the credential
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
+        try {
+
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
+            signInWithPhoneAuthCredential(credential);
+        } catch (Exception e) {
+            Toast.makeText(this, "Please Try Again Later" + e, Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(VerifyPhoneActivity.this, LoginActivity.class));
+            finish();
+        }
 
         //signing the user
-        signInWithPhoneAuthCredential(credential);
     }
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {

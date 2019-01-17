@@ -48,6 +48,8 @@ import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 import static com.gagandeep.nuvococontacts.AddUserActivity.TAG;
+import static com.gagandeep.nuvococontacts.Constants.PHONE_NUMBER_LENGTH;
+import static com.gagandeep.nuvococontacts.HelperClass.setMaxLength;
 import static com.gagandeep.nuvococontacts.SplashScreenActivity.currentUser;
 
 
@@ -72,7 +74,7 @@ public class ProfileFragment extends Fragment {
     FrameLayout frameLayout;
     ProgressBar uploadProgressBar;
     FloatingActionButton fab;
-    int edit = 0;
+    int edit = 0, saveImageLocally = 0;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -148,6 +150,7 @@ public class ProfileFragment extends Fragment {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
             try {
+                Toast.makeText(getActivity(), "" + filePath, Toast.LENGTH_SHORT).show();
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 bitmap = getResizedBitmap(bitmap, 800, 600);
@@ -346,22 +349,20 @@ public class ProfileFragment extends Fragment {
                 dataSnapshot.getRef().child("location").setValue(location);
                 dataSnapshot.getRef().child("department").setValue(department);
                 dataSnapshot.getRef().child("designation").setValue(designation);
-                if (filePath != null && !TextUtils.isEmpty(newProfileUri)) {
-
-                    dataSnapshot.getRef().child("profileUri").setValue(profileUri);
-                    dataSnapshot.getRef().child("profileCacheUri").setValue(profileCacheUri);
-                }
                 dataSnapshot.getRef().child("sapId").setValue(sapId);
                 dataSnapshot.getRef().child("employeeId").setValue(employeeId);
                 dataSnapshot.getRef().child("deskNumber").setValue(deskNumber);
                 dataSnapshot.getRef().child("emergencyNumber").setValue(emergencyNumber);
-//                if (filePath != null)
-//                    Toast.makeText(getActivity(), "" + filePath, Toast.LENGTH_SHORT).show();
-                if (TextUtils.isEmpty(profileUri)) {
-
-                    Toast.makeText(getActivity(), "Profile Image was not updated, other data uploaded successfully", Toast.LENGTH_SHORT).show();
-                } else
+                if (filePath != null && !TextUtils.isEmpty(newProfileUri)) {
+                    saveImageLocally = 1;
+                    dataSnapshot.getRef().child("profileUri").setValue(newProfileUri);
+                    dataSnapshot.getRef().child("profileCacheUri").setValue(newProfileCacheUri);
                     Toast.makeText(getActivity(), "Updated Successfully", Toast.LENGTH_SHORT).show();
+
+                } else
+                    Toast.makeText(getActivity(), "Profile Image was not updated, other data uploaded successfully", Toast.LENGTH_SHORT).show();
+
+
                 disableKeyListeners();
                 saveUserInfo();
 
@@ -469,6 +470,11 @@ public class ProfileFragment extends Fragment {
         editTextDeskNumber.setText("" + deskNumber);
         editTextEmergencyPhone.setText("" + emergencyNumber);
 
+        setMaxLength(editTextPhoneNo3, PHONE_NUMBER_LENGTH);
+        setMaxLength(editTextPhoneNo2, PHONE_NUMBER_LENGTH);
+        setMaxLength(editTextPhoneNo1, PHONE_NUMBER_LENGTH);
+        setMaxLength(editTextEmergencyPhone, PHONE_NUMBER_LENGTH);
+
 
         if (!TextUtils.isEmpty(phone_2)) {
             editTextPhoneNo2.setText(phone_2);
@@ -513,9 +519,10 @@ public class ProfileFragment extends Fragment {
         set.add(phone_3);
         set.add(emergencyNumber);
         set.add(department);
-        if (filePath != null && !TextUtils.isEmpty(newProfileUri)) {
+        if (filePath != null && !TextUtils.isEmpty(newProfileUri) && saveImageLocally == 1) {
             set.add(newProfileUri);
             set.add(newProfileCacheUri);
+            saveImageLocally = 0;
         } else {
 
             set.add(profileUri);
