@@ -16,13 +16,11 @@
             android:id="@+id/chooseImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:scaleType="centerCrop"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true" />
+            android:scaleType="centerCrop" />
 
         <TextView
             android:padding="8sp"
+            android:background="@color/nuvoco_white"
             android:visibility="gone"
             android:id="@+id/addImageTextView"
             android:layout_width="wrap_content"
@@ -47,7 +45,7 @@
         android:id="@+id/progressBarUploadImage"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="6sp" />
 
 
     <LinearLayout

@@ -1,4 +1,7 @@
 v0.53
+*Added phoje number size validation in login activity
+*Added a edittext phonenumber validation function
+*Added phone number validations in profile fragments
 *Fixed OTP not getting 2nd time by "removing from onCodeSent"
 *Fixed few crashes in Verify Code activity
 *Removed Unecessary Toast

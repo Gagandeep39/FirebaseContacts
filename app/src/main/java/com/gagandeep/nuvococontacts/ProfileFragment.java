@@ -48,8 +48,26 @@ import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 import static com.gagandeep.nuvococontacts.AddUserActivity.TAG;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_DEPARTMENT;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_DESIGNATION;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_DESK_NUMBER;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMAIL_1;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMAIL_2;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMERGENCY_NUMBER;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMPLOYEE_ID;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_FIRST_NAME;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_LAST_NAME;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_LOCATION;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_1;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_2;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_3;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_SAP_ID;
+import static com.gagandeep.nuvococontacts.Constants.CURRENT_USER;
+import static com.gagandeep.nuvococontacts.Constants.FIREBASE_USERINFO;
+import static com.gagandeep.nuvococontacts.Constants.PACKAGE_NAME;
 import static com.gagandeep.nuvococontacts.Constants.PHONE_NUMBER_LENGTH;
 import static com.gagandeep.nuvococontacts.HelperClass.setMaxLength;
+import static com.gagandeep.nuvococontacts.HelperClass.validatePhoneNumber;
 import static com.gagandeep.nuvococontacts.SplashScreenActivity.currentUser;
 
 
@@ -69,8 +87,8 @@ public class ProfileFragment extends Fragment {
     ImageView chooseImageView;
     String id, firstName, lastName, designation, department, email_1, email_2, phone_1, phone_2, phone_3, location, profileUri, profileCacheUri, sapId, emergencyNumber, employeeId, deskNumber;
     KeyListener nameKeyListener, locationKeyListener, designationKeyListener, departmentKeyListener, email_1KeyListener, email_2KeyListener, phoneno_1KeyListener, phoneno_2KeyListener, phoneno_3KeyListener, sapIdKeyListener, employeeIdKeyListener, deskNumberKeyListener, emergencyNumberKeyListener, lastNameKeyListener;
-    String newName, newDesignation, newDepartment, newEmail_1, newEmail_2, newPhone_1, newPhone_2, newPhone_3, newLocation, newImageString, newProfileUri, newProfileCacheUri;
-    TextView addImageTextView, uploadInfoTextView, phoneno_1TextView, phoneno_2TextView, phoneno_3TextView, email_1TextView, email_2TextView, whatsapp_1TextView, whatsapp_2TextView, whatsapp_3TextView;
+    String newEmail_2, newPhone_2, newPhone_3, newProfileUri, newProfileCacheUri;
+    TextView addImageTextView, uploadInfoTextView;
     FrameLayout frameLayout;
     ProgressBar uploadProgressBar;
     FloatingActionButton fab;
@@ -149,7 +167,6 @@ public class ProfileFragment extends Fragment {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
             try {
-                Toast.makeText(getActivity(), "" + filePath, Toast.LENGTH_SHORT).show();
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 bitmap = getResizedBitmap(bitmap, 800, 600);
@@ -289,14 +306,7 @@ public class ProfileFragment extends Fragment {
                 } else {
                     edit = 0;
                     updateData();
-                    fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_edit));
-                    addImageTextView.setVisibility(View.GONE);
-                    if (TextUtils.isEmpty(newEmail_2))
-                        email_2Layout.setVisibility(View.GONE);
-                    if (TextUtils.isEmpty(newPhone_2))
-                        phoneno_2Layout.setVisibility(View.GONE);
-                    if (TextUtils.isEmpty(newPhone_3))
-                        phoneno_3Layout.setVisibility(View.GONE);
+
 
                 }
 
@@ -329,49 +339,84 @@ public class ProfileFragment extends Fragment {
         deskNumber = editTextDeskNumber.getText().toString();
         sapId = editTextSapId.getText().toString();
         employeeId = editTextEmployeeId.getText().toString();
+        int validationCounter = 0;
+        if (!TextUtils.isEmpty(phone_1)) {
+            validationCounter = 1;
+            if (validatePhoneNumber(phone_1, editTextPhoneNo1))
+                validationCounter = 0;
 
+        }
+        if (!TextUtils.isEmpty(phone_2)) {
+            validationCounter = 1;
+            if (validatePhoneNumber(phone_2, editTextPhoneNo2))
+                validationCounter = 0;
+
+        }
+        if (!TextUtils.isEmpty(phone_3)) {
+            validationCounter = 1;
+            if (validatePhoneNumber(phone_3, editTextPhoneNo3))
+                validationCounter = 0;
+
+        }
+        if (validationCounter == 0) {
+            uploadToFirebase();
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_edit));
+            addImageTextView.setVisibility(View.GONE);
+            if (TextUtils.isEmpty(newEmail_2))
+                email_2Layout.setVisibility(View.GONE);
+            if (TextUtils.isEmpty(newPhone_2))
+                phoneno_2Layout.setVisibility(View.GONE);
+            if (TextUtils.isEmpty(newPhone_3))
+                phoneno_3Layout.setVisibility(View.GONE);
+        }
+
+
+    }
+
+    private void uploadToFirebase() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabaseRef = database.getReference();
 
         if (!TextUtils.isEmpty(currentUser.getUserId()))
-        mDatabaseRef.child("userinfo").child(currentUser.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            mDatabaseRef.child(FIREBASE_USERINFO).child(currentUser.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                dataSnapshot.getRef().child("firstName").setValue(firstName);
-                dataSnapshot.getRef().child("lastName").setValue(lastName);
-                dataSnapshot.getRef().child("email1").setValue(email_1);
-                dataSnapshot.getRef().child("email2").setValue(email_2);
-                dataSnapshot.getRef().child("phoneno_1").setValue(phone_1);
-                dataSnapshot.getRef().child("phoneno_2").setValue(phone_2);
-                dataSnapshot.getRef().child("phoneno_3").setValue(phone_3);
-                dataSnapshot.getRef().child("location").setValue(location);
-                dataSnapshot.getRef().child("department").setValue(department);
-                dataSnapshot.getRef().child("designation").setValue(designation);
-                dataSnapshot.getRef().child("sapId").setValue(sapId);
-                dataSnapshot.getRef().child("employeeId").setValue(employeeId);
-                dataSnapshot.getRef().child("deskNumber").setValue(deskNumber);
-                dataSnapshot.getRef().child("emergencyNumber").setValue(emergencyNumber);
-                if (filePath != null && !TextUtils.isEmpty(newProfileUri)) {
-                    saveImageLocally = 1;
-                    dataSnapshot.getRef().child("profileUri").setValue(newProfileUri);
-                    dataSnapshot.getRef().child("profileCacheUri").setValue(newProfileCacheUri);
-                    Toast.makeText(getActivity(), "Updated Successfully", Toast.LENGTH_SHORT).show();
+                    dataSnapshot.getRef().child(COLUMN_FIRST_NAME).setValue(firstName);
+                    dataSnapshot.getRef().child(COLUMN_LAST_NAME).setValue(lastName);
+                    dataSnapshot.getRef().child(COLUMN_EMAIL_1).setValue(email_1);
+                    dataSnapshot.getRef().child(COLUMN_EMAIL_2).setValue(email_2);
+                    dataSnapshot.getRef().child(COLUMN_PHONENO_1).setValue(phone_1);
+                    dataSnapshot.getRef().child(COLUMN_PHONENO_2).setValue(phone_2);
+                    dataSnapshot.getRef().child(COLUMN_PHONENO_3).setValue(phone_3);
+                    dataSnapshot.getRef().child(COLUMN_LOCATION).setValue(location);
+                    dataSnapshot.getRef().child(COLUMN_DEPARTMENT).setValue(department);
+                    dataSnapshot.getRef().child(COLUMN_DESIGNATION).setValue(designation);
+                    dataSnapshot.getRef().child(COLUMN_SAP_ID).setValue(sapId);
+                    dataSnapshot.getRef().child(COLUMN_EMPLOYEE_ID).setValue(employeeId);
+                    dataSnapshot.getRef().child(COLUMN_DESK_NUMBER).setValue(deskNumber);
+                    dataSnapshot.getRef().child(COLUMN_EMERGENCY_NUMBER).setValue(emergencyNumber);
+                    if (filePath != null && !TextUtils.isEmpty(newProfileUri)) {
+                        saveImageLocally = 1;
+                        dataSnapshot.getRef().child("profileUri").setValue(newProfileUri);
+                        dataSnapshot.getRef().child("profileCacheUri").setValue(newProfileCacheUri);
+                        Toast.makeText(getActivity(), "Updated Successfully", Toast.LENGTH_SHORT).show();
 
-                } else
-                    Toast.makeText(getActivity(), "Profile Image was not updated, other data uploaded successfully", Toast.LENGTH_SHORT).show();
+                    } else
+                        Toast.makeText(getActivity(), "Profile Image was not updated, other data uploaded successfully", Toast.LENGTH_SHORT).show();
+
+                    chooseImageView.setFocusable(true);
+
+                    disableKeyListeners();
+                    saveUserInfo();
 
 
-                disableKeyListeners();
-                saveUserInfo();
+                }
 
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
     }
 
     //Prevent User from Typing in below Text Views
@@ -533,9 +578,9 @@ public class ProfileFragment extends Fragment {
         set.add(deskNumber);
         set.add(sapId);
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("com.gagandeep.nuvococontacts", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(PACKAGE_NAME, Context.MODE_PRIVATE);
 
-        sharedPreferences.edit().putString("currentuser", ObjectSerializer.serialize(set)).apply();
+        sharedPreferences.edit().putString(CURRENT_USER, ObjectSerializer.serialize(set)).apply();
         sharedPreferences.edit().apply();
     }
 

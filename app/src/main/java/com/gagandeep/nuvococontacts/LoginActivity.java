@@ -23,6 +23,9 @@ import java.util.ArrayList;
 
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_1;
 import static com.gagandeep.nuvococontacts.Constants.FIREBASE_USERINFO;
+import static com.gagandeep.nuvococontacts.Constants.PHONE_NUMBER_LENGTH;
+import static com.gagandeep.nuvococontacts.HelperClass.setMaxLength;
+import static com.gagandeep.nuvococontacts.HelperClass.validatePhoneNumber;
 import static com.gagandeep.nuvococontacts.SplashScreenActivity.temporaryUser;
 
 public class LoginActivity extends AppCompatActivity {
@@ -77,14 +80,19 @@ public class LoginActivity extends AppCompatActivity {
         editTextPhone = findViewById(R.id.textInputPhone);
         progressBar = findViewById(R.id.progressBar);
 
+        setMaxLength(editTextPhone, PHONE_NUMBER_LENGTH);
+
         button = findViewById(R.id.buttonLogin);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 number = editTextPhone.getText().toString();
                 if (!TextUtils.isEmpty(number)) {
-                    progressBar.setVisibility(View.VISIBLE);
-                    searchFirebase(number);
+                    if (validatePhoneNumber(number, editTextPhone)) {
+
+                        progressBar.setVisibility(View.VISIBLE);
+                        searchFirebase(number);
+                    }
                 } else {
                     editTextPhone.setError("Phone number required.");
                 }
@@ -92,6 +100,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
 
     //Perform search for phone_1 in database
     private void searchFirebase(final String number) {

@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.TextInputEditText;
 import android.text.InputFilter;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -50,6 +51,7 @@ public class HelperClass {
         }
     }
 
+    //Funtion to set Max input text length of Text box
     public static void setMaxLength(EditText view, int length) {
         InputFilter[] curFilters;
         InputFilter.LengthFilter lengthFilter;
@@ -77,5 +79,11 @@ public class HelperClass {
         }
     }
 
+    public static boolean validatePhoneNumber(String number, TextInputEditText editText) {
+        if (number.length() < 10) {
+            editText.setError("Enter a valid number");
+            return false;
+        } else return true;
+    }
 
 }
