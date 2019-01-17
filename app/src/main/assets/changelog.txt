@@ -1,5 +1,10 @@
+v0.53
+*Fixed OTP not getting 2nd time by "removing from onCodeSent"
 *Fixed few crashes in Verify Code activity
 *Removed Unecessary Toast
+*Added phonumber limit of 10
+*Replaced few strings with constants
+*Changed Placeholder image
 *Comparison for "You" in list is now done using phone number
 *Added improved logic for saving profilePicture
 *Modified login of Favourites GridAdapter

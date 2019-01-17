@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,8 +69,6 @@ public class FavouriteFragment extends Fragment {
 
                     }
 
-
-                Toast.makeText(getActivity(), "" + favouriteList.size(), Toast.LENGTH_SHORT).show();
 
                 adapter = new GridViewAdapter(getActivity(), favouriteList);
                 gridview.setAdapter(adapter);

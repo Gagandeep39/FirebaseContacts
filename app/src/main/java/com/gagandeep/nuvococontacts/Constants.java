@@ -29,4 +29,5 @@ public class Constants {
     public static final String FIREBASE_USERINFO = "userinfo";
     public static final String PACKAGE_NAME = "com.gagandeep.nuvococontacts";
     public static final int PHONE_NUMBER_LENGTH = 10;
+    public static final String CURRENT_USER = "currentuser";
 }

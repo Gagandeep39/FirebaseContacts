@@ -26,6 +26,8 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import static com.gagandeep.nuvococontacts.Constants.CURRENT_USER;
+import static com.gagandeep.nuvococontacts.Constants.PACKAGE_NAME;
 import static com.gagandeep.nuvococontacts.SplashScreenActivity.currentUser;
 import static com.gagandeep.nuvococontacts.SplashScreenActivity.isAdmin;
 import static com.gagandeep.nuvococontacts.SplashScreenActivity.temporaryUser;
@@ -72,7 +74,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
 
         @Override
         public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-            super.onCodeSent(s, forceResendingToken);
+//            super.onCodeSent(s, forceResendingToken);
             Toast.makeText(VerifyPhoneActivity.this, "Code Sent", Toast.LENGTH_SHORT).show();
             //storing the verification id that is s ent to the user
             mVerificationId = s;
@@ -168,7 +170,6 @@ public class VerifyPhoneActivity extends AppCompatActivity {
 
     void saveUserInfo() {
         ArrayList<String> set = new ArrayList<>();
-        Toast.makeText(this, "" + currentUser.getUserId(), Toast.LENGTH_SHORT).show();
         set.add(currentUser.getUserId());
         set.add(currentUser.getFirstName());
         set.add(currentUser.getLastName());
@@ -191,9 +192,9 @@ public class VerifyPhoneActivity extends AppCompatActivity {
             if (currentUser.getAdminRights().equals("true"))
                 isAdmin = true;
         }
-        SharedPreferences sharedPreferences = getSharedPreferences("com.gagandeep.nuvococontacts", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(PACKAGE_NAME, Context.MODE_PRIVATE);
 
-        sharedPreferences.edit().putString("currentuser", ObjectSerializer.serialize(set)).apply();
+        sharedPreferences.edit().putString(CURRENT_USER, ObjectSerializer.serialize(set)).apply();
         sharedPreferences.edit().apply();
     }
     }
