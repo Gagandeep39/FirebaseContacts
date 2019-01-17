@@ -83,7 +83,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(getActivity(), "" + currentUser.getUserId(), Toast.LENGTH_SHORT).show();
     }
 
     private void findViews(View v) {

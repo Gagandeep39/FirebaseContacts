@@ -113,7 +113,6 @@ public class FavouriteFragment extends Fragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (hidden) {
-            Toast.makeText(getActivity(), "HIDDEN", Toast.LENGTH_SHORT).show();
         } else {
             readValuesFromFavouritesDatabase();
             final Handler handler = new Handler();
@@ -129,9 +128,6 @@ public class FavouriteFragment extends Fragment {
                             }
 
                         }
-
-
-                    Toast.makeText(getActivity(), "" + favouriteList.size(), Toast.LENGTH_SHORT).show();
 
                     adapter = new GridViewAdapter(getActivity(), favouriteList);
                     gridview.setAdapter(adapter);
