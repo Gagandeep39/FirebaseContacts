@@ -26,8 +26,9 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import static com.gagandeep.nuvococontacts.LoginActivity.currentUser;
-import static com.gagandeep.nuvococontacts.LoginActivity.temporaryUser;
+import static com.gagandeep.nuvococontacts.SplashScreenActivity.currentUser;
+import static com.gagandeep.nuvococontacts.SplashScreenActivity.isAdmin;
+import static com.gagandeep.nuvococontacts.SplashScreenActivity.temporaryUser;
 
 public class VerifyPhoneActivity extends AppCompatActivity {
 
@@ -183,7 +184,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
         set.add(currentUser.getSapId());
         if (!TextUtils.isEmpty(currentUser.getAdminRights())) {
             if (currentUser.getAdminRights().equals("true"))
-                LoginActivity.isAdmin = true;
+                isAdmin = true;
         }
         SharedPreferences sharedPreferences = getSharedPreferences("com.gagandeep.nuvococontacts", Context.MODE_PRIVATE);
 

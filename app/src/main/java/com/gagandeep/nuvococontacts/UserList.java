@@ -35,7 +35,7 @@ import static com.gagandeep.nuvococontacts.Constants.COLUMN_PROFILE_CACHE_URI;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_PROFILE_URI;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_SAP_ID;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_USER_ID;
-import static com.gagandeep.nuvococontacts.LoginActivity.currentUser;
+import static com.gagandeep.nuvococontacts.SplashScreenActivity.currentUser;
 
 
 public class UserList extends ArrayAdapter<User> {
@@ -48,6 +48,7 @@ public class UserList extends ArrayAdapter<User> {
         this.userList = userList;
     }
 
+    private int lastPosition = -1;
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ImageView imageViewPhone, imageViewMail, imageViewMessage, imageViewDetails;
@@ -70,7 +71,7 @@ public class UserList extends ArrayAdapter<User> {
 
             Picasso.get().load(Uri.parse(profileString))
                     .error(R.drawable.bg_placeholder)
-                    .resize(50, 50)
+                    .placeholder(R.drawable.bg_placeholder)
                     .into(profileImageView);
         }
 

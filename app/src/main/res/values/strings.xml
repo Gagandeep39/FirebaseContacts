@@ -4,15 +4,91 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_view_customer">ViewCustomerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
+        "A material metaphor is the unifying theory of a rationalized space and a system of motion."
+        "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
+        "technologically advanced and open to imagination and magic.\n"
 
     </string>
-    <string name="action_settings">Settings</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="lead">Lead</string>
+    <string name="customer">Customer</string>
+    <string name="market">Market</string>
+    <string name="visit">Visit</string>
+    <string name="add_dummy_data">Add dummy Data</string>
+    <string name="title_activity_complaint">ComplaintActivity</string>
+    <string name="title_activity_complaint_details">ComplaintDetailsActivity</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+
+    <string name="log_out">Log Out</string>
+    <string name="title_activity_complaint_status">ComplaintStatusActivity</string>
+    <string name="title_activity_customer_details">CustomerDetailsActivity</string>
+    <string name="title_activity_view_customer_contact">ViewCustomerContactActivity</string>
+    <string name="title_activity_customer_contact_details">CustomerContactDetailsActivity</string>
+    <string name="title_activity_user_account">UserAccountActivity</string>
+    <string name="title_activity_brand_price">BrandPriceActivity</string>
+    <string name="title_activity_insert_general_market">InsertGeneralMarketActivity</string>
+    <string name="title_activity_view_new_customer">ViewNewCustomerActivity</string>
+    <string name="title_activity_view_general_market">ViewGeneralMarketActivity</string>
+    <string name="title_activity_insert_campaign">InsertCampaignActivity</string>
+    <string name="default_name">default</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_view_complaint">ViewComplaintActivity</string>
+    <string name="title_activity_insert">InsertActivity</string>
+    <string name="title_activity_update_status">UpdateStatusActivity</string>
+    <string name="email_id">Email ID </string>
+    <string name="name">Name : </string>
+    <string name="id">ID : </string>
+    <string name="category">Category : </string>
+    <string name="area">Area : </string>
+    <string name="view_customer">View Customer</string>
+    <string name="view_contacts">View Contacts</string>
+    <string name="update_status">Update Status</string>
+    <string name="title_activity_brand_price_details">BrandPriceDetailsActivity</string>
+    <string name="details">Details</string>
+    <string name="counter">Counter : </string>
+    <string name="brand">Brand : </string>
+    <string name="product">Product : </string>
+    <string name="stock">Stock : </string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="company_info">© 2018-19, Nuvoco Vistas Corp Ltd. All Rights reserved.</string>
+    <string name="technical_verify">Technical</string>
+    <string name="dealer">Dealer</string>
+    <string name="sub_dealer">Sub Dealer</string>
+    <string name="individual">Individual</string>
+    <string name="view_my_customers">View My Customers</string>
+    <string name="title_activity_create_jcp">CreateJCPActivity</string>
+    <string name="title_activity_new_jcp">NewJCPActivity</string>
+    <string name="title_activity_view_jcp">ViewJCPActivity</string>
+    <string name="title_activity_visit_details">VisitDetailsActivity</string>
+    <string name="title_activity_calendar">CalendarActivity</string>
+    <string name="connection_error">Error Connecting to Server</string>
+    <string name="something_went_wrong">Something went wrong!!</string>
+    <string name="created_by_nuvoco">Created By Nuvoco IT Team</string>
+    <string name="empty">Empty</string>
+    <string name="title_activity_view_visit_details">ViewVisitDetailsActivity</string>
+    <string name="title_activity_changelog">ChangelogActivity</string>
     <string name="title_activity_user_info">UserInfoActivity</string>
     <string name="title_activity_add_user">AddUserActivity</string>
 </resources>

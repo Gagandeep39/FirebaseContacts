@@ -48,7 +48,7 @@ import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 import static com.gagandeep.nuvococontacts.AddUserActivity.TAG;
-import static com.gagandeep.nuvococontacts.LoginActivity.currentUser;
+import static com.gagandeep.nuvococontacts.SplashScreenActivity.currentUser;
 
 
 public class ProfileFragment extends Fragment {

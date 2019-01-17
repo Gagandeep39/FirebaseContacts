@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 
+
 //implement the interface OnNavigationItemSelectedListener in your activity class
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -18,13 +19,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     final Fragment fragment3 = new ProfileFragment();
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment1;        //object for currently active fragment
-
+    BottomNavigationView navigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
 
         //Show 1 fragment and hide other
         fm.beginTransaction().add(R.id.main_container, fragment3, "3").hide(fragment3).commit();
@@ -32,9 +33,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         fm.beginTransaction().add(R.id.main_container, fragment1, "1").hide(fragment1).commit();
         navigation.setOnNavigationItemSelectedListener(this);
         navigation.setSelectedItemId(R.id.search);
+
     }
 
-    //To show a fragment on selecting one of the bottom button
+    //    //To show a fragment on selecting one of the bottom button
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

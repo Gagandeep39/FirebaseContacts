@@ -41,7 +41,7 @@ import static com.gagandeep.nuvococontacts.HelperClass.initiateCallTo;
 import static com.gagandeep.nuvococontacts.HelperClass.sendMailTo;
 import static com.gagandeep.nuvococontacts.HelperClass.sendMessageTo;
 import static com.gagandeep.nuvococontacts.HelperClass.sendWhatsAppMessageTo;
-import static com.gagandeep.nuvococontacts.LoginActivity.isAdmin;
+import static com.gagandeep.nuvococontacts.SplashScreenActivity.isAdmin;
 
 public class UserInfoActivity extends AppCompatActivity {
     String firstName, designation, department, email_1, email_2, phone_1, phone_2, phone_3, location, profileUri, lastName, desknumber, employeeid, emergencyNumber, sapid;

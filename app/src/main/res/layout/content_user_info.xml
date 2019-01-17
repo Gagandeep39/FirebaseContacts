@@ -47,11 +47,7 @@
                     android:layout_gravity="center"
                     android:src="@drawable/ic_phone_black" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Call" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -70,11 +66,6 @@
                     android:layout_gravity="center"
                     android:src="@drawable/ic_message" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Text" />
             </LinearLayout>
 
             <LinearLayout
@@ -93,11 +84,6 @@
                     android:layout_gravity="center"
                     android:src="@drawable/ic_email" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Email" />
             </LinearLayout>
 
             <LinearLayout
@@ -116,11 +102,6 @@
                     android:layout_gravity="center"
                     android:src="@drawable/ic_whatsapp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="WhatsApp" />
             </LinearLayout>
         </LinearLayout>
         <View
@@ -149,51 +130,58 @@
         </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/employeeIdTextView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4sp"
-            android:text="Employee ID : "
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:padding="8sp">
 
-        <TextView
-            android:id="@+id/sapIdTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="4sp"
-            android:text="SAP ID : "
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/employeeIdTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4sp"
+                android:text="Employee ID : "
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/departmentTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="4sp"
-            android:text="Department : "
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/sapIdTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4sp"
+                android:text="SAP ID : "
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/deskNumberTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="4sp"
-            android:text="Desk No. : "
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/departmentTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4sp"
+                android:text="Department : "
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/designationTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="4sp"
-            android:text="Designation : "
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/deskNumberTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4sp"
+                android:text="Desk No. : "
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/designationTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4sp"
+                android:text="Designation : "
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="2sp"
