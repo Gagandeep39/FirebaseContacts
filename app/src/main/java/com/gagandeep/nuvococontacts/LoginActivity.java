@@ -41,13 +41,13 @@ public class LoginActivity extends AppCompatActivity {
     //firebase auth object
     private FirebaseAuth mAuth;
     ArrayList<User> userArrayList;
-    int counter = 0;
+
     ValueEventListener view = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             if (dataSnapshot.exists()) {
                 for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                    counter++;
+
                     temporaryUser = issue.getValue(User.class);
                     break;
 

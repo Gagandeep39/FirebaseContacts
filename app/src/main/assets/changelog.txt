@@ -1,3 +1,4 @@
+Invalid code toasts shows even if valid code is entered
 v0.54
 *Fixed Email not showing in UserInfo Activity
 *Modified progress bar logic of  VerifyPhone Activity
