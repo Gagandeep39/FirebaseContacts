@@ -27,7 +27,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         textViewVersion = findViewById(R.id.textViewVersion);
-        textViewVersion.setText(versionName + "\n" + getString(R.string.created_by_nuvoco));
+        textViewVersion.setText("Version " + versionName + "\n" + getString(R.string.created_by_nuvoco));
 
         new Handler().postDelayed(new Runnable() {
 

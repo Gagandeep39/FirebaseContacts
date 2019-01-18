@@ -1,5 +1,10 @@
+v0.54
+*Modified progress bar logic of  VerifyPhone Activity
+*Splash Screen now nows "Version" before actual version number
+*Added a network connection check before making Autehntication
+*Added a limit of max code length of 6
 v0.53
-*Added phoje number size validation in login activity
+*Added phone number size validation in login activity
 *Added a edittext phonenumber validation function
 *Added phone number validations in profile fragments
 *Fixed OTP not getting 2nd time by "removing from onCodeSent"

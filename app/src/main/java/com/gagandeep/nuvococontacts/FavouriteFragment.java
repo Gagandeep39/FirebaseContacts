@@ -30,8 +30,8 @@ public class FavouriteFragment extends Fragment {
     GridViewAdapter adapter;
     String[] projection = {
             BaseColumns._ID,
-            FavouriteContract.Favourite.COLUMN_NAME_TITLE,
-            FavouriteContract.Favourite.COLUMN_NAME_SUBTITLE
+            FavouriteContract.Favourite.COLUMN_LOCAL_NAME,
+            FavouriteContract.Favourite.COLUMN_LOCAL_PHONE
     };
 
 
@@ -99,8 +99,8 @@ public class FavouriteFragment extends Fragment {
         while (cursor.moveToNext()) {
             int itemId = cursor.getInt(
                     cursor.getColumnIndexOrThrow(FavouriteContract.Favourite._ID));
-            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_NAME_TITLE));
-            String itemPhone = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_NAME_SUBTITLE));
+            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_LOCAL_NAME));
+            String itemPhone = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_LOCAL_PHONE));
             itemIds.add(new FavouriteItem(itemId, itemName, itemPhone));
         }
         cursor.close();

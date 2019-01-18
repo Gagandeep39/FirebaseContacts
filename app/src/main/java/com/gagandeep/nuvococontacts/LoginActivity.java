@@ -1,11 +1,14 @@
 package com.gagandeep.nuvococontacts;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -90,8 +93,11 @@ public class LoginActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(number)) {
                     if (validatePhoneNumber(number, editTextPhone)) {
 
-                        progressBar.setVisibility(View.VISIBLE);
-                        searchFirebase(number);
+                        if (checkInternetConnection()) {
+                            searchFirebase(number);
+                        } else {
+                            Toast.makeText(LoginActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 } else {
                     editTextPhone.setError("Phone number required.");
@@ -112,5 +118,18 @@ public class LoginActivity extends AppCompatActivity {
         query1.addListenerForSingleValueEvent(view);
     }
 
+
+    private boolean checkInternetConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        // test for connection
+        if (cm.getActiveNetworkInfo() != null
+                && cm.getActiveNetworkInfo().isAvailable()
+                && cm.getActiveNetworkInfo().isConnected()) {
+            return true;
+        } else {
+            Log.v("", "Internet Connection Not Present");
+            return false;
+        }
+    }
 
 }

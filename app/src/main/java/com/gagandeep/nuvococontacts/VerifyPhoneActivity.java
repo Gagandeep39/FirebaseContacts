@@ -3,10 +3,12 @@ package com.gagandeep.nuvococontacts;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.gagandeep.nuvococontacts.Constants.CURRENT_USER;
 import static com.gagandeep.nuvococontacts.Constants.PACKAGE_NAME;
+import static com.gagandeep.nuvococontacts.HelperClass.setMaxLength;
 import static com.gagandeep.nuvococontacts.SplashScreenActivity.currentUser;
 import static com.gagandeep.nuvococontacts.SplashScreenActivity.isAdmin;
 import static com.gagandeep.nuvococontacts.SplashScreenActivity.temporaryUser;
@@ -91,14 +94,21 @@ public class VerifyPhoneActivity extends AppCompatActivity {
         editTextCode = findViewById(R.id.editTextPhone);
         progressBar = findViewById(R.id.progressBar);
 
+        setMaxLength(editTextCode, 6);
+
 
         //getting mobile number from the previous activity
         //and sending the verification code to the number
         Intent intent = getIntent();
         String mobile = intent.getStringExtra("mobile");
-        sendVerificationCode(mobile);
-
-
+        if (checkInternetConnection()) {
+            progressBar.setVisibility(View.VISIBLE);
+            sendVerificationCode(mobile);
+        } else {
+            Toast.makeText(VerifyPhoneActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(VerifyPhoneActivity.this, LoginActivity.class));
+            finish();
+        }
         //if the automatic sms detection did not work, user can also enter the code manually
         //so adding a click listener to the button
         buttonSignIn = findViewById(R.id.buttonSignIn);
@@ -112,7 +122,9 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                     return;
                 }
 
+//
                 verifyVerificationCode(code);
+//
             }
         });
 
@@ -125,6 +137,19 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                 TimeUnit.SECONDS,
                 TaskExecutors.MAIN_THREAD,
                 mCallbacks);
+    }
+
+    private boolean checkInternetConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        // test for connection
+        if (cm.getActiveNetworkInfo() != null
+                && cm.getActiveNetworkInfo().isAvailable()
+                && cm.getActiveNetworkInfo().isConnected()) {
+            return true;
+        } else {
+            Log.v("", "Internet Connection Not Present");
+            return false;
+        }
     }
 
     private void verifyVerificationCode(String code) {
@@ -156,12 +181,14 @@ public class VerifyPhoneActivity extends AppCompatActivity {
 
                         } else {
 
-                            String message = "Somthing is wrong, we will fix it soon...";
+                            String message = "Check Your Connection";
 
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 message = "Invalid code entered...";
                             }
                             Toast.makeText(VerifyPhoneActivity.this, "" + message, Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
+
                         }
                     }
                 });

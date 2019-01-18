@@ -36,7 +36,7 @@ import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_2;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_3;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_PROFILE_URI;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_SAP_ID;
-import static com.gagandeep.nuvococontacts.FavouriteContract.Favourite.COLUMN_NAME_TITLE;
+import static com.gagandeep.nuvococontacts.FavouriteContract.Favourite.COLUMN_LOCAL_NAME;
 import static com.gagandeep.nuvococontacts.HelperClass.initiateCallTo;
 import static com.gagandeep.nuvococontacts.HelperClass.sendMailTo;
 import static com.gagandeep.nuvococontacts.HelperClass.sendMessageTo;
@@ -55,11 +55,11 @@ public class UserInfoActivity extends AppCompatActivity {
     List<FavouriteItem> itemIds;
     String[] projection = {
             BaseColumns._ID,
-            COLUMN_NAME_TITLE,
-            FavouriteContract.Favourite.COLUMN_NAME_SUBTITLE
+            COLUMN_LOCAL_NAME,
+            FavouriteContract.Favourite.COLUMN_LOCAL_PHONE
     };
 
-    String selection = COLUMN_NAME_TITLE + " = ?";
+    String selection = COLUMN_LOCAL_NAME + " = ?";
 
 
     @Override
@@ -321,8 +321,8 @@ public class UserInfoActivity extends AppCompatActivity {
         while (cursor.moveToNext()) {
             int itemId = cursor.getInt(
                     cursor.getColumnIndexOrThrow(FavouriteContract.Favourite._ID));
-            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_TITLE));
-            String itemPhone = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_NAME_SUBTITLE));
+            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCAL_NAME));
+            String itemPhone = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_LOCAL_PHONE));
             itemIds.add(new FavouriteItem(itemId, itemName, itemPhone));
         }
         cursor.close();
@@ -331,7 +331,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
     private void deleteFavourites(MenuItem item) {
 // Define 'where' part of query.
-        String selection = COLUMN_NAME_TITLE + " LIKE ?";
+        String selection = COLUMN_LOCAL_NAME + " LIKE ?";
 // Specify arguments in placeholder order.
         String[] selectionArgs = {firstName};
 // Issue SQL statement.
@@ -346,8 +346,8 @@ public class UserInfoActivity extends AppCompatActivity {
 
 // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME_TITLE, firstName);           //data is stored in key value pair
-        values.put(FavouriteContract.Favourite.COLUMN_NAME_SUBTITLE, phone_1);
+        values.put(COLUMN_LOCAL_NAME, firstName);           //data is stored in key value pair
+        values.put(FavouriteContract.Favourite.COLUMN_LOCAL_PHONE, phone_1);
 
 // Insert the new row, returning the primary key value of the new row
         long newRowId = db.insert(FavouriteContract.Favourite.TABLE_NAME, null, values);
@@ -360,14 +360,14 @@ public class UserInfoActivity extends AppCompatActivity {
 // you will actually use after this query.
         String[] selectionArgs = {firstName};
 
-        String whereNotNull = COLUMN_NAME_TITLE + "= ?";
-        String whereNull = COLUMN_NAME_TITLE + " IS NULL";
+        String whereNotNull = COLUMN_LOCAL_NAME + "= ?";
+        String whereNull = COLUMN_LOCAL_NAME + " IS NULL";
         String[] whereArgs = {firstName};
 
 
         // How you want the results sorted in the resulting Cursor
         String sortOrder =
-                FavouriteContract.Favourite.COLUMN_NAME_SUBTITLE + " DESC";
+                FavouriteContract.Favourite.COLUMN_LOCAL_PHONE + " DESC";
 
         db = mDbHelper.getReadableDatabase();
         Cursor cursor = whereArgs == null
@@ -393,8 +393,8 @@ public class UserInfoActivity extends AppCompatActivity {
         while (cursor.moveToNext()) {
             int itemId = cursor.getInt(
                     cursor.getColumnIndexOrThrow(FavouriteContract.Favourite._ID));
-            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_TITLE));
-            String itemPhone = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_NAME_SUBTITLE));
+            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCAL_NAME));
+            String itemPhone = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_LOCAL_PHONE));
             itemIds.add(new FavouriteItem(itemId, itemName, itemPhone));
         }
         cursor.close();

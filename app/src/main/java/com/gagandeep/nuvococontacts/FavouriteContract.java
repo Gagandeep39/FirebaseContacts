@@ -11,7 +11,7 @@ public class FavouriteContract {
     /* Inner class that defines the table contents */
     public static class Favourite implements BaseColumns {
         public static final String TABLE_NAME = "favourite";
-        public static final String COLUMN_NAME_TITLE = "name";
-        public static final String COLUMN_NAME_SUBTITLE = "phoneno";
+        public static final String COLUMN_LOCAL_NAME = "name";
+        public static final String COLUMN_LOCAL_PHONE = "phoneno";
     }
 }

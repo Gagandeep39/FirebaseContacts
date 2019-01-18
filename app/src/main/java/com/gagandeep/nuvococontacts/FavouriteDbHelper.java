@@ -11,8 +11,8 @@ public class FavouriteDbHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + FavouriteContract.Favourite.TABLE_NAME + " (" +
                     FavouriteContract.Favourite._ID + " INTEGER PRIMARY KEY," +
-                    FavouriteContract.Favourite.COLUMN_NAME_TITLE + " TEXT," +
-                    FavouriteContract.Favourite.COLUMN_NAME_SUBTITLE + " TEXT)";
+                    FavouriteContract.Favourite.COLUMN_LOCAL_NAME + " TEXT," +
+                    FavouriteContract.Favourite.COLUMN_LOCAL_PHONE + " TEXT)";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + FavouriteContract.Favourite.TABLE_NAME;
