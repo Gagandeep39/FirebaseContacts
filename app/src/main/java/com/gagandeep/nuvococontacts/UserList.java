@@ -23,6 +23,7 @@ import static com.gagandeep.nuvococontacts.Constants.COLUMN_DEPARTMENT;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_DESIGNATION;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_DESK_NUMBER;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMAIL_1;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMAIL_2;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMERGENCY_NUMBER;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMPLOYEE_ID;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_FIRST_NAME;
@@ -119,8 +120,9 @@ public class UserList extends ArrayAdapter<User> {
 
         String phone = user.getPhoneno_1();
         if (phone != null)
-            if (phone.equals(currentUser.getPhoneno_1()))
-            nameTextView.setText("You");
+            if (phone.equals(currentUser.getPhoneno_1())) {
+                nameTextView.setText("You");
+            }
         else
             nameTextView.setText(user.getFirstName() + " " + user.getLastName());
         locationTextView.setText(user.getLocation());
@@ -135,7 +137,7 @@ public class UserList extends ArrayAdapter<User> {
         intent.putExtra(COLUMN_DEPARTMENT, user.getDepartment());
         intent.putExtra(COLUMN_LOCATION, user.getLocation());
         intent.putExtra(COLUMN_EMAIL_1, user.getEmail1());
-        intent.putExtra(COLUMN_EMAIL_1, user.getEmail2());
+        intent.putExtra(COLUMN_EMAIL_2, user.getEmail2());
         intent.putExtra(COLUMN_PHONENO_1, user.getPhoneno_1());
         intent.putExtra(COLUMN_PHONENO_2, user.getPhoneno_2());
         intent.putExtra(COLUMN_PHONENO_3, user.getPhoneno_3());

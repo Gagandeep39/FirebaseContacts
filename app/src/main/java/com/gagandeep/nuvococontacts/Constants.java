@@ -12,8 +12,8 @@ public class Constants {
     public static final String COLUMN_DEPARTMENT = "department";
     public static final String COLUMN_DESIGNATION = "designation";
     public static final String COLUMN_LOCATION = "location";
-    public static final String COLUMN_EMAIL_1 = "email_1";
-    public static final String COLUMN_EMAIL_2 = "email_2";
+    public static final String COLUMN_EMAIL_1 = "email1";
+    public static final String COLUMN_EMAIL_2 = "email2";
     public static final String COLUMN_PHONENO_1 = "phoneno_1";
     public static final String COLUMN_PHONENO_2 = "phoneno_2";
     public static final String COLUMN_PHONENO_3 = "phoneno_3";

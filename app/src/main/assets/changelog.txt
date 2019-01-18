@@ -1,8 +1,10 @@
 v0.54
+*Fixed Email not showing in UserInfo Activity
 *Modified progress bar logic of  VerifyPhone Activity
 *Splash Screen now nows "Version" before actual version number
 *Added a network connection check before making Autehntication
 *Added a limit of max code length of 6
+*Fixed last name error problem
 v0.53
 *Added phone number size validation in login activity
 *Added a edittext phonenumber validation function

@@ -326,7 +326,7 @@ public class ProfileFragment extends Fragment {
     //fetch data from text views
     private void updateData() {
         firstName = editTextFirstName.getText().toString();
-        lastName = editTextFirstName.getText().toString();
+        lastName = editTextLastName.getText().toString();
         location = editTextLocation.getText().toString();
         designation = editTextDesignation.getText().toString();
         department = editTextDepartment.getText().toString();
@@ -381,7 +381,6 @@ public class ProfileFragment extends Fragment {
             mDatabaseRef.child(FIREBASE_USERINFO).child(currentUser.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-
                     dataSnapshot.getRef().child(COLUMN_FIRST_NAME).setValue(firstName);
                     dataSnapshot.getRef().child(COLUMN_LAST_NAME).setValue(lastName);
                     dataSnapshot.getRef().child(COLUMN_EMAIL_1).setValue(email_1);
@@ -506,13 +505,29 @@ public class ProfileFragment extends Fragment {
         editTextLastName.setText("" + lastName);
         editTextDepartment.setText("" + department);
         editTextDesignation.setText("" + designation);
-        editTextLocation.setText("" + location);
         editTextPhoneNo1.setText("" + phone_1);
         editTextEmail.setText("" + email_1);
-        editTextEmployeeId.setText("" + employeeId);
-        editTextSapId.setText("" + sapId);
-        editTextDeskNumber.setText("" + deskNumber);
-        editTextEmergencyPhone.setText("" + emergencyNumber);
+
+        if (TextUtils.isEmpty(employeeId)) editTextEmployeeId.setText("");
+        else editTextEmployeeId.setText("" + employeeId);
+
+
+        if (TextUtils.isEmpty(sapId)) editTextSapId.setText("");
+        else editTextSapId.setText("" + sapId);
+
+        if (TextUtils.isEmpty(deskNumber)) editTextDeskNumber.setText("");
+        else editTextDeskNumber.setText("" + deskNumber);
+
+        if (TextUtils.isEmpty(emergencyNumber)) editTextEmergencyPhone.setText("");
+        else editTextEmergencyPhone.setText("" + emergencyNumber);
+
+        if (TextUtils.isEmpty(location)) editTextLocation.setText("");
+        else editTextLocation.setText("" + location);
+        if (TextUtils.isEmpty(designation)) editTextDesignation.setText("");
+        else editTextDesignation.setText("" + designation);
+        if (TextUtils.isEmpty(department)) editTextDepartment.setText("");
+        else editTextDepartment.setText("" + department);
+
 
         setMaxLength(editTextPhoneNo3, PHONE_NUMBER_LENGTH);
         setMaxLength(editTextPhoneNo2, PHONE_NUMBER_LENGTH);
