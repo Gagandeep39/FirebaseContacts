@@ -12,7 +12,6 @@ public class FavouriteItem {
         this.phoneno = phoneno;
     }
 
-
     public int get_id() {
         return _id;
     }
@@ -24,6 +23,4 @@ public class FavouriteItem {
     public String getPhoneno() {
         return phoneno;
     }
-
-
 }

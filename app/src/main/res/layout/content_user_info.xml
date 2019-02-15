@@ -113,28 +113,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="8sp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_location" />
 
             <TextView
                 android:id="@+id/locationTextView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mumbai" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="8sp">
+                android:padding="4sp"
+                android:text="Location : "
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/employeeIdTextView"
@@ -164,11 +153,11 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/deskNumberTextView"
+                android:id="@+id/divisionTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="4sp"
-                android:text="Desk No. : "
+                android:text="Division : "
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -259,43 +248,6 @@
                 android:clickable="true"
                 android:onClick="messageFunction"
                 android:layout_height="40sp"
-                android:src="@drawable/ic_message" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/phoneno_3Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:onClick="callFunction"
-            android:orientation="horizontal"
-            android:padding="8sp">
-
-            <ImageView
-                android:layout_width="0sp"
-                android:layout_height="40sp"
-                android:layout_weight="0.2"
-                android:src="@drawable/ic_phone_black" />
-
-            <TextView
-                android:id="@+id/phoneno_3TextView"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.8"
-                android:gravity="left"
-                android:text="1234567890"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:id="@+id/message_3ImageView"
-                android:layout_width="0sp"
-                android:layout_height="40sp"
-                android:layout_weight="0.2"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:onClick="messageFunction"
                 android:src="@drawable/ic_message" />
         </LinearLayout>
 
@@ -445,32 +397,6 @@
 
             <TextView
                 android:id="@+id/whatsapp_2TextView"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.8"
-                android:text="Gagandeep Singh"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/whatsapp_3Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:onClick="whatsappFunction"
-            android:orientation="horizontal"
-            android:padding="8sp">
-
-            <ImageView
-                android:layout_width="0sp"
-                android:layout_height="40sp"
-                android:layout_weight="0.15"
-                android:src="@drawable/ic_whatsapp" />
-
-            <TextView
-                android:id="@+id/whatsapp_3TextView"
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

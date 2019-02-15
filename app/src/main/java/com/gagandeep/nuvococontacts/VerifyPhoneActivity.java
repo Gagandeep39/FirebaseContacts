@@ -194,27 +194,42 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                 });
     }
 
-
+    /**
+     * 0 SapID
+     * 1 name
+     * 2 department
+     * 3 location
+     * 4 dsignation
+     * 5 division
+     * 6 employeeid
+     * 7 email1
+     * 8 email2
+     * 9 phone1
+     * 10 phone2
+     * 11 adminright
+     * 12 desknumber
+     * 13 emergencynumber
+     * 14 profilecacheuri
+     * 15 profile uri
+     */
     void saveUserInfo() {
         ArrayList<String> set = new ArrayList<>();
-        set.add(currentUser.getUserId());
-        set.add(currentUser.getFirstName());
-        set.add(currentUser.getLastName());
-        set.add(currentUser.getDesignation());
+        set.add(currentUser.getSapId());
+        set.add(currentUser.getName());
+        set.add(currentUser.getDepartment());
         set.add(currentUser.getLocation());
+        set.add(currentUser.getDesignation());
+        set.add(currentUser.getDivision());
+        set.add(currentUser.getEmployeeId());
         set.add(currentUser.getEmail1());
         set.add(currentUser.getEmail2());
         set.add(currentUser.getPhoneno_1());
         set.add(currentUser.getPhoneno_2());
-        set.add(currentUser.getPhoneno_3());
-        set.add(currentUser.getEmergencyNumber());
-        set.add(currentUser.getDepartment());
-        set.add(currentUser.getProfileUri());
-        set.add(currentUser.getProfileCacheUri());
-        set.add(currentUser.getEmployeeId());
         set.add(currentUser.getAdminRights());
         set.add(currentUser.getDeskNumber());
-        set.add(currentUser.getSapId());
+        set.add(currentUser.getEmergencyNumber());
+        set.add(currentUser.getProfileCacheUri());
+        set.add(currentUser.getProfileUri());
         if (!TextUtils.isEmpty(currentUser.getAdminRights())) {
             if (currentUser.getAdminRights().equals("true"))
                 isAdmin = true;

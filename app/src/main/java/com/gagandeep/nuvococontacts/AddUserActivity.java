@@ -109,7 +109,7 @@ public class AddUserActivity extends AppCompatActivity {
     //Link widgets with variables
     private void findViews() {
 
-        editTextFirstName = findViewById(R.id.editTextFirstName);
+        editTextFirstName = findViewById(R.id.editTextName);
         editTextDepartment = findViewById(R.id.editTextDepartment);
         editTextDesignation = findViewById(R.id.editTextDesignation);
         editTextEmail = findViewById(R.id.editTextEmailId);
@@ -123,7 +123,7 @@ public class AddUserActivity extends AppCompatActivity {
         editTextEmployeeId = findViewById(R.id.editTextEmployeeId);
         editTextEmergencyNumber = findViewById(R.id.editTextEmergencyNumber);
         editTextLastName = findViewById(R.id.editTextLastName);
-        editTextDeskNumber = findViewById(R.id.editTextDeskNumber);
+        editTextDeskNumber = findViewById(R.id.editTextDivision);
         frameLayout = findViewById(R.id.frameLayout);
         editTextSapId = findViewById(R.id.editTextSapId);
         uploadProgressBar = findViewById(R.id.uploadProgressBar);
@@ -190,7 +190,7 @@ public class AddUserActivity extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    User user = new User(id, firstName, lastName, designation, location, email, email2, phoneno1, phoneno2, phoneno3, emergencyNumber, department, profileUri, profileCacheUri, employeeId, adminRights, deskNo, sapId);
+                    User user = new User(id, firstName, designation, location, email, email2, phoneno1, phoneno2, emergencyNumber, department, profileUri, profileCacheUri, employeeId, adminRights, deskNo, sapId);
                     databaseReferenceUser.child(id).setValue(user);
                     if (TextUtils.isEmpty(profileUri))
                         Toast.makeText(AddUserActivity.this, "Profile Picture could not be Uploaded\nOther data inserted successfully", Toast.LENGTH_SHORT).show();

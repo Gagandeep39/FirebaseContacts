@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     TextInputEditText editTextPhone;
     Button button;
     String number;
-    TextView versionTextView;
     ProgressBar progressBar;
 
     //firebase auth object
@@ -47,7 +45,6 @@ public class LoginActivity extends AppCompatActivity {
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             if (dataSnapshot.exists()) {
                 for (DataSnapshot issue : dataSnapshot.getChildren()) {
-
                     temporaryUser = issue.getValue(User.class);
                     break;
 
@@ -62,13 +59,10 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         }
-
-
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
             progressBar.setVisibility(View.INVISIBLE);
             Toast.makeText(LoginActivity.this, "Please Try Again", Toast.LENGTH_SHORT).show();
-
         }
     };
 
@@ -78,8 +72,6 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_login);
         userArrayList = new ArrayList<>();
-
-
         editTextPhone = findViewById(R.id.textInputPhone);
         progressBar = findViewById(R.id.progressBar);
 
@@ -131,5 +123,4 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
     }
-
 }

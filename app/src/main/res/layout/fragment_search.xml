@@ -12,10 +12,8 @@
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.NoActionBar.AppBarOverlay">
 
-
-
             <android.support.v7.widget.Toolbar
-                app:title="Search"
+                app:title="Employ Contacts1"
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -25,12 +23,17 @@
 
 
         <ListView
+            android:animationCache="true"
+            android:choiceMode="multipleChoice"
+            android:fadeScrollbars="true"
+            android:fastScrollEnabled="true"
+            android:scrollingCache="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:fillViewport="true"
             android:id="@+id/listView"
+            android:smoothScrollbar="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
 
 
     <android.support.design.widget.FloatingActionButton
@@ -46,6 +49,38 @@
         android:layout_marginBottom="10dp"
         android:visibility="gone"
         app:srcCompat="@drawable/ic_close" />
+
+    <LinearLayout
+        android:id="@+id/broadcastLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:padding="16sp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/cancelBroadCast"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="Cancel" />
+
+        <TextView
+            android:id="@+id/sendBroadCast"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="Send" />
+
+    </LinearLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

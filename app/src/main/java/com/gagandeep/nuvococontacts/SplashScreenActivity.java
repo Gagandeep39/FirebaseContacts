@@ -42,10 +42,29 @@ public class SplashScreenActivity extends AppCompatActivity {
                 authenticationCheck();
 
                 // close this activity
-                finish();
+//                finish();
             }
         }, 2000);
     }
+
+    /**
+     * 0 SapID
+     * 1 name
+     * 2 department
+     * 3 location
+     * 4 dsignation
+     * 5 division
+     * 6 employeeid
+     * 7 email1
+     * 8 email2
+     * 9 phone1
+     * 10 phone2
+     * 11 adminright
+     * 12 desknumber
+     * 13 emergencynumber
+     * 14 profilecacheuri
+     * 15 profile uri
+     */
 
 
     //check if user is previously autenticated and logged in from locally stored data
@@ -54,6 +73,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(PACKAGE_NAME, Context.MODE_PRIVATE);
         User user = null;
         newArralist = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("currentuser", ObjectSerializer.serialize(new ArrayList<String>())));
+
+
         if (newArralist.size() != 0)
             user = new User(newArralist.get(0)
                     , newArralist.get(1)
@@ -71,14 +92,11 @@ public class SplashScreenActivity extends AppCompatActivity {
                     , newArralist.get(13)
                     , newArralist.get(14)
                     , newArralist.get(15)
-                    , newArralist.get(16)
-                    , newArralist.get(17));
-
+            );
 
         String name = "";
         if (user != null)
-            name = user.getFirstName();
-
+            name = user.getName();
 
         if (!TextUtils.isEmpty(name)) {
             currentUser = user;
@@ -90,9 +108,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         } else
             startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
         finish();
-
         return user;
     }
-
-
 }

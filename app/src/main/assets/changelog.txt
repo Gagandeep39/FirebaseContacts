@@ -1,4 +1,30 @@
-Invalid code toasts shows even if valid code is entered
+DONE - Added  a medium to send bulk message
+DONE - Implemented a dialogue to write message
+DONE - Added viewholder (now layout gives butter smooth performance)
+DONE - Multiselect now sends message from sms App
+
+*****REQUIREMENTS By Pankaj Uncle - 14 Feb 2019*****
+DONE - Fixed Department showing other department containing 'IT' in  it
+DONE - Fixed normal search not working
+DONE - Max line of button is now 1
+
+*****REQUIREMENTS By Pankaj Uncle - 7 Feb 2019*****
+
+DONE - empID, sapId, phoneno1, emailid1 are not editable
+DONE - Fixed Profile Fragment showing wrong data
+DONE - Fixed data not showing in search fragment sometimes
+
+*****REQUIREMENTS By Pankaj Uncle - 6 Feb 2019*****
+
+
+DONE - In profile fragment, 9 fields should be editable and shows proper data.
+DONE - In favorite fragment, it not update the activity if i unmark the employee.
+DONE - On back press after search data, data should not go to default home page.
+DONE - Profile photo must be good(vertical) in my profile section.
+
+DONE - in useractivity.java(Employee details page), if email2 & phone 2 is not exist, then also its showin
+ON HOLD - Meetings profile i will discuss on phone.
+
 v0.54
 *Fixed Email not showing in UserInfo Activity
 *Modified progress bar logic of  VerifyPhone Activity

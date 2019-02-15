@@ -51,17 +51,12 @@ import static com.gagandeep.nuvococontacts.AddUserActivity.TAG;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_DEPARTMENT;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_DESIGNATION;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_DESK_NUMBER;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMAIL_1;
+import static com.gagandeep.nuvococontacts.Constants.COLUMN_DIVISION;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMAIL_2;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMERGENCY_NUMBER;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMPLOYEE_ID;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_FIRST_NAME;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_LAST_NAME;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_LOCATION;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_1;
 import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_2;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_3;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_SAP_ID;
 import static com.gagandeep.nuvococontacts.Constants.CURRENT_USER;
 import static com.gagandeep.nuvococontacts.Constants.FIREBASE_USERINFO;
 import static com.gagandeep.nuvococontacts.Constants.PACKAGE_NAME;
@@ -70,73 +65,65 @@ import static com.gagandeep.nuvococontacts.HelperClass.setMaxLength;
 import static com.gagandeep.nuvococontacts.HelperClass.validatePhoneNumber;
 import static com.gagandeep.nuvococontacts.SplashScreenActivity.currentUser;
 
+//import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMPLOYEE_ID;
 
 public class ProfileFragment extends Fragment {
-
-
     private static final int PICK_IMAGE_REQUEST = 234;
-    //    FirebaseStorage storage = FirebaseStorage.getInstance();
-//    StorageReference storageRef = storage.getReference();
-    Bitmap universalBitmap;
     Uri filePath;
-    TextInputEditText editTextFirstName, editTextLastName, editTextDesignation, editTextLocation, editTextDepartment, editTextEmail, editTextEmail2, editTextPhoneNo1, editTextPhoneNo2, editTextPhoneNo3, editTextEmergencyPhone, editTextDeskNumber, editTextSapId, editTextEmployeeId;
-    TextInputLayout phoneno_1Layout, phoneno_2Layout, phoneno_3Layout, email_1Layout, email_2Layout;
-
+    TextInputEditText editTextname, editTextdesignation, editTextLocation, editTextdepartment, editTextEmail, editTextEmail2, editTextDivision, editTextPhoneNo1, editTextPhoneNo2, editTextEmergencyPhone, editTextDeskNumber, editTextSapId, editTextEmployeeId;
+    TextInputLayout name_Layout, emergencyNumber_Layout, phoneno_2Layout, email_2Layout, desknumber_Layout, emergencynumber_Layout, designation_Layout, department_Layout, location_Layout, division_Layout;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     ImageView chooseImageView;
-    String id, firstName, lastName, designation, department, email_1, email_2, phone_1, phone_2, phone_3, location, profileUri, profileCacheUri, sapId, emergencyNumber, employeeId, deskNumber;
-    KeyListener nameKeyListener, locationKeyListener, designationKeyListener, departmentKeyListener, email_1KeyListener, email_2KeyListener, phoneno_1KeyListener, phoneno_2KeyListener, phoneno_3KeyListener, sapIdKeyListener, employeeIdKeyListener, deskNumberKeyListener, emergencyNumberKeyListener, lastNameKeyListener;
-    String newEmail_2, newPhone_2, newPhone_3, newProfileUri, newProfileCacheUri;
+    // 14 String Fields Defined....
+    String employeeId, sapId, name, department, location, designation, division, email_1, email_2, phoneno_1, phoneno_2, profileCacheUri, emergencyNumber, profileUri, deskNumber;
+    KeyListener nameKeyListener, divisionKeyListener, locationKeyListener, designationKeyListener, departmentKeyListener, email_1KeyListener, email_2KeyListener, phoneno_1KeyListener, phoneno_2KeyListener, sapIdKeyListener, employeeIdKeyListener, deskNumberKeyListener, emergencyNumberKeyListener;
+    String newEmail_2, newphoneno_2, newProfileUri, newProfileCacheUri;
     TextView addImageTextView, uploadInfoTextView;
     FrameLayout frameLayout;
     ProgressBar uploadProgressBar;
     FloatingActionButton fab;
     int edit = 0, saveImageLocally = 0;
-
     public ProfileFragment() {
         // Required empty public constructor
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     private void findViews(View v) {
-
-
-        editTextFirstName = v.findViewById(R.id.editTextFirstName);
-        editTextLastName = v.findViewById(R.id.editTextLastName);
-        editTextDepartment = v.findViewById(R.id.editTextDepartment);
-        editTextDesignation = v.findViewById(R.id.editTextDesignation);
-        editTextEmail = v.findViewById(R.id.editTextEmailId);
-        editTextEmail2 = v.findViewById(R.id.editTextEmailId2);
-        editTextLocation = v.findViewById(R.id.editTextLocation);
-        editTextPhoneNo1 = v.findViewById(R.id.editTextPhoneNo1);
-        editTextPhoneNo2 = v.findViewById(R.id.editTextPhoneNo2);
-        editTextPhoneNo3 = v.findViewById(R.id.editTextPhoneNo3);
         chooseImageView = v.findViewById(R.id.chooseImageView);
-        phoneno_1Layout = v.findViewById(R.id.phoneno_1EditTextLayout);
-        phoneno_2Layout = v.findViewById(R.id.phoneno_2EditTextLayout);
-        phoneno_3Layout = v.findViewById(R.id.phoneno_3EditTextLayout);
-        email_1Layout = v.findViewById(R.id.email_1EditTextLayout);
-        email_2Layout = v.findViewById(R.id.email_2EditTextLayout);
         addImageTextView = v.findViewById(R.id.addImageTextView);
         uploadProgressBar = v.findViewById(R.id.progressBarUploadImage);
-        editTextEmergencyPhone = v.findViewById(R.id.editTextEmergencyPhone);
-        editTextDeskNumber = v.findViewById(R.id.editTextDeskNumber);
-        editTextSapId = v.findViewById(R.id.editTextSapId);
-        editTextEmployeeId = v.findViewById(R.id.editTextEmployeeId);
         fab = v.findViewById(R.id.fab);
         uploadInfoTextView = v.findViewById(R.id.uploadInfoTextView);
+        editTextEmployeeId = v.findViewById(R.id.editTextEmployeeId);
+        editTextSapId = v.findViewById(R.id.editTextSapId);
+        editTextname = v.findViewById(R.id.editTextName);
+        editTextdepartment = v.findViewById(R.id.editTextDepartment);
+        editTextLocation = v.findViewById(R.id.editTextLocation);
+        editTextdesignation = v.findViewById(R.id.editTextDesignation);
+        editTextDivision = v.findViewById(R.id.editTextDivision);
+        editTextEmail = v.findViewById(R.id.editTextEmailId);
+        editTextEmail2 = v.findViewById(R.id.editTextEmailId2);
+        editTextPhoneNo1 = v.findViewById(R.id.editTextPhoneNo1);
+        editTextPhoneNo2 = v.findViewById(R.id.editTextPhoneNo2);
+        editTextEmergencyPhone = v.findViewById(R.id.editTextEmergencyPhone);
+        editTextDeskNumber = v.findViewById(R.id.editTextDeskNumber);
 
-
-
-
-
+        //phoneno_1Layout = v.findViewById(R.id.phoneno_1EditTextLayout);
+        //email_1Layout = v.findViewById(R.id.email_1EditTextLayout);
+        name_Layout = v.findViewById(R.id.nameEditTextLayout);
+        phoneno_2Layout = v.findViewById(R.id.phoneno_2EditTextLayout);
+        email_2Layout = v.findViewById(R.id.email_2EditTextLayout);
+        desknumber_Layout = v.findViewById(R.id.DeskNumberEditTextLayout);
+        designation_Layout = v.findViewById(R.id.designationEditTextLayout);
+        department_Layout = v.findViewById(R.id.departmentEditTextLayout);
+        location_Layout = v.findViewById(R.id.locationEditTextLayout);
+        division_Layout = v.findViewById(R.id.divisionEditTextLayout);
+        emergencyNumber_Layout = v.findViewById(R.id.emergencynumberEditTextLayout);
     }
-
 
     public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
         int width = bm.getWidth();
@@ -171,9 +158,10 @@ public class ProfileFragment extends Fragment {
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 bitmap = getResizedBitmap(bitmap, 800, 600);
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                chooseImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 chooseImageView.setImageBitmap(bitmap);
-                newProfileCacheUri = uploadCachedImage(id);
-                newProfileUri = uploadImage(id);
+                newProfileCacheUri = uploadCachedImage(sapId);
+                newProfileUri = uploadImage(sapId);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -183,14 +171,12 @@ public class ProfileFragment extends Fragment {
     String uploadCachedImage(String id) {
         chooseImageView.setDrawingCacheEnabled(true);
         chooseImageView.buildDrawingCache();
-
         final StorageReference nameReference = storageRef.child(id + "cache.jpg");
         Bitmap bitmap = ((BitmapDrawable) chooseImageView.getDrawable()).getBitmap();
         bitmap = getResizedBitmap(bitmap, 800, 600);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
         byte[] data = baos.toByteArray();
-
         UploadTask uploadTask = nameReference.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
@@ -214,7 +200,6 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-
         return newProfileCacheUri;
     }
 
@@ -223,14 +208,12 @@ public class ProfileFragment extends Fragment {
         chooseImageView.buildDrawingCache();
         uploadProgressBar.setVisibility(View.VISIBLE);
         uploadInfoTextView.setVisibility(View.VISIBLE);
-
         final StorageReference nameReference = storageRef.child(id + ".jpg");
         Bitmap bitmap = ((BitmapDrawable) chooseImageView.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap = getResizedBitmap(bitmap, 800, 600);
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
-
         UploadTask uploadTask = nameReference.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
@@ -260,10 +243,6 @@ public class ProfileFragment extends Fragment {
 
                     }
                 }, 2000);   //2000ms->2s
-
-
-
-
             }
         });
 
@@ -275,13 +254,8 @@ public class ProfileFragment extends Fragment {
                 int currentprogress = (int) progress;
                 uploadProgressBar.setProgress(currentprogress);
                 uploadInfoTextView.setText("Uploading...." + currentprogress + "%");
-
-
-
             }
         });
-
-
         return newProfileUri;
     }
 
@@ -289,10 +263,6 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
-
-
-
-
         findViews(v);
         disableKeyListeners();
         fillData();
@@ -306,14 +276,9 @@ public class ProfileFragment extends Fragment {
                 } else {
                     edit = 0;
                     updateData();
-
-
                 }
-
             }
         });
-
-
         addImageTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -325,38 +290,26 @@ public class ProfileFragment extends Fragment {
 
     //fetch data from text views
     private void updateData() {
-        firstName = editTextFirstName.getText().toString();
-        lastName = editTextLastName.getText().toString();
+        name = editTextname.getText().toString();
         location = editTextLocation.getText().toString();
-        designation = editTextDesignation.getText().toString();
-        department = editTextDepartment.getText().toString();
-        phone_1 = editTextPhoneNo1.getText().toString();
-        phone_2 = editTextPhoneNo2.getText().toString();
-        phone_3 = editTextPhoneNo3.getText().toString();
-        email_1 = editTextEmail.getText().toString();
+        division = editTextDivision.getText().toString();
+        designation = editTextdesignation.getText().toString();
+        department = editTextdepartment.getText().toString();
+        phoneno_2 = editTextPhoneNo2.getText().toString();
         email_2 = editTextEmail2.getText().toString();
         emergencyNumber = editTextEmergencyPhone.getText().toString();
         deskNumber = editTextDeskNumber.getText().toString();
-        sapId = editTextSapId.getText().toString();
-        employeeId = editTextEmployeeId.getText().toString();
+
         int validationCounter = 0;
-        if (!TextUtils.isEmpty(phone_1)) {
+        if (!TextUtils.isEmpty(phoneno_1)) {
             validationCounter = 1;
-            if (validatePhoneNumber(phone_1, editTextPhoneNo1))
+            if (validatePhoneNumber(phoneno_1, editTextPhoneNo1))
                 validationCounter = 0;
-
         }
-        if (!TextUtils.isEmpty(phone_2)) {
+        if (!TextUtils.isEmpty(phoneno_2)) {
             validationCounter = 1;
-            if (validatePhoneNumber(phone_2, editTextPhoneNo2))
+            if (validatePhoneNumber(phoneno_2, editTextPhoneNo2))
                 validationCounter = 0;
-
-        }
-        if (!TextUtils.isEmpty(phone_3)) {
-            validationCounter = 1;
-            if (validatePhoneNumber(phone_3, editTextPhoneNo3))
-                validationCounter = 0;
-
         }
         if (validationCounter == 0) {
             uploadToFirebase();
@@ -364,54 +317,40 @@ public class ProfileFragment extends Fragment {
             addImageTextView.setVisibility(View.GONE);
             if (TextUtils.isEmpty(newEmail_2))
                 email_2Layout.setVisibility(View.GONE);
-            if (TextUtils.isEmpty(newPhone_2))
+            if (TextUtils.isEmpty(newphoneno_2))
                 phoneno_2Layout.setVisibility(View.GONE);
-            if (TextUtils.isEmpty(newPhone_3))
-                phoneno_3Layout.setVisibility(View.GONE);
         }
-
-
     }
 
     private void uploadToFirebase() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabaseRef = database.getReference();
 
-        if (!TextUtils.isEmpty(currentUser.getUserId()))
-            mDatabaseRef.child(FIREBASE_USERINFO).child(currentUser.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
+        if (!TextUtils.isEmpty(currentUser.getSapId()))
+            mDatabaseRef.child(FIREBASE_USERINFO).child(currentUser.getSapId()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    dataSnapshot.getRef().child(COLUMN_FIRST_NAME).setValue(firstName);
-                    dataSnapshot.getRef().child(COLUMN_LAST_NAME).setValue(lastName);
-                    dataSnapshot.getRef().child(COLUMN_EMAIL_1).setValue(email_1);
-                    dataSnapshot.getRef().child(COLUMN_EMAIL_2).setValue(email_2);
-                    dataSnapshot.getRef().child(COLUMN_PHONENO_1).setValue(phone_1);
-                    dataSnapshot.getRef().child(COLUMN_PHONENO_2).setValue(phone_2);
-                    dataSnapshot.getRef().child(COLUMN_PHONENO_3).setValue(phone_3);
-                    dataSnapshot.getRef().child(COLUMN_LOCATION).setValue(location);
+                    dataSnapshot.getRef().child(COLUMN_FIRST_NAME).setValue(name);
                     dataSnapshot.getRef().child(COLUMN_DEPARTMENT).setValue(department);
+                    dataSnapshot.getRef().child(COLUMN_LOCATION).setValue(location);
                     dataSnapshot.getRef().child(COLUMN_DESIGNATION).setValue(designation);
-                    dataSnapshot.getRef().child(COLUMN_SAP_ID).setValue(sapId);
-                    dataSnapshot.getRef().child(COLUMN_EMPLOYEE_ID).setValue(employeeId);
-                    dataSnapshot.getRef().child(COLUMN_DESK_NUMBER).setValue(deskNumber);
+                    dataSnapshot.getRef().child(COLUMN_DIVISION).setValue(division);
+                    dataSnapshot.getRef().child(COLUMN_EMAIL_2).setValue(email_2);
+                    dataSnapshot.getRef().child(COLUMN_PHONENO_2).setValue(phoneno_2);
                     dataSnapshot.getRef().child(COLUMN_EMERGENCY_NUMBER).setValue(emergencyNumber);
+                    dataSnapshot.getRef().child(COLUMN_DESK_NUMBER).setValue(deskNumber);
+
                     if (filePath != null && !TextUtils.isEmpty(newProfileUri)) {
                         saveImageLocally = 1;
                         dataSnapshot.getRef().child("profileUri").setValue(newProfileUri);
                         dataSnapshot.getRef().child("profileCacheUri").setValue(newProfileCacheUri);
                         Toast.makeText(getActivity(), "Updated Successfully", Toast.LENGTH_SHORT).show();
-
                     } else
                         Toast.makeText(getActivity(), "Profile Image was not updated, other data uploaded successfully", Toast.LENGTH_SHORT).show();
-
                     chooseImageView.setFocusable(true);
-
                     disableKeyListeners();
                     saveUserInfo();
-
-
                 }
-
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
@@ -420,22 +359,20 @@ public class ProfileFragment extends Fragment {
 
     //Prevent User from Typing in below Text Views
     private void disableKeyListeners() {
-        nameKeyListener = editTextFirstName.getKeyListener();
-        editTextFirstName.setKeyListener(null);
-        lastNameKeyListener = editTextLastName.getKeyListener();
-        editTextLastName.setKeyListener(null);
+        nameKeyListener = editTextname.getKeyListener();
+        editTextname.setKeyListener(null);
         locationKeyListener = editTextLocation.getKeyListener();
         editTextLocation.setKeyListener(null);
-        designationKeyListener = editTextDesignation.getKeyListener();
-        editTextDesignation.setKeyListener(null);
-        departmentKeyListener = editTextDepartment.getKeyListener();
-        editTextDepartment.setKeyListener(null);
+        divisionKeyListener = editTextDivision.getKeyListener();
+        editTextDivision.setKeyListener(null);
+        designationKeyListener = editTextdesignation.getKeyListener();
+        editTextdesignation.setKeyListener(null);
+        departmentKeyListener = editTextdepartment.getKeyListener();
+        editTextdepartment.setKeyListener(null);
         phoneno_1KeyListener = editTextPhoneNo1.getKeyListener();
         editTextPhoneNo1.setKeyListener(null);
         phoneno_2KeyListener = editTextPhoneNo2.getKeyListener();
         editTextPhoneNo2.setKeyListener(null);
-        phoneno_3KeyListener = editTextPhoneNo3.getKeyListener();
-        editTextPhoneNo3.setKeyListener(null);
         email_1KeyListener = editTextEmail.getKeyListener();
         editTextEmail.setKeyListener(null);
         email_2KeyListener = editTextEmail2.getKeyListener();
@@ -448,156 +385,139 @@ public class ProfileFragment extends Fragment {
         editTextEmergencyPhone.setKeyListener(null);
         deskNumberKeyListener = editTextDeskNumber.getKeyListener();
         editTextDeskNumber.setKeyListener(null);
-
-        if (!TextUtils.isEmpty(phone_2))
+        if (!TextUtils.isEmpty(phoneno_2))
             phoneno_2Layout.setVisibility(View.VISIBLE);
-        if (!TextUtils.isEmpty(phone_3))
-            phoneno_3Layout.setVisibility(View.VISIBLE);
         if (!TextUtils.isEmpty(email_2))
             email_2Layout.setVisibility(View.VISIBLE);
     }
 
     //Show edit box for field which previously were empty and also enable the ability to type in textboxes
     private void showAllEditBox() {
-        phoneno_2Layout.setVisibility(View.VISIBLE);
-        phoneno_3Layout.setVisibility(View.VISIBLE);
-        email_2Layout.setVisibility(View.VISIBLE);
         addImageTextView.setVisibility(View.VISIBLE);
+        name_Layout.setVisibility(View.VISIBLE);
+        phoneno_2Layout.setVisibility(View.VISIBLE);
+        email_2Layout.setVisibility(View.VISIBLE);
+        department_Layout.setVisibility(View.VISIBLE);
+        location_Layout.setVisibility(View.VISIBLE);
+        designation_Layout.setVisibility(View.VISIBLE);
+        division_Layout.setVisibility(View.VISIBLE);
+        emergencyNumber_Layout.setVisibility(View.VISIBLE);
+        desknumber_Layout.setVisibility(View.VISIBLE);
 
-        editTextFirstName.setKeyListener(nameKeyListener);
-        editTextDepartment.setKeyListener(departmentKeyListener);
-        editTextLocation.setKeyListener(locationKeyListener);
-        editTextDesignation.setKeyListener(designationKeyListener);
-        editTextEmail.setKeyListener(email_1KeyListener);
+        editTextname.setKeyListener(nameKeyListener);
+//        editTextEmail.setKeyListener(email_1KeyListener);
+//        editTextPhoneNo1.setKeyListener(phoneno_1KeyListener);
         editTextEmail2.setKeyListener(email_2KeyListener);
-        editTextPhoneNo1.setKeyListener(phoneno_1KeyListener);
         editTextPhoneNo2.setKeyListener(phoneno_2KeyListener);
-        editTextPhoneNo3.setKeyListener(phoneno_3KeyListener);
-        editTextDeskNumber.setKeyListener(deskNumberKeyListener);
         editTextEmergencyPhone.setKeyListener(emergencyNumberKeyListener);
-        editTextSapId.setKeyListener(sapIdKeyListener);
-        editTextEmployeeId.setKeyListener(employeeIdKeyListener);
-        editTextLastName.setKeyListener(lastNameKeyListener);
+        editTextDeskNumber.setKeyListener(deskNumberKeyListener);
+        editTextdesignation.setKeyListener(designationKeyListener);
+        editTextdepartment.setKeyListener(departmentKeyListener);
+        editTextLocation.setKeyListener(locationKeyListener);
+        editTextdepartment.setKeyListener(departmentKeyListener);
+        editTextDivision.setKeyListener(divisionKeyListener);
 
     }
 
     //Fetch
     private void fillData() {
-        firstName = currentUser.getFirstName();
-        phone_1 = currentUser.getPhoneno_1();
-        phone_2 = currentUser.getPhoneno_2();
-        phone_3 = currentUser.getPhoneno_3();
+        uploadProgressBar.setVisibility(View.GONE);
+        employeeId = currentUser.getEmployeeId();
+        sapId = currentUser.getSapId();
+        name = currentUser.getName();
+        department = currentUser.getDepartment();
+        location = currentUser.getLocation();
+        designation = currentUser.getDesignation();
+        division = currentUser.getDivision();
         email_1 = currentUser.getEmail1();
         email_2 = currentUser.getEmail2();
-        department = currentUser.getDepartment();
-        designation = currentUser.getDesignation();
-        location = currentUser.getLocation();
-        id = currentUser.getUserId();
+        phoneno_1 = currentUser.getPhoneno_1();
+        phoneno_2 = currentUser.getPhoneno_2();
+        emergencyNumber = currentUser.getEmergencyNumber();
+        deskNumber = currentUser.getDeskNumber();
         profileUri = currentUser.getProfileUri();
         profileCacheUri = currentUser.getProfileCacheUri();
-        deskNumber = currentUser.getDeskNumber();
-        sapId = currentUser.getSapId();
-        employeeId = currentUser.getEmployeeId();
-        emergencyNumber = currentUser.getEmergencyNumber();
-        lastName = currentUser.getLastName();
 
-        editTextFirstName.setText("" + firstName);
-        editTextLastName.setText("" + lastName);
-        editTextDepartment.setText("" + department);
-        editTextDesignation.setText("" + designation);
-        editTextPhoneNo1.setText("" + phone_1);
+        editTextEmployeeId.setText("" + employeeId);
+        editTextSapId.setText("" + sapId);
+        editTextname.setText("" + name);
+        editTextdepartment.setText("" + department);
+        editTextLocation.setText("" + location);
+        editTextdesignation.setText("" + designation);
+        editTextDivision.setText("" + division);
         editTextEmail.setText("" + email_1);
+        editTextPhoneNo1.setText("" + phoneno_1);
+        editTextEmergencyPhone.setText("" + emergencyNumber);
+        editTextDeskNumber.setText("" + deskNumber);
 
-        if (TextUtils.isEmpty(employeeId)) editTextEmployeeId.setText("");
-        else editTextEmployeeId.setText("" + employeeId);
-
-
-        if (TextUtils.isEmpty(sapId)) editTextSapId.setText("");
-        else editTextSapId.setText("" + sapId);
-
-        if (TextUtils.isEmpty(deskNumber)) editTextDeskNumber.setText("");
-        else editTextDeskNumber.setText("" + deskNumber);
-
-        if (TextUtils.isEmpty(emergencyNumber)) editTextEmergencyPhone.setText("");
-        else editTextEmergencyPhone.setText("" + emergencyNumber);
-
-        if (TextUtils.isEmpty(location)) editTextLocation.setText("");
-        else editTextLocation.setText("" + location);
-        if (TextUtils.isEmpty(designation)) editTextDesignation.setText("");
-        else editTextDesignation.setText("" + designation);
-        if (TextUtils.isEmpty(department)) editTextDepartment.setText("");
-        else editTextDepartment.setText("" + department);
-
-
-        setMaxLength(editTextPhoneNo3, PHONE_NUMBER_LENGTH);
         setMaxLength(editTextPhoneNo2, PHONE_NUMBER_LENGTH);
         setMaxLength(editTextPhoneNo1, PHONE_NUMBER_LENGTH);
         setMaxLength(editTextEmergencyPhone, PHONE_NUMBER_LENGTH);
 
-
-        if (!TextUtils.isEmpty(phone_2)) {
-            editTextPhoneNo2.setText(phone_2);
+        if (!TextUtils.isEmpty(phoneno_2)) {
+            editTextPhoneNo2.setText("" + phoneno_2);
             phoneno_2Layout.setVisibility(View.VISIBLE);
         } else {
             phoneno_2Layout.setVisibility(View.GONE);
         }
-
-        if (!TextUtils.isEmpty(phone_3)) {
-            editTextPhoneNo3.setText(phone_3);
-            phoneno_3Layout.setVisibility(View.VISIBLE);
-        } else {
-            phoneno_3Layout.setVisibility(View.GONE);
-        }
-
         if (!TextUtils.isEmpty(email_2)) {
-            editTextEmail2.setText(email_2);
+            editTextEmail2.setText("" + email_2);
             email_2Layout.setVisibility(View.VISIBLE);
         } else {
             email_2Layout.setVisibility(View.GONE);
         }
-
-
         if (!TextUtils.isEmpty(profileUri)) {
             Picasso.get().load(Uri.parse(profileUri)).placeholder(R.drawable.bg_placeholder).into(chooseImageView);
         }
-
     }
+
+
+    /**
+     * 0 SapID
+     * 1 name
+     * 2 department
+     * 3 location
+     * 4 dsignation
+     * 5 division
+     * 6 employeeid
+     * 7 email1
+     * 8 email2
+     * 9 phone1
+     * 10 phone2
+     * 11 adminright
+     * 12 desknumber
+     * 13 emergencynumber
+     * 14 profilecacheuri
+     * 15 profile uri
+     */
 
 
     void saveUserInfo() {
         ArrayList<String> set = new ArrayList<>();
-        set.add(id);
-        set.add(firstName);
-        set.add(lastName);
-        set.add(designation);
+        set.add(sapId);
+        set.add(name);
+        set.add(department);
         set.add(location);
+        set.add(designation);
+        set.add(division);
+        set.add(employeeId);
         set.add(email_1);
         set.add(email_2);
-        set.add(phone_1);
-        set.add(phone_2);
-        set.add(phone_3);
-        set.add(emergencyNumber);
-        set.add(department);
-        if (filePath != null && !TextUtils.isEmpty(newProfileUri) && saveImageLocally == 1) {
-            set.add(newProfileUri);
-            set.add(newProfileCacheUri);
-            saveImageLocally = 0;
-        } else {
-
-            set.add(profileUri);
-            set.add(profileCacheUri);
-        }
-
-        set.add(employeeId);
+        set.add(phoneno_1);
+        set.add(phoneno_2);
         set.add(currentUser.getAdminRights());
         set.add(deskNumber);
-        set.add(sapId);
-
+        set.add(emergencyNumber);
+        if (filePath != null && !TextUtils.isEmpty(newProfileUri) && saveImageLocally == 1) {
+            set.add(newProfileCacheUri);
+            set.add(newProfileUri);
+            saveImageLocally = 0;
+        } else {
+            set.add(profileCacheUri);
+            set.add(profileUri);
+        }
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(PACKAGE_NAME, Context.MODE_PRIVATE);
-
         sharedPreferences.edit().putString(CURRENT_USER, ObjectSerializer.serialize(set)).apply();
         sharedPreferences.edit().apply();
     }
-
-
 }

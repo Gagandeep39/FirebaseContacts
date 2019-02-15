@@ -3,26 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:background="@color/colorPrimary"
-                app:title="Profile"
+                app:title="My Profile"
                 app:titleTextColor="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay" />
 
-
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="?attr/actionBarSize">
-
         <include layout="@layout/edit_profile_fragment" />
 
     </android.support.v4.widget.NestedScrollView>
-
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -36,6 +32,5 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         app:srcCompat="@drawable/ic_edit" />
-
 
 </android.support.design.widget.CoordinatorLayout>

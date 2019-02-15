@@ -1,28 +1,23 @@
 package com.gagandeep.nuvococontacts;
 
-
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.support.constraint.Constraints.TAG;
 import static com.gagandeep.nuvococontacts.SearchFragment.userList;
 
 public class FavouriteFragment extends Fragment {
-    ListView listView;
-    GridView gridview;
+    ListView listview;
     SQLiteDatabase db;
     FavouriteDbHelper mDbHelper;
     List<FavouriteItem> itemIds;
@@ -34,25 +29,18 @@ public class FavouriteFragment extends Fragment {
             FavouriteContract.Favourite.COLUMN_LOCAL_PHONE
     };
 
-
     public FavouriteFragment() {
-
     }
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_recent, container, false);
-        gridview = v.findViewById(R.id.gridview);
-
+        listview = v.findViewById(R.id.gridview);
 
         readValuesFromFavouritesDatabase();
         final Handler handler = new Handler();
@@ -66,12 +54,9 @@ public class FavouriteFragment extends Fragment {
                                 favouriteList.add(userList.get(i));
                             }
                         }
-
                     }
-
-
                 adapter = new GridViewAdapter(getActivity(), favouriteList);
-                gridview.setAdapter(adapter);
+                listview.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
 
             }
@@ -95,7 +80,6 @@ public class FavouriteFragment extends Fragment {
                 null               // The sort order
         );
 
-        Log.e(TAG, "onCreateView: " + cursor);
         while (cursor.moveToNext()) {
             int itemId = cursor.getInt(
                     cursor.getColumnIndexOrThrow(FavouriteContract.Favourite._ID));
@@ -123,15 +107,38 @@ public class FavouriteFragment extends Fragment {
                                     favouriteList.add(userList.get(i));
                                 }
                             }
-
                         }
-
                     adapter = new GridViewAdapter(getActivity(), favouriteList);
-                    gridview.setAdapter(adapter);
+                    listview.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-
                 }
             }, 200);   //2000ms->2s
         }
+    }
+
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        readValuesFromFavouritesDatabase();
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (userList != null)
+                    for (int i = 0; i < userList.size(); i++) {
+                        for (int j = 0; j < itemIds.size(); j++) {
+                            if (itemIds.get(j).getPhoneno().equals(userList.get(i).getPhoneno_1())) {
+                                favouriteList.add(userList.get(i));
+                            }
+                        }
+                    }
+
+                adapter = new GridViewAdapter(getActivity(), favouriteList);
+                listview.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+        }, 200);   //2000ms->2s
     }
 }

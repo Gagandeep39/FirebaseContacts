@@ -11,23 +11,25 @@
         android:layout_width="match_parent"
         android:layout_height="260sp">
 
-
         <ImageView
             android:id="@+id/chooseImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+            android:backgroundTint="@color/tooltip_background_dark"
+
+            android:scaleType="fitXY"
+            tools:ignore="VectorDrawableCompat" />
 
         <TextView
-            android:padding="8sp"
-            android:background="@color/nuvoco_white"
-            android:visibility="gone"
             android:id="@+id/addImageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
+            android:background="@color/nuvoco_white"
             android:clickable="true"
-            android:text="Add Image" />
+            android:padding="8sp"
+            android:text="Pick image"
+            android:visibility="gone" />
 
     </android.support.design.widget.CoordinatorLayout>
 
@@ -62,10 +64,10 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextEmployeeId"
                 android:layout_width="match_parent"
-                android:inputType="number"
-                android:nextFocusDown="@id/editTextSapId"
                 android:layout_height="wrap_content"
-                android:hint="Employee ID" />
+                android:hint="Employee ID"
+                android:inputType="number"
+                android:nextFocusDown="@id/editTextSapId" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -74,92 +76,82 @@
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextSapId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="SAP ID"
                 android:inputType="number"
-                android:nextFocusDown="@id/editTextFirstName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="SAP ID" />
+                android:nextFocusDown="@id/editTextName" />
         </android.support.design.widget.TextInputLayout>
 
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/nameEditTextLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/editTextFirstName"
-                android:layout_width="match_parent"
-                android:inputType="textPersonName"
-                android:nextFocusDown="@id/editTextLastName"
-                android:layout_height="wrap_content"
-                android:hint="First Name" />
-        </android.support.design.widget.TextInputLayout>
-
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/editTextLastName"
-                android:inputType="textPersonName"
-                android:nextFocusDown="@id/editTextDepartment"
+                android:id="@+id/editTextName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Last Name" />
+                android:hint="Employee Name"
+                android:inputType="textPersonName"
+                android:nextFocusDown="@id/editTextLastName" />
         </android.support.design.widget.TextInputLayout>
 
-
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/departmentEditTextLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextDepartment"
                 android:layout_width="match_parent"
-                android:inputType="textPersonName"
                 android:layout_height="wrap_content"
-                android:nextFocusDown="@id/editTextLocation"
-                android:hint="Department" />
+                android:hint="Department"
+                android:inputType="textPersonName"
+                android:nextFocusDown="@id/editTextLocation" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/locationEditTextLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextLocation"
-                android:inputType="textPersonName"
-                android:nextFocusDown="@id/editTextDesignation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Location" />
+                android:hint="Location"
+                android:inputType="textPersonName"
+                android:nextFocusDown="@id/editTextDesignation" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/designationEditTextLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextDesignation"
                 android:layout_width="match_parent"
-                android:inputType="textPersonName"
-                android:nextFocusDown="@id/editTextDeskNumber"
                 android:layout_height="wrap_content"
-                android:hint="Designation" />
+                android:hint="Designation"
+                android:inputType="textPersonName"
+                android:nextFocusDown="@id/editTextDivision" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/divisionEditTextLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/editTextDeskNumber"
+                android:id="@+id/editTextDivision"
                 android:layout_width="match_parent"
-                android:inputType="number"
-                android:nextFocusDown="@id/editTextEmailId"
                 android:layout_height="wrap_content"
-                android:hint="Desk Number" />
+                android:hint="Division"
+                android:inputType="text"
+                android:nextFocusDown="@id/editTextEmailId" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -169,11 +161,11 @@
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextEmailId"
-                android:inputType="textEmailAddress"
-                android:nextFocusDown="@id/editTextEmailId2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email ID 1" />
+                android:hint="Primary Email Id"
+                android:inputType="textEmailAddress"
+                android:nextFocusDown="@id/editTextEmailId2" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -184,11 +176,11 @@
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextEmailId2"
-                android:inputType="textEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nextFocusDown="@id/editTextPhoneNo1"
-                android:hint="Email ID 2" />
+                android:hint="Secondary Email Id"
+                android:inputType="textEmailAddress"
+                android:nextFocusDown="@id/editTextPhoneNo1" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -199,10 +191,10 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextPhoneNo1"
                 android:layout_width="match_parent"
-                android:inputType="phone"
-                android:nextFocusDown="@id/editTextPhoneNo2"
                 android:layout_height="wrap_content"
-                android:hint="Phone Number 1" />
+                android:hint="Primary Contact Number"
+                android:inputType="phone"
+                android:nextFocusDown="@id/editTextPhoneNo2" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -214,40 +206,37 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextPhoneNo2"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Secondary Contact Number"
                 android:inputType="phone"
                 android:nextFocusDown="@id/editTextPhoneNo3"
-                android:nextFocusForward="@id/editTextPhoneNo3"
-                android:layout_height="wrap_content"
-                android:hint="Phone Number 2" />
+                android:nextFocusForward="@id/editTextPhoneNo3" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/phoneno_3EditTextLayout"
+            android:id="@+id/DeskNumberEditTextLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:layout_height="wrap_content">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/editTextPhoneNo3"
-                android:inputType="phone"
-                android:nextFocusDown="@id/editTextEmergencyPhone"
+                android:id="@+id/editTextDeskNumber"
                 android:layout_width="match_parent"
-                android:nextFocusForward="@id/editTextEmergencyPhone"
                 android:layout_height="wrap_content"
-                android:hint="Phone Number 3" />
+                android:hint="Desk Number"
+                android:inputType="phone" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/emergencyPhoneEditTextLayout"
+            android:id="@+id/emergencynumberEditTextLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextEmergencyPhone"
                 android:layout_width="match_parent"
-                android:inputType="phone"
                 android:layout_height="wrap_content"
-                android:hint="Emergency Phone Number" />
+                android:hint="Emergency Phone Number"
+                android:inputType="phone" />
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>

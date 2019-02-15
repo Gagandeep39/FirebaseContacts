@@ -2,120 +2,98 @@ package com.gagandeep.nuvococontacts;
 
 public class User {
 
-
-    private String userId;
-    private String firstName;
-    private String lastName;
-    private String designation;
+    public boolean selected = false;
+    // 15 String fields defined...
+    private String employeeId;
+    private String sapId;
+    private String name;    // Rename (firstName)
     private String location;
+    private String department;
+    private String designation;
     private String email1;
     private String email2;
     private String phoneno_1;
     private String phoneno_2;
-    private String phoneno_3;
     private String profileCacheUri;
-    private String department;
-    private String employeeId;
     private String adminRights;
     private String deskNumber;
     private String emergencyNumber;
-    private String sapId;
     private String profileUri;
+    private String division;            //  Added instead of private String userId;
 
-    public User(String userId
-            , String firstName
-            , String lastName
-            , String designation
-            , String location
-            , String email1
-            , String email2
-            , String phoneno_1
-            , String phoneno_2
-            , String phoneno_3
-            , String emergencyNumber
-            , String department
-            , String profileUri
-            , String profileCacheUri
-            , String employeeId
-            , String adminRights
-            , String deskNumber
-            , String sapId) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.designation = designation;
+    /**
+     * SapID
+     * name
+     * department
+     * location
+     * dsignation
+     * division
+     * employeeid
+     * email1
+     * email2
+     * phone1
+     * phone2
+     * profilecacheuri
+     * adminright
+     * desknumber
+     * emergencynumber
+     * profile uri
+     */
+
+    public User(String sapId, String name, String department, String location, String designation, String division, String employeeId, String email1, String email2, String phoneno_1, String phoneno_2, String adminRights, String deskNumber, String emergencyNumber, String profileCacheUri, String profileUri) {
+        this.sapId = sapId;
+        this.name = name;
+        this.department = department;
         this.location = location;
+        this.designation = designation;
+        this.division = division;
         this.email1 = email1;
         this.email2 = email2;
         this.phoneno_1 = phoneno_1;
         this.phoneno_2 = phoneno_2;
-        this.phoneno_3 = phoneno_3;
-        this.department = department;
-        this.profileUri = profileUri;
         this.profileCacheUri = profileCacheUri;
-        this.emergencyNumber = emergencyNumber;
-        this.employeeId = employeeId;
         this.adminRights = adminRights;
         this.deskNumber = deskNumber;
-        this.lastName = lastName;
-        this.sapId = sapId;
+        this.emergencyNumber = emergencyNumber;
+        this.profileUri = profileUri;
+        this.employeeId = employeeId;
     }
 
-    User() {
 
+    public User() {
+    }
+
+public boolean setSelected(boolean selected) {
+    this.selected = selected;
+    return selected;
+}
+
+    public String getEmployeeId() {
+        return employeeId;
     }
 
     public String getSapId() {
         return sapId;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getEmployeeId() {
-        return employeeId;
-    }
-
-    public String getAdminRights() {
-        return adminRights;
-    }
-
-    public String getDeskNumber() {
-        return deskNumber;
-    }
-
-    public String getEmergencyNumber() {
-        return emergencyNumber;
-    }
-
-    public String getProfileUri() {
-        return profileUri;
-    }
-
-
-    public String getProfileCacheUri() {
-        return profileCacheUri;
+    public String getName() {
+        return name;
     }
 
     public String getDepartment() {
         return department;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getLocation() {
+        return location;
     }
-
 
     public String getDesignation() {
         return designation;
     }
 
-    public String getLocation() {
-        return location;
+    public String getDivision() {
+        return division;
     }
 
     public String getEmail1() {
@@ -134,7 +112,23 @@ public class User {
         return phoneno_2;
     }
 
-    public String getPhoneno_3() {
-        return phoneno_3;
+    public String getProfileCacheUri() {
+        return profileCacheUri;
+    }
+
+    public String getAdminRights() {
+        return adminRights;
+    }
+
+    public String getDeskNumber() {
+        return deskNumber;
+    }
+
+    public String getEmergencyNumber() {
+        return emergencyNumber;
+    }
+
+    public String getProfileUri() {
+        return profileUri;
     }
 }

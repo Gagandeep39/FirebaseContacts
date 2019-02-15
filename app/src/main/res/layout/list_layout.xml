@@ -9,12 +9,24 @@
     android:layout_height="wrap_content">
 
 
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <de.hdodenhof.circleimageview.CircleImageView
-        android:padding="8sp"
         android:id="@+id/imageView"
         android:layout_width="80dp"
-        android:src="@drawable/bg_placeholder"
         android:layout_height="0dp"
+        android:padding="8sp"
+        android:src="@drawable/bg_placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,7 +40,7 @@
         android:layout_marginEnd="8dp"
         android:text="Gagandeep Singh"
         android:textStyle="bold"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
@@ -47,7 +59,9 @@
             android:layout_width="20sp"
             android:src="@drawable/ic_location"
             android:layout_height="20sp" />
+
         <TextView
+            android:textSize="12sp"
             android:id="@+id/textViewLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,24 +72,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8sp"
+        android:padding="4sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutLocation">
+
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/phone"
+                android:layout_width="20sp"
+                android:layout_height="20sp"
                 android:clickable="true"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:src="@drawable/ic_phone_black" />
-
-
         </FrameLayout>
 
         <FrameLayout
@@ -85,11 +98,11 @@
             android:layout_height="wrap_content">
 
 
-        <ImageView
-            android:id="@+id/email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_email" />
+            <ImageView
+                android:id="@+id/email"
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:src="@drawable/ic_email" />
         </FrameLayout>
 
         <FrameLayout
@@ -98,11 +111,11 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_message" />
+            <ImageView
+                android:id="@+id/message"
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:src="@drawable/ic_message" />
         </FrameLayout>
 
         <FrameLayout
@@ -110,12 +123,14 @@
             android:clickable="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_info" />
+
+            <ImageView
+                android:id="@+id/info"
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:src="@drawable/ic_info" />
         </FrameLayout>
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

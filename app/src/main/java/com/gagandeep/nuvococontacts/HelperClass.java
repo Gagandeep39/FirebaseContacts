@@ -67,7 +67,6 @@ public class HelperClass {
                     return;
                 }
             }
-
             // since the length filter was not part of the list, but
             // there are filters, then add the length filter
             InputFilter[] newFilters = new InputFilter[curFilters.length + 1];
@@ -85,6 +84,4 @@ public class HelperClass {
             return false;
         } else return true;
     }
-
-
 }
