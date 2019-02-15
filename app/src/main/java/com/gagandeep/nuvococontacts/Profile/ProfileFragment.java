@@ -1,4 +1,4 @@
-package com.gagandeep.nuvococontacts;
+package com.gagandeep.nuvococontacts.Profile;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gagandeep.nuvococontacts.Helpers.ObjectSerializer;
+import com.gagandeep.nuvococontacts.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

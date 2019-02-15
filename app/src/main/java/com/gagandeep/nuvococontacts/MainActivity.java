@@ -12,6 +12,7 @@ import android.view.MenuItem;
 
 import com.gagandeep.nuvococontacts.Favourites.FavouriteFragment;
 import com.gagandeep.nuvococontacts.Groups.MeetingFragment;
+import com.gagandeep.nuvococontacts.Profile.ProfileFragment;
 import com.gagandeep.nuvococontacts.Search.SearchFragment;
 
 import static android.content.ContentValues.TAG;

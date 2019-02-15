@@ -2,6 +2,8 @@ Checkbox padding is now 24sp
 Added Meetings tab
 Fixed last list item hidden behind broadcast message layout
 Added java classes in folders to increase understandability of projectview
+Add Group table on database
+Created layout fo Groupfragment
 
 DONE - Added  a medium to send bulk message
 DONE - Implemented a dialogue to write message
