@@ -2,27 +2,27 @@ package com.gagandeep.nuvococontacts.Groups;
 
 public class Group {
     int id;
-    int groupName;
-    int groupMembers;
+    String groupName;
+    String groupMembers;
     int groupMemberCount;
 
-    public Group(int id, int groupName, int groupMembers, int groupMemberCount) {
+
+    public Group(int id, String groupName, String groupMembers, int groupMemberCount) {
         this.id = id;
         this.groupName = groupName;
         this.groupMembers = groupMembers;
         this.groupMemberCount = groupMemberCount;
     }
 
-
     public int getId() {
         return id;
     }
 
-    public int getGroupName() {
+    public String getGroupName() {
         return groupName;
     }
 
-    public int getGroupMembers() {
+    public String getGroupMembers() {
         return groupMembers;
     }
 
