@@ -435,6 +435,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        Log.e(TAG, "onResume: ");
         if (!valueEventListenerCalled) {
             databaseReferenceUser.addValueEventListener(valueEventListener);
             valueEventListenerCalled = true;
@@ -458,6 +459,7 @@ public class SearchFragment extends Fragment {
      */
     @Override
     public void onResume() {
+        Log.e(TAG, "onResume: ");
         super.onResume();
     }
 

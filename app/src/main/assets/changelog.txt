@@ -1,3 +1,6 @@
+Checkbox padding is now 24sp
+Added Meetings tab
+
 DONE - Added  a medium to send bulk message
 DONE - Implemented a dialogue to write message
 DONE - Added viewholder (now layout gives butter smooth performance)

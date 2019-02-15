@@ -44,10 +44,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-//            case R.id.meeting:
-//                fm.beginTransaction().hide(active).show(fragment4).commit();
-//                active = fragment4;
-//                return true;
+            case R.id.meeting:
+                fm.beginTransaction().hide(active).show(fragment4).commit();
+                active = fragment4;
+                return true;
 
             case R.id.favourite:
                 fm.beginTransaction().hide(active).show(fragment1).commit();
