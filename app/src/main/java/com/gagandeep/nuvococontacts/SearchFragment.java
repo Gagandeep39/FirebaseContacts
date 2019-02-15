@@ -95,6 +95,9 @@ public class SearchFragment extends Fragment {
                 }
             });
             recyclerAdapter = new UserList(getActivity(), userList);
+            TextView empty = new TextView(getContext());
+            empty.setHeight(150);
+            listView.addFooterView(empty);
             listView.setAdapter(recyclerAdapter);
 
             listView.setScrollingCacheEnabled(true);

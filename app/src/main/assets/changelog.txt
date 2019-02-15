@@ -1,10 +1,12 @@
 Checkbox padding is now 24sp
 Added Meetings tab
+Fixed last list item hidden behind broadcast message layout
 
 DONE - Added  a medium to send bulk message
 DONE - Implemented a dialogue to write message
 DONE - Added viewholder (now layout gives butter smooth performance)
 DONE - Multiselect now sends message from sms App
+
 
 *****REQUIREMENTS By Pankaj Uncle - 14 Feb 2019*****
 DONE - Fixed Department showing other department containing 'IT' in  it
