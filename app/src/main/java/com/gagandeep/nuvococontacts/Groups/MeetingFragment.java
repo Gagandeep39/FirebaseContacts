@@ -1,4 +1,4 @@
-package com.gagandeep.nuvococontacts;
+package com.gagandeep.nuvococontacts.Groups;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gagandeep.nuvococontacts.R;
 import com.google.firebase.database.DatabaseReference;
 
 public class MeetingFragment extends Fragment {

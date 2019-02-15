@@ -1,4 +1,4 @@
-package com.gagandeep.nuvococontacts;
+package com.gagandeep.nuvococontacts.Favourites;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

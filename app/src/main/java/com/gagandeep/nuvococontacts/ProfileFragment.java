@@ -27,6 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gagandeep.nuvococontacts.Helpers.ObjectSerializer;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -48,24 +49,24 @@ import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 import static com.gagandeep.nuvococontacts.AddUserActivity.TAG;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_DEPARTMENT;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_DESIGNATION;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_DESK_NUMBER;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_DIVISION;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMAIL_2;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMERGENCY_NUMBER;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_FIRST_NAME;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_LOCATION;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_2;
-import static com.gagandeep.nuvococontacts.Constants.CURRENT_USER;
-import static com.gagandeep.nuvococontacts.Constants.FIREBASE_USERINFO;
-import static com.gagandeep.nuvococontacts.Constants.PACKAGE_NAME;
-import static com.gagandeep.nuvococontacts.Constants.PHONE_NUMBER_LENGTH;
-import static com.gagandeep.nuvococontacts.HelperClass.setMaxLength;
-import static com.gagandeep.nuvococontacts.HelperClass.validatePhoneNumber;
-import static com.gagandeep.nuvococontacts.SplashScreenActivity.currentUser;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_DEPARTMENT;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_DESIGNATION;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_DESK_NUMBER;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_DIVISION;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_EMAIL_2;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_EMERGENCY_NUMBER;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_FIRST_NAME;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_LOCATION;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_PHONENO_2;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.CURRENT_USER;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.FIREBASE_USERINFO;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.PACKAGE_NAME;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.PHONE_NUMBER_LENGTH;
+import static com.gagandeep.nuvococontacts.Helpers.HelperClass.setMaxLength;
+import static com.gagandeep.nuvococontacts.Helpers.HelperClass.validatePhoneNumber;
+import static com.gagandeep.nuvococontacts.Login.SplashScreenActivity.currentUser;
 
-//import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMPLOYEE_ID;
+//import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_EMPLOYEE_ID;
 
 public class ProfileFragment extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 234;

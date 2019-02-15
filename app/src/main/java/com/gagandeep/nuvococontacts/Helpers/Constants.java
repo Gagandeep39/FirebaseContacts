@@ -1,4 +1,4 @@
-package com.gagandeep.nuvococontacts;
+package com.gagandeep.nuvococontacts.Helpers;
 
 /**
  * Data such as firstName, phoneno_1, email_1 are assumed as compulsory and are not validated for null values in any part of code
@@ -29,6 +29,6 @@ public class Constants {
     public static final String PACKAGE_NAME = "com.gagandeep.nuvococontacts";
     public static final int PHONE_NUMBER_LENGTH = 10;
     public static final String CURRENT_USER = "currentuser";
-    static boolean valueEventListenerCalled = false;
+    public static boolean valueEventListenerCalled = false;
 
 }

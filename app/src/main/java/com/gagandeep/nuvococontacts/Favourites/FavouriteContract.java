@@ -1,4 +1,4 @@
-package com.gagandeep.nuvococontacts;
+package com.gagandeep.nuvococontacts.Favourites;
 
 import android.provider.BaseColumns;
 

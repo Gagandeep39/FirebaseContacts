@@ -1,4 +1,4 @@
-package com.gagandeep.nuvococontacts;
+package com.gagandeep.nuvococontacts.Favourites;
 
 public class FavouriteItem {
     int _id;

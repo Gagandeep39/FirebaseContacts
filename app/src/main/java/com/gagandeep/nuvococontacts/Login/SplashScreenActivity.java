@@ -1,4 +1,4 @@
-package com.gagandeep.nuvococontacts;
+package com.gagandeep.nuvococontacts.Login;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,9 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import com.gagandeep.nuvococontacts.BuildConfig;
+import com.gagandeep.nuvococontacts.Helpers.ObjectSerializer;
+import com.gagandeep.nuvococontacts.MainActivity;
+import com.gagandeep.nuvococontacts.R;
+import com.gagandeep.nuvococontacts.User;
+
 import java.util.ArrayList;
 
-import static com.gagandeep.nuvococontacts.Constants.PACKAGE_NAME;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.PACKAGE_NAME;
 
 public class SplashScreenActivity extends AppCompatActivity {
 

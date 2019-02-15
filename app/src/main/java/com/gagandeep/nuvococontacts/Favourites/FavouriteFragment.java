@@ -1,4 +1,4 @@
-package com.gagandeep.nuvococontacts;
+package com.gagandeep.nuvococontacts.Favourites;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,10 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.gagandeep.nuvococontacts.GridViewAdapter;
+import com.gagandeep.nuvococontacts.R;
+import com.gagandeep.nuvococontacts.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.gagandeep.nuvococontacts.SearchFragment.userList;
+import static com.gagandeep.nuvococontacts.Search.SearchFragment.userList;
 
 public class FavouriteFragment extends Fragment {
     ListView listview;

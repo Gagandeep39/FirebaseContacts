@@ -1,4 +1,4 @@
-package com.gagandeep.nuvococontacts;
+package com.gagandeep.nuvococontacts.Login;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.gagandeep.nuvococontacts.R;
+import com.gagandeep.nuvococontacts.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,12 +25,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_1;
-import static com.gagandeep.nuvococontacts.Constants.FIREBASE_USERINFO;
-import static com.gagandeep.nuvococontacts.Constants.PHONE_NUMBER_LENGTH;
-import static com.gagandeep.nuvococontacts.HelperClass.setMaxLength;
-import static com.gagandeep.nuvococontacts.HelperClass.validatePhoneNumber;
-import static com.gagandeep.nuvococontacts.SplashScreenActivity.temporaryUser;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_PHONENO_1;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.FIREBASE_USERINFO;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.PHONE_NUMBER_LENGTH;
+import static com.gagandeep.nuvococontacts.Helpers.HelperClass.setMaxLength;
+import static com.gagandeep.nuvococontacts.Helpers.HelperClass.validatePhoneNumber;
+import static com.gagandeep.nuvococontacts.Login.SplashScreenActivity.temporaryUser;
 
 public class LoginActivity extends AppCompatActivity {
     TextInputEditText editTextPhone;

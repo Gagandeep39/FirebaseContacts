@@ -40,9 +40,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.gagandeep.nuvococontacts.Constants.FIREBASE_USERINFO;
-import static com.gagandeep.nuvococontacts.Constants.PHONE_NUMBER_LENGTH;
-import static com.gagandeep.nuvococontacts.HelperClass.setMaxLength;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.FIREBASE_USERINFO;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.PHONE_NUMBER_LENGTH;
+import static com.gagandeep.nuvococontacts.Helpers.HelperClass.setMaxLength;
 
 public class AddUserActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 234;

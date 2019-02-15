@@ -16,20 +16,20 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_DEPARTMENT;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_DESIGNATION;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_DESK_NUMBER;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_DIVISION;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMAIL_1;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMAIL_2;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMERGENCY_NUMBER;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMPLOYEE_ID;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_FIRST_NAME;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_LOCATION;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_1;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_2;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_PROFILE_URI;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_SAP_ID;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_DEPARTMENT;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_DESIGNATION;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_DESK_NUMBER;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_DIVISION;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_EMAIL_1;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_EMAIL_2;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_EMERGENCY_NUMBER;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_EMPLOYEE_ID;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_FIRST_NAME;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_LOCATION;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_PHONENO_1;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_PHONENO_2;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_PROFILE_URI;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_SAP_ID;
 
 //Adapter to show items in Favourites list
 public class GridViewAdapter extends ArrayAdapter<User> {

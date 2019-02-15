@@ -1,4 +1,4 @@
-package com.gagandeep.nuvococontacts;
+package com.gagandeep.nuvococontacts.Search;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +28,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gagandeep.nuvococontacts.ChangelogActivity;
+import com.gagandeep.nuvococontacts.Login.LoginActivity;
+import com.gagandeep.nuvococontacts.R;
+import com.gagandeep.nuvococontacts.User;
+import com.gagandeep.nuvococontacts.UserAdapter;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -43,8 +48,8 @@ import java.util.List;
 
 import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
-import static com.gagandeep.nuvococontacts.Constants.PACKAGE_NAME;
-import static com.gagandeep.nuvococontacts.Constants.valueEventListenerCalled;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.PACKAGE_NAME;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.valueEventListenerCalled;
 
 
 public class SearchFragment extends Fragment {
@@ -62,7 +67,7 @@ public class SearchFragment extends Fragment {
     public static LinearLayout linearLayoutBroadcast;
     Button button;
     DatabaseReference databaseReferenceUser;
-    UserList recyclerAdapter;
+    UserAdapter recyclerAdapter;
     FloatingActionButton clearSearchFAB, sendBrodcastFAB;
     TextView textViewCancelBroadcast, textViewSendBroadcast;
     ValueEventListener valueEventListener = new ValueEventListener() {
@@ -94,7 +99,7 @@ public class SearchFragment extends Fragment {
                     return v1.getName().compareTo(v2.getName());
                 }
             });
-            recyclerAdapter = new UserList(getActivity(), userList);
+            recyclerAdapter = new UserAdapter(getActivity(), userList);
             TextView empty = new TextView(getContext());
             empty.setHeight(150);
             listView.addFooterView(empty);
@@ -143,7 +148,7 @@ public class SearchFragment extends Fragment {
                 startActivity(new Intent(getActivity(), ChangelogActivity.class));
                 break;
             case R.id.checkable:
-                if (!UserList.checkable) {
+                if (!UserAdapter.checkable) {
                     recyclerAdapter.displayAllCheckbox(true);
                     linearLayoutBroadcast.setVisibility(View.VISIBLE);
 
@@ -178,12 +183,12 @@ public class SearchFragment extends Fragment {
                 }
                 if (sortedArrayList.isEmpty()) {
                     Toast.makeText(getActivity(), "No data found", Toast.LENGTH_LONG).show();
-                    recyclerAdapter = new UserList(getActivity(), sortedArrayList);
+                    recyclerAdapter = new UserAdapter(getActivity(), sortedArrayList);
                     listView.setAdapter(recyclerAdapter);
                     recyclerAdapter.notifyDataSetChanged();
                     clearSearchFAB.show();
                 } else {
-                    recyclerAdapter = new UserList(getActivity(), sortedArrayList);
+                    recyclerAdapter = new UserAdapter(getActivity(), sortedArrayList);
                     listView.setAdapter(recyclerAdapter);
                     recyclerAdapter.notifyDataSetChanged();
                     clearSearchFAB.show();
@@ -346,13 +351,13 @@ public class SearchFragment extends Fragment {
                 }
                 if (sortedArrayList.isEmpty()) {
                     Toast.makeText(getActivity(), "No data found", Toast.LENGTH_LONG).show();
-                    recyclerAdapter = new UserList(getActivity(), sortedArrayList);
+                    recyclerAdapter = new UserAdapter(getActivity(), sortedArrayList);
                     listView.setAdapter(recyclerAdapter);
                     recyclerAdapter.notifyDataSetChanged();
                     clearSearchFAB.show();
                     alertDialog.show();
                 } else {
-                    recyclerAdapter = new UserList(getActivity(), sortedArrayList);
+                    recyclerAdapter = new UserAdapter(getActivity(), sortedArrayList);
                     listView.setAdapter(recyclerAdapter);
                     recyclerAdapter.notifyDataSetChanged();
                     clearSearchFAB.show();
@@ -393,7 +398,7 @@ public class SearchFragment extends Fragment {
         clearSearchFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recyclerAdapter = new UserList(getActivity(), userList);
+                recyclerAdapter = new UserAdapter(getActivity(), userList);
                 listView.setAdapter(recyclerAdapter);
                 listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
                 recyclerAdapter.notifyDataSetChanged();
@@ -449,7 +454,7 @@ public class SearchFragment extends Fragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            recyclerAdapter = new UserList(getActivity(), sortedArrayList);
+            recyclerAdapter = new UserAdapter(getActivity(), sortedArrayList);
             listView.setAdapter(recyclerAdapter);
 
         }

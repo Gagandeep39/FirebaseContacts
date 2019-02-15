@@ -1,4 +1,4 @@
-package com.gagandeep.nuvococontacts;
+package com.gagandeep.nuvococontacts.Helpers;
 
 /**
  * Created by gagandeep on 24/12/17.

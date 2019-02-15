@@ -10,6 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.gagandeep.nuvococontacts.Favourites.FavouriteFragment;
+import com.gagandeep.nuvococontacts.Groups.MeetingFragment;
+import com.gagandeep.nuvococontacts.Search.SearchFragment;
+
 import static android.content.ContentValues.TAG;
 
 //implement the interface OnNavigationItemSelectedListener in your activity class

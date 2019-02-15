@@ -17,30 +17,33 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gagandeep.nuvococontacts.Favourites.FavouriteContract;
+import com.gagandeep.nuvococontacts.Favourites.FavouriteDbHelper;
+import com.gagandeep.nuvococontacts.Favourites.FavouriteItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_DEPARTMENT;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_DESIGNATION;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_DIVISION;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMAIL_1;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMAIL_2;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMERGENCY_NUMBER;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_EMPLOYEE_ID;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_FIRST_NAME;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_LOCATION;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_1;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_PHONENO_2;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_PROFILE_URI;
-import static com.gagandeep.nuvococontacts.Constants.COLUMN_SAP_ID;
-import static com.gagandeep.nuvococontacts.FavouriteContract.Favourite.COLUMN_LOCAL_NAME;
-import static com.gagandeep.nuvococontacts.HelperClass.initiateCallTo;
-import static com.gagandeep.nuvococontacts.HelperClass.sendMailTo;
-import static com.gagandeep.nuvococontacts.HelperClass.sendMessageTo;
-import static com.gagandeep.nuvococontacts.HelperClass.sendWhatsAppMessageTo;
-import static com.gagandeep.nuvococontacts.SplashScreenActivity.isAdmin;
+import static com.gagandeep.nuvococontacts.Favourites.FavouriteContract.Favourite.COLUMN_LOCAL_NAME;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_DEPARTMENT;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_DESIGNATION;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_DIVISION;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_EMAIL_1;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_EMAIL_2;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_EMERGENCY_NUMBER;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_EMPLOYEE_ID;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_FIRST_NAME;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_LOCATION;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_PHONENO_1;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_PHONENO_2;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_PROFILE_URI;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_SAP_ID;
+import static com.gagandeep.nuvococontacts.Helpers.HelperClass.initiateCallTo;
+import static com.gagandeep.nuvococontacts.Helpers.HelperClass.sendMailTo;
+import static com.gagandeep.nuvococontacts.Helpers.HelperClass.sendMessageTo;
+import static com.gagandeep.nuvococontacts.Helpers.HelperClass.sendWhatsAppMessageTo;
+import static com.gagandeep.nuvococontacts.Login.SplashScreenActivity.isAdmin;
 
 public class UserInfoActivity extends AppCompatActivity {
     String name, designation, department, email_1, email_2, phone_1, phone_2, location, profileUri, division, employeeid, emergencyNumber, sapId;

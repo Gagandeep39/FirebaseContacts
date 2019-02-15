@@ -7,6 +7,10 @@ buildscript {
         
     }
     dependencies {
+//UnComment below to line
+//        classpath 'com.android.tools.build:gradle:3.3.0'
+//        classpath 'com.google.gms:google-services:4.0.1'
+ //Comment these 2
         classpath 'com.android.tools.build:gradle:3.5.0-alpha04'
         classpath 'com.google.gms:google-services:4.2.0'
 

@@ -1,4 +1,4 @@
-package com.gagandeep.nuvococontacts;
+package com.gagandeep.nuvococontacts.Login;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.gagandeep.nuvococontacts.Helpers.ObjectSerializer;
+import com.gagandeep.nuvococontacts.MainActivity;
+import com.gagandeep.nuvococontacts.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
@@ -28,12 +31,12 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import static com.gagandeep.nuvococontacts.Constants.CURRENT_USER;
-import static com.gagandeep.nuvococontacts.Constants.PACKAGE_NAME;
-import static com.gagandeep.nuvococontacts.HelperClass.setMaxLength;
-import static com.gagandeep.nuvococontacts.SplashScreenActivity.currentUser;
-import static com.gagandeep.nuvococontacts.SplashScreenActivity.isAdmin;
-import static com.gagandeep.nuvococontacts.SplashScreenActivity.temporaryUser;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.CURRENT_USER;
+import static com.gagandeep.nuvococontacts.Helpers.Constants.PACKAGE_NAME;
+import static com.gagandeep.nuvococontacts.Helpers.HelperClass.setMaxLength;
+import static com.gagandeep.nuvococontacts.Login.SplashScreenActivity.currentUser;
+import static com.gagandeep.nuvococontacts.Login.SplashScreenActivity.isAdmin;
+import static com.gagandeep.nuvococontacts.Login.SplashScreenActivity.temporaryUser;
 
 public class VerifyPhoneActivity extends AppCompatActivity {
 
