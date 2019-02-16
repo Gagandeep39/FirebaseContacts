@@ -4,61 +4,65 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8sp">
+    android:orientation="vertical">
 
     <TextView
+        android:textSize="20sp"
         android:id="@+id/textViewGroupName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16sp"
         android:text="Group 1"
-        android:textSize="24sp" />
+        android:textStyle="bold" />
+
 
     <TextView
         android:id="@+id/textViewCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_marginEnd="16sp"
         android:layout_toLeftOf="@+id/frameLayout"
-        android:padding="18sp"
+        android:gravity="center"
+        android:padding="16sp"
         android:text="20"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <FrameLayout
+        android:layout_width="40sp"
+        android:layout_height="40sp"
         android:id="@+id/frameLayout"
-        android:layout_width="60sp"
-        android:layout_height="60sp"
+        android:layout_margin="8sp"
+        android:clickable="true"
         android:layout_alignParentEnd="true">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="60sp"
-            android:layout_height="60sp"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
             android:src="@color/colorPrimary">
 
         </de.hdodenhof.circleimageview.CircleImageView>
 
         <ImageView
             android:id="@+id/imageViewSend"
-            android:layout_width="30sp"
-            android:layout_height="30sp"
+            android:layout_width="20sp"
+            android:layout_height="20sp"
             android:layout_gravity="center"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
             android:src="@drawable/ic_send" />
 
     </FrameLayout>
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="2sp"
-        android:layout_below="@id/textViewGroupName"
-        android:layout_gravity="right"
-        android:background="@color/light_grey" />
+    <!--<View-->
+    <!--android:id="@+id/view"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="2sp"-->
+    <!--android:layout_below="@id/textViewGroupName"-->
+    <!--android:layout_gravity="right"-->
+    <!--android:background="@color/light_grey" />-->
 
 
 </RelativeLayout>

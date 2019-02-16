@@ -3,6 +3,7 @@ Removed GroupDB Helper
 Fixed checkbox not hiding afer clickong on cancel
 Clicking on Send Broadcast in menu second time will hide it
 Added fastscrollbar in Creategroup activity
+Implemented fully functional Group View
 
 
 Create CreateGroupAdapter which permanently have checkboxes

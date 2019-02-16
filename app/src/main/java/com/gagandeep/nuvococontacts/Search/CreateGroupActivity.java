@@ -172,6 +172,9 @@ public class CreateGroupActivity extends AppCompatActivity {
             dbHelper.saveToGroupTable(groupName, nameList + "", numberList + "", database);
             nameList.clear();
             numberList.clear();
+            for (int i = 0; i < userList.size(); i++) {
+                userList.get(i).setSelected(false);
+            }
             finish();
         }
 

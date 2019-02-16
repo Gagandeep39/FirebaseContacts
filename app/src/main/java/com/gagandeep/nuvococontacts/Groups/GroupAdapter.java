@@ -1,7 +1,6 @@
 package com.gagandeep.nuvococontacts.Groups;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TextInputEditText;
@@ -23,8 +22,11 @@ public class GroupAdapter extends ArrayAdapter<Group> {
     private Activity context;
     private List<Group> groupList;
 
-    public GroupAdapter(Context context, List<Group> groupList) {
+    //
+    public GroupAdapter(Activity context, List<Group> groupList) {
         super(context, R.layout.list_layout, groupList);
+        this.context = context;
+        this.groupList = groupList;
     }
 
     @Override
@@ -43,19 +45,22 @@ public class GroupAdapter extends ArrayAdapter<Group> {
             viewHolder.sendImageView = convertView.findViewById(R.id.imageViewSend);
 
 
-            viewHolder.groupNameTextView.setText(groupList.get(position).getGroupName());
-            viewHolder.memberCountTextView.setText(groupList.get(position).getGroupMemberCount());
-            viewHolder.sendImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showMessageDialogue(position);
-                }
-            });
-
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (GroupAdapter.GroupViewHolder) convertView.getTag();
         }
+        String groupName = groupList.get(position).getGroupName();
+
+
+        int groupCount = groupList.get(position).getGroupMemberCount();
+        viewHolder.groupNameTextView.setText(groupName + "");
+        viewHolder.memberCountTextView.setText("" + groupCount);
+        viewHolder.sendImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMessageDialogue(position);
+            }
+        });
 
         return convertView;
     }
@@ -97,7 +102,7 @@ public class GroupAdapter extends ArrayAdapter<Group> {
     static class GroupViewHolder {
         TextView groupNameTextView, memberCountTextView;
         ImageView detailsImageView, sendImageView;
-        ;
+
     }
 
 }

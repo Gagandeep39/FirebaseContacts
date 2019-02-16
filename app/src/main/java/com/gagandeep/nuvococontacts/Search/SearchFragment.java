@@ -92,7 +92,6 @@ public class SearchFragment extends Fragment {
     }
 
     private void showRecyclerView() {
-        Toast.makeText(getContext(), "" + userList.size(), Toast.LENGTH_SHORT).show();
         if (getActivity() != null) {
             Collections.sort(userList, new Comparator<User>() {
                 @Override
@@ -118,7 +117,6 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        Log.e(TAG, "onCreateViwe: ");
         View v = inflater.inflate(R.layout.fragment_search, container, false);
         FirebaseApp.initializeApp(getContext());
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -129,7 +127,6 @@ public class SearchFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.e(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
@@ -137,7 +134,6 @@ public class SearchFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
-        Log.e(TAG, "onoptionitemselected: ");
         switch (item.getItemId()) {
             case R.id.advanced_search:
                 showAdvancedSearchDialogue();
@@ -177,7 +173,6 @@ public class SearchFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(final Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        Log.e(TAG, "onCreateoptionmenu: ");
         inflater.inflate(R.menu.search_menu, menu);
         sortedArrayList.addAll(userList);
         final SearchView searchViewAndroidActionBar = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
@@ -456,7 +451,6 @@ public class SearchFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.e(TAG, "onResume: ");
         if (!valueEventListenerCalled) {
             databaseReferenceUser.addValueEventListener(valueEventListener);
             valueEventListenerCalled = true;
@@ -484,7 +478,6 @@ public class SearchFragment extends Fragment {
      */
     @Override
     public void onResume() {
-        Log.e(TAG, "onResume: ");
         super.onResume();
 
     }

@@ -70,11 +70,11 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(GroupContract.Group.COLUMN_MEMBER_NAME, groupMembersName);
         contentValues.put(GroupContract.Group.COLUMN_MEMBERS_NUMBER, groupMembersNumber);
         contentValues.put(GroupContract.Group.COLUMN_MEMBER_COUNT, memberCount);
-        database.insert(TABLE_GROUP, null, contentValues);
+        long i = database.insert(TABLE_GROUP, null, contentValues);
     }
 
     public Cursor readFromGroupTable(SQLiteDatabase database) {
-        String[] projection = {GroupContract.Group._ID, GroupContract.Group.COLUMN_GROUP_NAME, GroupContract.Group.COLUMN_MEMBERS_NUMBER, GroupContract.Group.COLUMN_MEMBER_COUNT};
+        String[] projection = {GroupContract.Group._ID, GroupContract.Group.COLUMN_GROUP_NAME, GroupContract.Group.COLUMN_MEMBER_NAME, GroupContract.Group.COLUMN_MEMBERS_NUMBER, GroupContract.Group.COLUMN_MEMBER_COUNT};
         return database.query(TABLE_GROUP, projection, null, null, null, null, null);
     }
 
