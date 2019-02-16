@@ -1,3 +1,4 @@
+version 0.61
 Changes local database variable name
 Removed GroupDB Helper
 Fixed checkbox not hiding afer clickong on cancel
@@ -9,12 +10,12 @@ Added option to edit group name
 Added a method to remove [ , ] from GroupTable data
 Created GroupMemberAdapter(UserAdapter with no Checkbox functionality)
 
-
+version 0.60
 Create CreateGroupAdapter which permanently have checkboxes
 Added new Activity to create group
 Added method to save data to database
 
-
+version 0.59
 Checkbox padding is now 24sp
 Added Meetings tab
 Fixed last list item hidden behind broadcast message layout
@@ -25,6 +26,7 @@ Fixed datatype of groupobject
 Fixed alphabetical order in searchfragment(now it is case insensitive)
 Attempted to fix blank screen on start
 
+version 0.58
 DONE - Added  a medium to send bulk message
 DONE - Implemented a dialogue to write message
 DONE - Added viewholder (now layout gives butter smooth performance)
