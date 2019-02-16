@@ -6,6 +6,7 @@ Add Group table on database
 Created layout fo Groupfragment
 Fixed datatype of groupobject
 Fixed alphabetical order in searchfragment(now it is case insensitive)
+Attempted to fix blank screen on start
 
 DONE - Added  a medium to send bulk message
 DONE - Implemented a dialogue to write message

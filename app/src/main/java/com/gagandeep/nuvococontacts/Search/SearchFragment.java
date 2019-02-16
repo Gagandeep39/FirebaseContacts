@@ -453,6 +453,7 @@ public class SearchFragment extends Fragment {
             databaseReferenceUser.addValueEventListener(valueEventListener);
             valueEventListenerCalled = true;
         }
+
     }
 
     @Override
@@ -474,7 +475,13 @@ public class SearchFragment extends Fragment {
     public void onResume() {
         Log.e(TAG, "onResume: ");
         super.onResume();
+
     }
 
 
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
 }
