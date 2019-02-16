@@ -61,7 +61,7 @@ public class GroupAdapter extends ArrayAdapter<Group> {
     }
 
     private void showMessageDialogue(int position) {
-        String groupMembers = groupList.get(position).getGroupMembers();
+        String groupMembers = groupList.get(position).getGroupMembersPhone();
 
 //        Toast.makeText(getContext(), "" +groupMembers, Toast.LENGTH_SHORT).show();
         AlertDialog.Builder dialogueBuilder = new AlertDialog.Builder(getContext());

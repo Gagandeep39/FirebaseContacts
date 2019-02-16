@@ -165,6 +165,10 @@ public class SearchFragment extends Fragment {
                 }
                 break;
 
+            case R.id.createGroup:
+                startActivity(new Intent(getActivity(), CreateGroupActivity.class));
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -216,8 +220,8 @@ public class SearchFragment extends Fragment {
             if (i != numberList.size() - 1)
                 number += ", ";
         }
-        Toast.makeText(getContext(), "" + numberList, Toast.LENGTH_SHORT).show();
         AlertDialog.Builder dialogueBuilder = new AlertDialog.Builder(getContext());
+
         View dialogueView = getLayoutInflater().inflate(R.layout.broadcast_dialogue, null);
         dialogueBuilder.setView(dialogueView);
         final TextInputEditText editTextMessage;
@@ -225,7 +229,7 @@ public class SearchFragment extends Fragment {
         editTextMessage = dialogueView.findViewById(R.id.editTextMessage);
         sendButton = dialogueView.findViewById(R.id.send);
         clearButton = dialogueView.findViewById(R.id.clear);
-        dialogueBuilder.setTitle("Advance Search");
+        dialogueBuilder.setTitle("Send Message...");
         final AlertDialog alertDialog = dialogueBuilder.create();
         alertDialog.show();
         clearButton.setOnClickListener(new View.OnClickListener() {
@@ -245,6 +249,7 @@ public class SearchFragment extends Fragment {
                 getContext().startActivity(sms_intent);
             }
         });
+
     }
 
     private void showAdvancedSearchDialogue() {
@@ -427,6 +432,7 @@ public class SearchFragment extends Fragment {
         recyclerAdapter.displayAllCheckbox(false);
         linearLayoutBroadcast.setVisibility(View.GONE);
         UserAdapter.checkable = false;
+        getActivity().invalidateOptionsMenu();
 
     }
 

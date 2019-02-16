@@ -37,9 +37,11 @@ public class MeetingFragment extends Fragment {
         while (cursor.moveToNext()) {
             String name = cursor.getString(cursor.getColumnIndex(GroupContract.Group.COLUMN_GROUP_NAME));
             String phoneNumbers = cursor.getString(cursor.getColumnIndex(GroupContract.Group.COLUMN_MEMBERS_NUMBER));
+            String memberName = cursor.getString(cursor.getColumnIndex(GroupContract.Group.COLUMN_MEMBER_NAME));
+
             int count = cursor.getInt(cursor.getColumnIndex(GroupContract.Group.COLUMN_MEMBER_COUNT));
             int id = cursor.getInt(cursor.getColumnIndex(GroupContract.Group._ID));
-            groupArrayList.add(new Group(id, name, phoneNumbers, count));
+            groupArrayList.add(new Group(id, name, phoneNumbers, memberName, count));
         }
 
 

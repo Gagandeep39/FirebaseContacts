@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gagandeep.nuvococontacts.Search.SearchFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -40,14 +38,12 @@ import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_PROFILE_URI;
 import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_SAP_ID;
 import static com.gagandeep.nuvococontacts.Login.SplashScreenActivity.currentUser;
 
-
-public class UserAdapter extends ArrayAdapter<User> {
+public class CreateGroupAdapter extends ArrayAdapter<User> {
+    boolean checkBoxState[];
     private Activity context;
     private List<User> userList;
-    public static boolean checkable = false;
-    boolean checkBoxState[];
 
-    public UserAdapter(Activity context, List<User> userList) {
+    public CreateGroupAdapter(Activity context, List<User> userList) {
         super(context, R.layout.list_layout, userList);
         this.context = context;
         this.userList = userList;
@@ -56,12 +52,6 @@ public class UserAdapter extends ArrayAdapter<User> {
             checkBoxState[i] = false;
     }
 
-    public void displayAllCheckbox(boolean checkable) {
-        this.checkable = checkable;
-        this.notifyDataSetChanged();
-//        notifyAll();
-
-    }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -88,12 +78,6 @@ public class UserAdapter extends ArrayAdapter<User> {
         }
 
 
-        if (checkable) {
-            viewHolder.chkItem.setVisibility(View.VISIBLE);
-            viewHolder.chkItem.setChecked(checkBoxState[position]);
-
-
-        }
         viewHolder.chkItem.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -104,31 +88,6 @@ public class UserAdapter extends ArrayAdapter<User> {
 
             }
         });
-
-        final ViewHolder finalViewHolder = viewHolder;
-        viewHolder.rootLayout.setOnLongClickListener(new View.OnLongClickListener() {
-
-            @Override
-            public boolean onLongClick(View v) {
-
-                if (!checkable) {
-                    finalViewHolder.chkItem.setVisibility(View.VISIBLE);
-                    checkBoxState[position] = true;
-                    finalViewHolder.chkItem.setChecked(checkBoxState[position]);
-                    notifyDataSetChanged();
-                    Log.d(this.getClass().getName(), "longclick");
-                    SearchFragment.linearLayoutBroadcast.setVisibility(View.VISIBLE);
-                    checkable = true;
-                    context.invalidateOptionsMenu();
-                }
-                return true;
-            }
-        });
-        if (!checkable) {
-            finalViewHolder.chkItem.setVisibility(View.GONE);
-        }
-
-
 
 
         final User user = userList.get(position);
@@ -180,8 +139,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         if (phone != null)
             if (phone.equals(currentUser.getPhoneno_1())) {
                 viewHolder.nameTextView.setText("You");
-            }
-        else
+            } else
                 viewHolder.nameTextView.setText(user.getName());
         viewHolder.locationTextView.setText(user.getLocation());
         return convertView;
@@ -312,14 +270,6 @@ public class UserAdapter extends ArrayAdapter<User> {
         alertDialog.show();
     }
 
-    static class ViewHolder {
-        ImageView imageViewPhone, imageViewMail, imageViewMessage;
-        CheckBox chkItem;
-        ConstraintLayout rootLayout;
-        CircleImageView profileImageView;
-        TextView nameTextView, locationTextView;
-    }
-
     private void callFunction(String num) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:+91" + num));
@@ -339,6 +289,14 @@ public class UserAdapter extends ArrayAdapter<User> {
         Intent sms_intent = new Intent(Intent.ACTION_SENDTO, sms_uri);
 //        sms_intent.putExtra("sms_body", "Good Morning ! how r U ?");
         context.startActivity(sms_intent);
+    }
+
+    static class ViewHolder {
+        ImageView imageViewPhone, imageViewMail, imageViewMessage;
+        CheckBox chkItem;
+        ConstraintLayout rootLayout;
+        CircleImageView profileImageView;
+        TextView nameTextView, locationTextView;
     }
 
 }

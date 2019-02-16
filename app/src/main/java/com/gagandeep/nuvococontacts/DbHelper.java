@@ -27,6 +27,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     GroupContract.Group._ID + " INTEGER PRIMARY KEY, " +
                     GroupContract.Group.COLUMN_GROUP_NAME + " TEXT, " +
                     GroupContract.Group.COLUMN_MEMBER_COUNT + " INTEGER, " +
+                    GroupContract.Group.COLUMN_MEMBER_NAME + " TEXT, " +
                     GroupContract.Group.COLUMN_MEMBERS_NUMBER + " TEXT )";
 
 

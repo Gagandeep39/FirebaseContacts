@@ -3,16 +3,18 @@ package com.gagandeep.nuvococontacts.Groups;
 public class Group {
     int id;
     String groupName;
-    String groupMembers;
+    String groupMembersPhone;
+    String groupMembersName;
     int groupMemberCount;
 
-
-    public Group(int id, String groupName, String groupMembers, int groupMemberCount) {
+    public Group(int id, String groupName, String groupMembersPhone, String groupMembersName, int groupMemberCount) {
         this.id = id;
         this.groupName = groupName;
-        this.groupMembers = groupMembers;
+        this.groupMembersPhone = groupMembersPhone;
+        this.groupMembersName = groupMembersName;
         this.groupMemberCount = groupMemberCount;
     }
+
 
     public int getId() {
         return id;
@@ -22,8 +24,12 @@ public class Group {
         return groupName;
     }
 
-    public String getGroupMembers() {
-        return groupMembers;
+    public String getGroupMembersPhone() {
+        return groupMembersPhone;
+    }
+
+    public String getGroupMembersName() {
+        return groupMembersName;
     }
 
     public int getGroupMemberCount() {

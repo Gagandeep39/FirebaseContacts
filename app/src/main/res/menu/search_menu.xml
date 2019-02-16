@@ -35,4 +35,9 @@
         android:visible="false"
 
         app:showAsAction="always" />
+    <item
+        android:id="@+id/createGroup"
+        android:icon="@drawable/ic_add_circle"
+        android:title="Create Group"
+        android:visible="true" />
 </menu>

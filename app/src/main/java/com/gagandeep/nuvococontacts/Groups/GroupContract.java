@@ -14,5 +14,8 @@ public class GroupContract {
         public static final String COLUMN_GROUP_NAME = "group_name";
         public static final String COLUMN_MEMBERS_NUMBER = "member_number";
         public static final String COLUMN_MEMBER_COUNT = "member_count";
+        public static final String COLUMN_MEMBER_NAME = "member_name";
+
+
     }
 }
