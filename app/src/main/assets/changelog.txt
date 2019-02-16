@@ -2,6 +2,8 @@ Changes local database variable name
 Removed GroupDB Helper
 Fixed checkbox not hiding afer clickong on cancel
 Clicking on Send Broadcast in menu second time will hide it
+Added fastscrollbar in Creategroup activity
+
 
 Create CreateGroupAdapter which permanently have checkboxes
 Added new Activity to create group

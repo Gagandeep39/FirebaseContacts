@@ -10,7 +10,6 @@
         android:id="@+id/groupNameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -19,6 +18,7 @@
             android:id="@+id/editTextCreateGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="16sp"
             android:hint="Group Name"
             android:inputType="textPersonName"
             android:nextFocusDown="@id/editTextSapId" />
@@ -33,23 +33,49 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:id="@+id/cancel"
-            android:layout_width="0sp"
+        <FrameLayout
             android:layout_height="wrap_content"
+            android:layout_width="0sp"
             android:layout_weight="1"
-            android:text="Cancel" />
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:padding="8sp">
 
-        <Button
-            android:id="@+id/save"
-            android:layout_width="0sp"
-            android:layout_height="wrap_content"
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_red_dark"
+                android:text="Cancel" />
+
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_weight="1"
-            android:text="Save" />
+            android:layout_width="0sp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:layout_height="wrap_content"
+            android:padding="8sp">
+
+            <Button
+                android:id="@+id/save"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                android:text="Cancel" />
+
+        </FrameLayout>
+
 
     </LinearLayout>
 
     <ListView
+        android:animationCache="true"
+        android:choiceMode="multipleChoice"
+        android:fadeScrollbars="true"
+        android:fastScrollEnabled="true"
+        android:scrollingCache="true"
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
