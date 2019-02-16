@@ -1,3 +1,8 @@
+Changes local database variable name
+Removed GroupDB Helper
+Fixed checkbox not hiding afer clickong on cancel
+
+
 Checkbox padding is now 24sp
 Added Meetings tab
 Fixed last list item hidden behind broadcast message layout

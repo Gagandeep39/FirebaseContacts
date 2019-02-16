@@ -159,10 +159,6 @@ public class SearchFragment extends Fragment {
                     linearLayoutBroadcast.setVisibility(View.VISIBLE);
 
 
-                } else {
-
-                    recyclerAdapter.displayAllCheckbox(false);
-                    item.setTitle("Send Broadcast");
                 }
                 break;
 
@@ -427,6 +423,8 @@ public class SearchFragment extends Fragment {
     private void cancelBroadcast() {
         recyclerAdapter.displayAllCheckbox(false);
         linearLayoutBroadcast.setVisibility(View.GONE);
+        UserAdapter.checkable = false;
+
     }
 
     private void sendBroadcast() {
@@ -461,9 +459,12 @@ public class SearchFragment extends Fragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            recyclerAdapter = new UserAdapter(getActivity(), sortedArrayList);
-            listView.setAdapter(recyclerAdapter);
+//            recyclerAdapter = new UserAdapter(getActivity(), sortedArrayList);
+//            listView.setAdapter(recyclerAdapter);
 
+        } else {
+//            UserAdapter.checkable = false;
+//            linearLayoutBroadcast.setVisibility(View.GONE);
         }
     }
 

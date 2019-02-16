@@ -58,7 +58,9 @@ public class UserAdapter extends ArrayAdapter<User> {
 
     public void displayAllCheckbox(boolean checkable) {
         this.checkable = checkable;
-        notifyDataSetChanged();
+        this.notifyDataSetChanged();
+//        notifyAll();
+
     }
 
     @Override
@@ -121,6 +123,9 @@ public class UserAdapter extends ArrayAdapter<User> {
                 return true;
             }
         });
+        if (!checkable) {
+            finalViewHolder.chkItem.setVisibility(View.GONE);
+        }
 
 
 
