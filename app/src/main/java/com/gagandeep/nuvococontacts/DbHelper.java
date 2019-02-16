@@ -63,11 +63,12 @@ public class DbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void saveToGroupTable(String name, String groupMembers, SQLiteDatabase database) {
+    public void saveToGroupTable(String name, String groupMembersName, String groupMembersNumber, SQLiteDatabase database) {
         ContentValues contentValues = new ContentValues();
-        int memberCount = groupmemberCount(groupMembers);
+        int memberCount = groupmemberCount(groupMembersNumber);
         contentValues.put(GroupContract.Group.COLUMN_GROUP_NAME, name);
-        contentValues.put(GroupContract.Group.COLUMN_MEMBERS_NUMBER, groupMembers);
+        contentValues.put(GroupContract.Group.COLUMN_MEMBER_NAME, groupMembersName);
+        contentValues.put(GroupContract.Group.COLUMN_MEMBERS_NUMBER, groupMembersNumber);
         contentValues.put(GroupContract.Group.COLUMN_MEMBER_COUNT, memberCount);
         database.insert(TABLE_GROUP, null, contentValues);
     }
@@ -77,10 +78,11 @@ public class DbHelper extends SQLiteOpenHelper {
         return database.query(TABLE_GROUP, projection, null, null, null, null, null);
     }
 
-    public void updateGroupTable(String name, String groupMembers, SQLiteDatabase database) {
+    public void updateGroupTable(String name, String groupMembersName, String groupMembersNumber, SQLiteDatabase database) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(GroupContract.Group.COLUMN_GROUP_NAME, name);
-        contentValues.put(GroupContract.Group.COLUMN_MEMBERS_NUMBER, groupMembers);
+        contentValues.put(GroupContract.Group.COLUMN_MEMBER_NAME, groupMembersName);
+        contentValues.put(GroupContract.Group.COLUMN_MEMBERS_NUMBER, groupMembersNumber);
         String selection = GroupContract.Group.COLUMN_GROUP_NAME + " LIKE ?";
         String[] selection_args = {name};
         database.update(TABLE_GROUP, contentValues, selection, selection_args);

@@ -16,11 +16,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/editTextEmployeeId"
+            android:id="@+id/editTextCreateGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Group Name"
-            android:inputType="number"
+            android:inputType="textPersonName"
             android:nextFocusDown="@id/editTextSapId" />
     </android.support.design.widget.TextInputLayout>
 

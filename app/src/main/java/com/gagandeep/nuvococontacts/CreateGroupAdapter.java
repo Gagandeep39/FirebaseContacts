@@ -21,21 +21,6 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_DEPARTMENT;
-import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_DESIGNATION;
-import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_DESK_NUMBER;
-import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_DIVISION;
-import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_EMAIL_1;
-import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_EMAIL_2;
-import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_EMERGENCY_NUMBER;
-import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_EMPLOYEE_ID;
-import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_FIRST_NAME;
-import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_LOCATION;
-import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_PHONENO_1;
-import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_PHONENO_2;
-import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_PROFILE_CACHE_URI;
-import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_PROFILE_URI;
-import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_SAP_ID;
 import static com.gagandeep.nuvococontacts.Login.SplashScreenActivity.currentUser;
 
 public class CreateGroupAdapter extends ArrayAdapter<User> {
@@ -61,7 +46,7 @@ public class CreateGroupAdapter extends ArrayAdapter<User> {
 
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.list_layout, null, true);
+            convertView = inflater.inflate(R.layout.create_group_list_layout, null, true);
 
             viewHolder.nameTextView = convertView.findViewById(R.id.textViewName);
             viewHolder.locationTextView = convertView.findViewById(R.id.textViewLocation);
@@ -90,7 +75,13 @@ public class CreateGroupAdapter extends ArrayAdapter<User> {
         });
 
 
+
         final User user = userList.get(position);
+        if (user.selected) {
+            viewHolder.chkItem.setChecked(true);
+        } else
+            viewHolder.chkItem.setChecked(false);
+
         String profileString = user.getProfileCacheUri();
         if (!TextUtils.isEmpty(profileString)) {
 
@@ -102,38 +93,6 @@ public class CreateGroupAdapter extends ArrayAdapter<User> {
                     .into(viewHolder.profileImageView);
         }
 
-        viewHolder.imageViewPhone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!TextUtils.isEmpty(user.getPhoneno_2()))
-                    showAlertDialogue(user);
-                else callFunction(user.getPhoneno_1());
-            }
-        });
-
-        viewHolder.imageViewMail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!TextUtils.isEmpty(user.getEmail2()))
-                    showEmailAlertDialogue(user);
-                else emailFunction(user.getEmail1());
-            }
-        });
-
-        viewHolder.imageViewMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!TextUtils.isEmpty(user.getPhoneno_2()))
-                    showMessageAlertDialogue(user);
-                else messageFunction(user.getPhoneno_1());
-            }
-        });
-        viewHolder.rootLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intentFunction(user);
-            }
-        });
 
         String phone = user.getPhoneno_1();
         if (phone != null)
@@ -145,25 +104,6 @@ public class CreateGroupAdapter extends ArrayAdapter<User> {
         return convertView;
     }
 
-    private void intentFunction(User user) {
-        Intent intent = new Intent(getContext(), UserInfoActivity.class);
-        intent.putExtra(COLUMN_FIRST_NAME, user.getName());
-        intent.putExtra(COLUMN_DESIGNATION, user.getDesignation());
-        intent.putExtra(COLUMN_DEPARTMENT, user.getDepartment());
-        intent.putExtra(COLUMN_LOCATION, user.getLocation());
-        intent.putExtra(COLUMN_EMAIL_1, user.getEmail1());
-        intent.putExtra(COLUMN_EMAIL_2, user.getEmail2());
-        intent.putExtra(COLUMN_PHONENO_1, user.getPhoneno_1());
-        intent.putExtra(COLUMN_PHONENO_2, user.getPhoneno_2());
-        intent.putExtra(COLUMN_PROFILE_URI, user.getProfileUri());
-        intent.putExtra(COLUMN_EMPLOYEE_ID, user.getEmployeeId());
-        intent.putExtra(COLUMN_DESK_NUMBER, user.getDeskNumber());
-        intent.putExtra(COLUMN_DIVISION, user.getDivision());
-        intent.putExtra(COLUMN_EMERGENCY_NUMBER, user.getEmergencyNumber());
-        intent.putExtra(COLUMN_PROFILE_CACHE_URI, user.getProfileCacheUri());
-        intent.putExtra(COLUMN_SAP_ID, user.getSapId());
-        getContext().startActivity(intent);
-    }
 
     private void showAlertDialogue(final User user) {
         AlertDialog.Builder dialogueBuilder = new AlertDialog.Builder(getContext());

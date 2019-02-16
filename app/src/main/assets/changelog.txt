@@ -3,6 +3,10 @@ Removed GroupDB Helper
 Fixed checkbox not hiding afer clickong on cancel
 Clicking on Send Broadcast in menu second time will hide it
 
+Create CreateGroupAdapter which permanently have checkboxes
+Added new Activity to create group
+Added method to save data to database
+
 
 Checkbox padding is now 24sp
 Added Meetings tab
