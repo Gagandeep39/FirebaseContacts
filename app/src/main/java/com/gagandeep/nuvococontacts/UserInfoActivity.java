@@ -18,14 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gagandeep.nuvococontacts.Favourites.FavouriteContract;
-import com.gagandeep.nuvococontacts.Favourites.FavouriteDbHelper;
 import com.gagandeep.nuvococontacts.Favourites.FavouriteItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.gagandeep.nuvococontacts.Favourites.FavouriteContract.Favourite.COLUMN_LOCAL_NAME;
+import static com.gagandeep.nuvococontacts.Favourites.FavouriteContract.Favourite.COLUMN_FAV_NAME;
 import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_DEPARTMENT;
 import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_DESIGNATION;
 import static com.gagandeep.nuvococontacts.Helpers.Constants.COLUMN_DIVISION;
@@ -53,13 +52,13 @@ public class UserInfoActivity extends AppCompatActivity {
     int counter = 0;
     //Database vriable
     SQLiteDatabase db;
-    FavouriteDbHelper mDbHelper;
+    DbHelper mDbHelper;
     List<FavouriteItem> itemIds;
 
     String[] projection = {
             BaseColumns._ID,
-            COLUMN_LOCAL_NAME,
-            FavouriteContract.Favourite.COLUMN_LOCAL_PHONE
+            COLUMN_FAV_NAME,
+            FavouriteContract.Favourite.COLUMN_FAV_PHONE
     };
 
     @Override
@@ -123,7 +122,7 @@ public class UserInfoActivity extends AppCompatActivity {
         employeeIdTextView = findViewById(R.id.employeeIdTextView);
 
         profileImageView = findViewById(R.id.profileImageView);
-        mDbHelper = new FavouriteDbHelper(this);
+        mDbHelper = new DbHelper(this);
         itemIds = new ArrayList<>();
         employeeIdTextView.append("");
         sapIdTextView.append("" + sapId);
@@ -282,7 +281,7 @@ public class UserInfoActivity extends AppCompatActivity {
     private void readDatabase() {
         db = mDbHelper.getReadableDatabase();
         Cursor cursor = db.query(
-                FavouriteContract.Favourite.TABLE_NAME,   // The table to query
+                FavouriteContract.Favourite.TABLE_FAV,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 null,              // The columns for the WHERE clause
                 null,          // The values for the WHERE clause
@@ -294,8 +293,8 @@ public class UserInfoActivity extends AppCompatActivity {
         while (cursor.moveToNext()) {
             int itemId = cursor.getInt(
                     cursor.getColumnIndexOrThrow(FavouriteContract.Favourite._ID));
-            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCAL_NAME));
-            String itemPhone = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_LOCAL_PHONE));
+            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FAV_NAME));
+            String itemPhone = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_FAV_PHONE));
             itemIds.add(new FavouriteItem(itemId, itemName, itemPhone));
         }
         cursor.close();
@@ -304,11 +303,11 @@ public class UserInfoActivity extends AppCompatActivity {
 
     private void deleteFavourites(MenuItem item) {
 // Define 'where' part of query.
-        String selection = COLUMN_LOCAL_NAME + " LIKE ?";
+        String selection = COLUMN_FAV_NAME + " LIKE ?";
 // Specify arguments in placeholder order.
         String[] selectionArgs = {name};
 // Issue SQL statement.
-        int deletedRows = db.delete(FavouriteContract.Favourite.TABLE_NAME, selection, selectionArgs);
+        int deletedRows = db.delete(FavouriteContract.Favourite.TABLE_FAV, selection, selectionArgs);
         item.setIcon(R.drawable.ic_star);
     }
 
@@ -318,11 +317,11 @@ public class UserInfoActivity extends AppCompatActivity {
 
 // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(COLUMN_LOCAL_NAME, name);           //data is stored in key value pair
-        values.put(FavouriteContract.Favourite.COLUMN_LOCAL_PHONE, phone_1);
+        values.put(COLUMN_FAV_NAME, name);           //data is stored in key value pair
+        values.put(FavouriteContract.Favourite.COLUMN_FAV_PHONE, phone_1);
 
 // Insert the new row, returning the primary key value of the new row
-        long newRowId = db.insert(FavouriteContract.Favourite.TABLE_NAME, null, values);
+        long newRowId = db.insert(FavouriteContract.Favourite.TABLE_FAV, null, values);
         item.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_star_filled));
     }
 
@@ -332,19 +331,19 @@ public class UserInfoActivity extends AppCompatActivity {
 // you will actually use after this query.
         String[] selectionArgs = {name};
 
-        String whereNotNull = COLUMN_LOCAL_NAME + "= ?";
-        String whereNull = COLUMN_LOCAL_NAME + " IS NULL";
+        String whereNotNull = COLUMN_FAV_NAME + "= ?";
+        String whereNull = COLUMN_FAV_NAME + " IS NULL";
         String[] whereArgs = {name};
 
 
         // How you want the results sorted in the resulting Cursor
         String sortOrder =
-                FavouriteContract.Favourite.COLUMN_LOCAL_PHONE + " DESC";
+                FavouriteContract.Favourite.COLUMN_FAV_PHONE + " DESC";
 
         db = mDbHelper.getReadableDatabase();
         Cursor cursor = whereArgs == null
                 ? db.query(
-                FavouriteContract.Favourite.TABLE_NAME,   // The table to query
+                FavouriteContract.Favourite.TABLE_FAV,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 whereNull,              // The columns for the WHERE clause
                 whereArgs,          // The values for the WHERE clause
@@ -352,7 +351,7 @@ public class UserInfoActivity extends AppCompatActivity {
                 null,                   // don't filter by row groups
                 sortOrder)              // The sort order
                 : db.query(
-                FavouriteContract.Favourite.TABLE_NAME,   // The table to query
+                FavouriteContract.Favourite.TABLE_FAV,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 whereNotNull,              // The columns for the WHERE clause
                 whereArgs,          // The values for the WHERE clause
@@ -364,8 +363,8 @@ public class UserInfoActivity extends AppCompatActivity {
         while (cursor.moveToNext()) {
             int itemId = cursor.getInt(
                     cursor.getColumnIndexOrThrow(FavouriteContract.Favourite._ID));
-            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCAL_NAME));
-            String itemPhone = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_LOCAL_PHONE));
+            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FAV_NAME));
+            String itemPhone = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_FAV_PHONE));
             itemIds.add(new FavouriteItem(itemId, itemName, itemPhone));
         }
         cursor.close();

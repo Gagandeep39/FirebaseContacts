@@ -146,6 +146,7 @@ public class SearchFragment extends Fragment {
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences(PACKAGE_NAME, Context.MODE_PRIVATE);
                 sharedPreferences.edit().clear().apply();
                 FirebaseAuth.getInstance().signOut();
+                valueEventListenerCalled = true;
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 getActivity().finish();
                 break;

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.gagandeep.nuvococontacts.DbHelper;
 import com.gagandeep.nuvococontacts.R;
 import com.google.firebase.database.DatabaseReference;
 
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 public class MeetingFragment extends Fragment {
     DatabaseReference databaseReferenceUser;
     ArrayList<Group> groupArrayList;
-    GroupDbHelper dbHelper;
+    DbHelper dbHelper;
     SQLiteDatabase database;
     ListView listView;
 
@@ -28,17 +29,17 @@ public class MeetingFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_meeting, container, false);
         findViews(v);
         groupArrayList = new ArrayList<>();
-        dbHelper = new GroupDbHelper(getContext());
-        database = dbHelper.getWritableDatabase();
-        dbHelper.readFromLocalDatabase(database);
-        Cursor cursor = dbHelper.readFromLocalDatabase(database);
+        dbHelper = new DbHelper(getActivity());
+        database = dbHelper.getReadableDatabase();
+        Cursor cursor = dbHelper.readFromGroupTable(database);
+
+        if (cursor != null)
         while (cursor.moveToNext()) {
             String name = cursor.getString(cursor.getColumnIndex(GroupContract.Group.COLUMN_GROUP_NAME));
             String phoneNumbers = cursor.getString(cursor.getColumnIndex(GroupContract.Group.COLUMN_MEMBERS_NUMBER));
             int count = cursor.getInt(cursor.getColumnIndex(GroupContract.Group.COLUMN_MEMBER_COUNT));
             int id = cursor.getInt(cursor.getColumnIndex(GroupContract.Group._ID));
             groupArrayList.add(new Group(id, name, phoneNumbers, count));
-
         }
 
 

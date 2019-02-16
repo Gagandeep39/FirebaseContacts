@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.gagandeep.nuvococontacts.DbHelper;
 import com.gagandeep.nuvococontacts.GridViewAdapter;
 import com.gagandeep.nuvococontacts.R;
 import com.gagandeep.nuvococontacts.User;
@@ -23,14 +24,14 @@ import static com.gagandeep.nuvococontacts.Search.SearchFragment.userList;
 public class FavouriteFragment extends Fragment {
     ListView listview;
     SQLiteDatabase db;
-    FavouriteDbHelper mDbHelper;
+    DbHelper mDbHelper;
     List<FavouriteItem> itemIds;
     List<User> favouriteList;
     GridViewAdapter adapter;
     String[] projection = {
             BaseColumns._ID,
-            FavouriteContract.Favourite.COLUMN_LOCAL_NAME,
-            FavouriteContract.Favourite.COLUMN_LOCAL_PHONE
+            FavouriteContract.Favourite.COLUMN_FAV_NAME,
+            FavouriteContract.Favourite.COLUMN_FAV_PHONE
     };
 
     public FavouriteFragment() {
@@ -70,12 +71,13 @@ public class FavouriteFragment extends Fragment {
     }
 
     private void readValuesFromFavouritesDatabase() {
-        mDbHelper = new FavouriteDbHelper(getContext());
+        mDbHelper = new DbHelper(getContext());
         itemIds = new ArrayList<>();
         favouriteList = new ArrayList<>();
         db = mDbHelper.getReadableDatabase();
-        Cursor cursor = db.query(
-                FavouriteContract.Favourite.TABLE_NAME,   // The table to query
+        Cursor cursor = null;
+        cursor = db.query(
+                FavouriteContract.Favourite.TABLE_FAV,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 null,              // The columns for the WHERE clause
                 null,          // The values for the WHERE clause
@@ -84,13 +86,14 @@ public class FavouriteFragment extends Fragment {
                 null               // The sort order
         );
 
-        while (cursor.moveToNext()) {
-            int itemId = cursor.getInt(
-                    cursor.getColumnIndexOrThrow(FavouriteContract.Favourite._ID));
-            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_LOCAL_NAME));
-            String itemPhone = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_LOCAL_PHONE));
-            itemIds.add(new FavouriteItem(itemId, itemName, itemPhone));
-        }
+        if (cursor != null)
+            while (cursor.moveToNext()) {
+                int itemId = cursor.getInt(
+                        cursor.getColumnIndexOrThrow(FavouriteContract.Favourite._ID));
+                String itemName = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_FAV_NAME));
+                String itemPhone = cursor.getString(cursor.getColumnIndexOrThrow(FavouriteContract.Favourite.COLUMN_FAV_PHONE));
+                itemIds.add(new FavouriteItem(itemId, itemName, itemPhone));
+            }
         cursor.close();
     }
 
