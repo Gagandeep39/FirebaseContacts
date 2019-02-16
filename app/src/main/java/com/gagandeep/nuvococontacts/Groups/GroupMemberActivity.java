@@ -21,7 +21,6 @@ import com.gagandeep.nuvococontacts.DbHelper;
 import com.gagandeep.nuvococontacts.R;
 import com.gagandeep.nuvococontacts.Search.SearchFragment;
 import com.gagandeep.nuvococontacts.User;
-import com.gagandeep.nuvococontacts.UserAdapter;
 
 import java.util.ArrayList;
 
@@ -34,7 +33,7 @@ public class GroupMemberActivity extends AppCompatActivity {
     String memberName, memberNumber, groupName;
     int count, groupId;
     ListView listView;
-    UserAdapter adapter;
+    GroupMemberAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +67,6 @@ public class GroupMemberActivity extends AppCompatActivity {
                 Toast.makeText(GroupMemberActivity.this, "Will allow adding more members", Toast.LENGTH_SHORT).show();
             }
         });
-        Toast.makeText(this, "" + memberName, Toast.LENGTH_SHORT).show();
         String phoneNumbers[] = stringToArray(memberNumber);
 
 
@@ -80,7 +78,7 @@ public class GroupMemberActivity extends AppCompatActivity {
 
             }
         }
-        adapter = new UserAdapter(this, groupMemberList);
+        adapter = new GroupMemberAdapter(this, groupMemberList);
         listView.setAdapter(adapter);
 
 
