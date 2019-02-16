@@ -154,11 +154,14 @@ public class SearchFragment extends Fragment {
                 startActivity(new Intent(getActivity(), ChangelogActivity.class));
                 break;
             case R.id.checkable:
-                if (!UserAdapter.checkable) {
+                if (!linearLayoutBroadcast.isShown()) {
                     recyclerAdapter.displayAllCheckbox(true);
                     linearLayoutBroadcast.setVisibility(View.VISIBLE);
+                } else {
 
-
+                    recyclerAdapter.displayAllCheckbox(false);
+                    linearLayoutBroadcast.setVisibility(View.GONE);
+                    UserAdapter.checkable = false;
                 }
                 break;
 
