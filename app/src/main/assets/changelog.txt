@@ -4,6 +4,9 @@ Fixed checkbox not hiding afer clickong on cancel
 Clicking on Send Broadcast in menu second time will hide it
 Added fastscrollbar in Creategroup activity
 Implemented fully functional Group View
+Fixed title in GroupMemberActivity
+Added option to edit group name
+Added a method to remove [ , ] from GroupTable data
 
 
 Create CreateGroupAdapter which permanently have checkboxes

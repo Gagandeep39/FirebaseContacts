@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gagandeep.nuvococontacts.R;
@@ -41,18 +42,21 @@ public class GroupAdapter extends ArrayAdapter<Group> {
 
             viewHolder.groupNameTextView = convertView.findViewById(R.id.textViewGroupName);
             viewHolder.memberCountTextView = convertView.findViewById(R.id.textViewCount);
-//            viewHolder.detailsImageView = convertView.findViewById(R.id.phone);
             viewHolder.sendImageView = convertView.findViewById(R.id.imageViewSend);
+            viewHolder.rootLayout = convertView.findViewById(R.id.rootLayout);
 
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (GroupAdapter.GroupViewHolder) convertView.getTag();
         }
-        String groupName = groupList.get(position).getGroupName();
+        final Group group = groupList.get(position);
 
 
-        int groupCount = groupList.get(position).getGroupMemberCount();
+        String groupName = group.getGroupName();
+
+
+        int groupCount = group.getGroupMemberCount();
         viewHolder.groupNameTextView.setText(groupName + "");
         viewHolder.memberCountTextView.setText("" + groupCount);
         viewHolder.sendImageView.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +66,24 @@ public class GroupAdapter extends ArrayAdapter<Group> {
             }
         });
 
+        viewHolder.rootLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendIntent(group);
+            }
+        });
+
         return convertView;
+    }
+
+    private void sendIntent(Group group) {
+        Intent intent = new Intent(context, GroupMemberActivity.class);
+        intent.putExtra("groupId", group.getId());
+        intent.putExtra("groupName", group.getGroupName());
+        intent.putExtra("groupMemberName", group.getGroupMembersName());
+        intent.putExtra("groupMemberPhone", group.getGroupMembersPhone());
+        intent.putExtra("groupMemberCount", group.getGroupMemberCount());
+        context.startActivity(intent);
     }
 
     private void showMessageDialogue(int position) {
@@ -102,6 +123,7 @@ public class GroupAdapter extends ArrayAdapter<Group> {
     static class GroupViewHolder {
         TextView groupNameTextView, memberCountTextView;
         ImageView detailsImageView, sendImageView;
+        RelativeLayout rootLayout;
 
     }
 

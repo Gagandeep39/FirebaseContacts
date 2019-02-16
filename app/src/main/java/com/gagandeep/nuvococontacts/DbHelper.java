@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import com.gagandeep.nuvococontacts.Favourites.FavouriteContract;
 import com.gagandeep.nuvococontacts.Groups.GroupContract;
@@ -13,6 +14,7 @@ import static com.gagandeep.nuvococontacts.Favourites.FavouriteContract.Favourit
 import static com.gagandeep.nuvococontacts.Groups.GroupContract.Group.TABLE_GROUP;
 
 public class DbHelper extends SQLiteOpenHelper {
+    Context context;
 
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "FeedReader.db";
@@ -38,6 +40,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     public static int groupmemberCount(String members) {
@@ -78,13 +81,19 @@ public class DbHelper extends SQLiteOpenHelper {
         return database.query(TABLE_GROUP, projection, null, null, null, null, null);
     }
 
-    public void updateGroupTable(String name, String groupMembersName, String groupMembersNumber, SQLiteDatabase database) {
+    public boolean updateGroupTable(int id, String name, String groupMembersName, String groupMembersNumber, SQLiteDatabase database) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(GroupContract.Group.COLUMN_GROUP_NAME, name);
         contentValues.put(GroupContract.Group.COLUMN_MEMBER_NAME, groupMembersName);
         contentValues.put(GroupContract.Group.COLUMN_MEMBERS_NUMBER, groupMembersNumber);
-        String selection = GroupContract.Group.COLUMN_GROUP_NAME + " LIKE ?";
-        String[] selection_args = {name};
-        database.update(TABLE_GROUP, contentValues, selection, selection_args);
+        String selection = GroupContract.Group._ID + " = ?";
+        String[] selection_args = {id + ""};
+        int updated = database.update(TABLE_GROUP, contentValues, selection, selection_args);
+        if (updated > 0) {
+            Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
+            return true;
+        } else
+            Toast.makeText(context, "Error Updating", Toast.LENGTH_SHORT).show();
+        return false;
     }
 }

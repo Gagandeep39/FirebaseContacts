@@ -213,7 +213,7 @@ public class SearchFragment extends Fragment {
         for (int i = 0; i < numberList.size(); i++) {
             number += numberList.get(i);
             if (i != numberList.size() - 1)
-                number += ", ";
+                number += ",";
         }
         AlertDialog.Builder dialogueBuilder = new AlertDialog.Builder(getContext());
 
