@@ -95,10 +95,15 @@ public class SearchFragment extends Fragment {
         Toast.makeText(getContext(), "" + userList.size(), Toast.LENGTH_SHORT).show();
         if (getActivity() != null) {
             Collections.sort(userList, new Comparator<User>() {
-                public int compare(User v1, User v2) {
-                    return v1.getName().compareTo(v2.getName());
+                @Override
+                public int compare(User item, User t1) {
+                    String s1 = item.getName();
+                    String s2 = t1.getName();
+                    return s1.compareToIgnoreCase(s2);
                 }
+
             });
+
             recyclerAdapter = new UserAdapter(getActivity(), userList);
             TextView empty = new TextView(getContext());
             empty.setHeight(150);

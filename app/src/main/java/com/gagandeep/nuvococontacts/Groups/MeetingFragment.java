@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.gagandeep.nuvococontacts.R;
 import com.google.firebase.database.DatabaseReference;
@@ -20,10 +21,12 @@ public class MeetingFragment extends Fragment {
     ArrayList<Group> groupArrayList;
     GroupDbHelper dbHelper;
     SQLiteDatabase database;
+    ListView listView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_meeting, container, false);
+        findViews(v);
         groupArrayList = new ArrayList<>();
         dbHelper = new GroupDbHelper(getContext());
         database = dbHelper.getWritableDatabase();
@@ -38,11 +41,13 @@ public class MeetingFragment extends Fragment {
 
         }
 
+
         return v;
     }
 
     private void findViews(View v) {
         Toolbar actionBarToolBar = v.findViewById(R.id.toolbar);
+        listView = v.findViewById(R.id.listView);
         ((AppCompatActivity) getActivity()).setSupportActionBar(actionBarToolBar);
         actionBarToolBar.setTitle("Conferences & Meetings");
         //actionBarToolBar.inflateMenu(R.menu.search_menu);
