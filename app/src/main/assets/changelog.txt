@@ -1,3 +1,6 @@
+version 0.63
+Completely fixed blank screen in Search Fragment
+
 version 0.62
 Attempted to fix blank fragment on returning to SearchFragment from oher activity
 Fixed crash on clicking menu in GrupMemberActivity

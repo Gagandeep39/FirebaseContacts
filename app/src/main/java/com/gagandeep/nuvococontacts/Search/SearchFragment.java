@@ -451,21 +451,19 @@ public class SearchFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        if (!valueEventListenerCalled) {
+            databaseReferenceUser.addValueEventListener(valueEventListener);
+            valueEventListenerCalled = true;
+        }
 
 
     }
 
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!hidden) {
-//            recyclerAdapter = new UserAdapter(getActivity(), sortedArrayList);
-//            listView.setAdapter(recyclerAdapter);
 
-        } else {
-//            UserAdapter.checkable = false;
-//            linearLayoutBroadcast.setVisibility(View.GONE);
-        }
     }
 
     /**
@@ -476,10 +474,6 @@ public class SearchFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (!valueEventListenerCalled) {
-            databaseReferenceUser.addValueEventListener(valueEventListener);
-            valueEventListenerCalled = true;
-        }
 
     }
 
@@ -487,6 +481,11 @@ public class SearchFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        valueEventListenerCalled = false;
 
     }
+
+    //create start resume pause
+    //create start resume
+    //
 }
