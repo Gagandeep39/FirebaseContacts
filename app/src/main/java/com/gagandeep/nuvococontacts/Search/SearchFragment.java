@@ -118,10 +118,16 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
         View v = inflater.inflate(R.layout.fragment_search, container, false);
+        Log.e(TAG, "onCreateView: ");
         FirebaseApp.initializeApp(getContext());
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReferenceUser = database.getReference();
         findViews(v);
+
+        if (!valueEventListenerCalled) {
+            databaseReferenceUser.addValueEventListener(valueEventListener);
+            valueEventListenerCalled = true;
+        }
         return v;
     }
 
@@ -129,6 +135,8 @@ public class SearchFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+
     }
 
 
@@ -450,11 +458,8 @@ public class SearchFragment extends Fragment {
      */
     @Override
     public void onStart() {
+        Log.e(TAG, "onStart: ");
         super.onStart();
-        if (!valueEventListenerCalled) {
-            databaseReferenceUser.addValueEventListener(valueEventListener);
-            valueEventListenerCalled = true;
-        }
 
 
     }
@@ -463,7 +468,14 @@ public class SearchFragment extends Fragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        if (!hidden) {
+//            recyclerAdapter = new UserAdapter(getActivity(), sortedArrayList);
+//            listView.setAdapter(recyclerAdapter);
 
+        } else {
+//            UserAdapter.checkable = false;
+//            linearLayoutBroadcast.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -473,6 +485,7 @@ public class SearchFragment extends Fragment {
      */
     @Override
     public void onResume() {
+        Log.e(TAG, "onResume: ");
         super.onResume();
 
     }
@@ -480,6 +493,7 @@ public class SearchFragment extends Fragment {
 
     @Override
     public void onPause() {
+        Log.e(TAG, "onPause: ");
         super.onPause();
         valueEventListenerCalled = false;
 
