@@ -116,7 +116,7 @@ public class SearchFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        setRetainInstance(true);
         View v = inflater.inflate(R.layout.fragment_search, container, false);
         FirebaseApp.initializeApp(getContext());
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -451,10 +451,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (!valueEventListenerCalled) {
-            databaseReferenceUser.addValueEventListener(valueEventListener);
-            valueEventListenerCalled = true;
-        }
+
 
     }
 
@@ -479,6 +476,10 @@ public class SearchFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if (!valueEventListenerCalled) {
+            databaseReferenceUser.addValueEventListener(valueEventListener);
+            valueEventListenerCalled = true;
+        }
 
     }
 

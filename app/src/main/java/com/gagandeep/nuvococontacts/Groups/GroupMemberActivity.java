@@ -49,7 +49,6 @@ public class GroupMemberActivity extends AppCompatActivity {
     private void initializeViews() {
 
         groupMemberList = new ArrayList<>();
-
         Intent intent = getIntent();
         if (intent != null) {
             groupId = intent.getIntExtra("groupId", 0);
@@ -67,7 +66,7 @@ public class GroupMemberActivity extends AppCompatActivity {
                 Toast.makeText(GroupMemberActivity.this, "Will allow adding more members", Toast.LENGTH_SHORT).show();
             }
         });
-        String phoneNumbers[] = stringToArray(memberNumber);
+        String[] phoneNumbers = stringToArray(memberNumber);
 
 
         for (int i = 0; i < SearchFragment.userList.size(); i++) {
@@ -86,7 +85,7 @@ public class GroupMemberActivity extends AppCompatActivity {
 
 
     private void findViews() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         listView = findViewById(R.id.listView);
@@ -129,9 +128,8 @@ public class GroupMemberActivity extends AppCompatActivity {
         editTextMessage = dialogueView.findViewById(R.id.editTextMessage);
         saveButton = dialogueView.findViewById(R.id.send);
         clearButton = dialogueView.findViewById(R.id.clear);
-        textInputLayout = findViewById(R.id.textInputLayout);
 
-        textInputLayout.setHint("Name");
+        editTextMessage.setHint("Name");
 
         saveButton.setText("SAVE");
         dialogueBuilder.setTitle("Enter Group Name");
